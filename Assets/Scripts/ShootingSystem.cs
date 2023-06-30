@@ -13,6 +13,7 @@ public class ShootingSystem : MonoBehaviour
     [SerializeField] Transform parentController;
     [SerializeField] Transform splatGunNozzle;
     [SerializeField] CinemachineFreeLook freeLookCamera;
+    Camera cam;
     CinemachineImpulseSource impulseSource;
 
     void Start()
