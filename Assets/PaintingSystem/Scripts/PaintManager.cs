@@ -80,5 +80,4 @@ public class PaintManager : Singleton<PaintManager>{
         Graphics.ExecuteCommandBuffer(command);
         command.Clear();
     }
-
 }
