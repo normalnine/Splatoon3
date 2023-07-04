@@ -8,7 +8,7 @@ public class ShootingSystem : MonoBehaviour
 {
 
     MovementInput input;
-
+    private Vector3 desiredMoveDirection;
     [SerializeField] ParticleSystem inkParticle;
     [SerializeField] Transform parentController;
     [SerializeField] Transform splatGunNozzle;
@@ -31,7 +31,7 @@ public class ShootingSystem : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             VisualPolish();
-            input.RotateToCamera(transform);
+            //input.RotateToCamera(transform);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -53,7 +53,7 @@ public class ShootingSystem : MonoBehaviour
             parentController.DOLocalMove(localPos - new Vector3(0, 0, .2f), .03f)
                 .OnComplete(() => parentController.DOLocalMove(localPos, .1f).SetEase(Ease.OutSine));
 
-           impulseSource.GenerateImpulse();
+           //impulseSource.GenerateImpulse();
         }
 
         if (!DOTween.IsTweening(splatGunNozzle))
