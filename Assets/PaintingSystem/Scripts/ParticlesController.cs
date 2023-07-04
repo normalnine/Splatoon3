@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +22,12 @@ public class ParticlesController: MonoBehaviour{
     }
 
     void OnParticleCollision(GameObject other) {
+        //if(other.gameObject.name.Contains("Ground") && paintColor == new Color(0, 0.2877133f, 1))
+        //{
+        //    print("groundpaint");
+        //    return;
+        //}
+
         int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);
 
         Paintable p = other.GetComponent<Paintable>();
