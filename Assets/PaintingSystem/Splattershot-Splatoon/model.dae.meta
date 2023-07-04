@@ -3,7 +3,37 @@ guid: 6ecf4ed5e905303488757bf045c01010
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Body
+    second: {fileID: 2100000, guid: 2c4716a8ce690bc4d8cfc9547b01bd9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Handle
+    second: {fileID: 2100000, guid: a632a98bf15d54f4dbf0ae5733cd9df2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Nozzle
+    second: {fileID: 2100000, guid: 3f147ecca71633d4a82c4caad97cb905, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pump
+    second: {fileID: 2100000, guid: 5fc26080382b5bc44a6b4a21db209be2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tank
+    second: {fileID: 2100000, guid: 4d55ac861bef7b447bb029a4da2cb51a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tube
+    second: {fileID: 2100000, guid: e84b818e2f8296a42bb635fb015c58ff, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

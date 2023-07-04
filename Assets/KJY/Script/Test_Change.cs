@@ -11,6 +11,11 @@ public class Test_Change : MonoBehaviour
     public GameObject humanBody;
     public GameObject squidBody;
     private GameObject otherBody;
+    //public Transform cameraArm_tmp;
+    public Collider humanBodyCollider;
+    public bool changeFormNow;
+    private Vector3 desiredMoveDirection;
+
     private void Awake()
     {
         instance = this;
@@ -21,6 +26,7 @@ public class Test_Change : MonoBehaviour
         isHuman = true;
         squidBody.GetComponent<MeshRenderer>().enabled = false;
         otherBody = GameObject.Find("otherBody");
+        changeFormNow = false;
     }
 
     // Update is called once per frame
@@ -29,20 +35,35 @@ public class Test_Change : MonoBehaviour
         SamePosition();
         ChangeHuman();
         ChangeSquid();
+        if (changeFormNow == true)
+        {
+            ChangeNow();
+        }
     }
 
     void ChangeHuman()
     {
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            if (humanBody.transform.position.y <= 0)
+            //cameraArm_tmp = cameraArm_tmp.transform;
+            isHuman = true;
+            //humanBodyCollider.transform.position = humanBody.transform.position;
+            TurnBody();
+            if (humanBody.transform.position.y < 0f)
             {
-                isHuman = true;
-                TurnBody();
                 //StartCoroutine(MoveBodyUp());
                 StartCoroutine(Up());
             }
+            else
+            {
+                changeFormNow = true;
+            }
         }
+    }
+
+    void ChangeNow()
+    {
+        humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, humanBodyCollider.transform.position, 0.02f);
     }
 
     void ChangeSquid()
@@ -53,10 +74,10 @@ public class Test_Change : MonoBehaviour
             if (Test_Move.instance.jumping == false)
             {
                 Vector3 tmp = humanBody.transform.position;
-                tmp.y = -2f;
-                humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.1f);
+                tmp.y = -2.5f;
+                humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
             }
-            if (humanBody.transform.position.y <= -1f)
+            if (humanBody.transform.position.y <= 0f)
             {
                 TurnBody();
             }
@@ -69,12 +90,16 @@ public class Test_Change : MonoBehaviour
         {
             humanBody.GetComponent<MeshRenderer>().enabled = false;
             squidBody.GetComponent<MeshRenderer>().enabled = true;
+            //humanBodyCollider.enabled = false;
+            //squidBodyCollider.enabled = true;
             otherBody.SetActive(false);
         }
         else
         {
             squidBody.GetComponent<MeshRenderer>().enabled = false;
             humanBody.GetComponent<MeshRenderer>().enabled = true;
+            //squidBodyCollider.enabled = false;
+           // humanBodyCollider.enabled= true;
             otherBody.SetActive(true);
         }
     }

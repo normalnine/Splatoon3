@@ -10,20 +10,20 @@ public class Shooting : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        inkParticle.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            inkParticle.Play();
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
-            inkParticle.Stop();
-        }
-        nozzle.transform.rotation = cameraArm.transform.rotation;
+        //if (Input.GetMouseButton(0))
+        //{
+        //   inkParticle.Play();
+       // }
+        //else if (Input.GetMouseButtonUp(0))
+        //{
+       //     inkParticle.Stop();
+        //}
+       // nozzle.transform.rotation = cameraArm.transform.rotation;
     }
 }
