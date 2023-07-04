@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Paintable : MonoBehaviour {
     const int TEXTURE_SIZE = 1024;
