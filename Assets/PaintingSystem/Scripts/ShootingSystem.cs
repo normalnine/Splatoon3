@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -15,6 +15,7 @@ public class ShootingSystem : MonoBehaviour
     [SerializeField] CinemachineFreeLook freeLookCamera;
     Camera cam;
     CinemachineImpulseSource impulseSource;
+    //float verticalRotation; = cam.transform.localEulerAngles.x;
 
     void Start()
     {

@@ -1,4 +1,4 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +14,13 @@ public class ShootingTest : MonoBehaviour
     [SerializeField] Camera cam;
 
     public GameObject cameraArm;
+    public Transform Gun;
     public GameObject nozzle;
     public bool Shooting;
     private Vector3 desiredMoveDirection;
     public float desiredRotationSpeed = 0.1f;
+
+    float rotX;
     private void Awake()
     {
         instance = this;
@@ -31,8 +34,8 @@ public class ShootingTest : MonoBehaviour
     {
         Vector3 angle = parentController.localEulerAngles;
         //input.blockRotationPlayer = Input.GetMouseButton(0);
-        parentController.transform.position = nozzle.transform.position; 
         parentController.transform.rotation = nozzle.transform.rotation;
+        parentController.transform.position = nozzle.transform.position;
         bool pressing = Input.GetMouseButton(0);
 
         if (Input.GetMouseButton(0))
@@ -50,13 +53,24 @@ public class ShootingTest : MonoBehaviour
             Shooting = false;
         }
 
-        // parentController.localEulerAngles = new Vector3(Mathf.LerpAngle(parentController.localEulerAngles.x, pressing ? RemapCamera(cam.transform.rotation.eulerAngles.y, 0, 360, -25, 25) : 0, .3f), angle.y, angle.z);
+        //float mx = Input.GetAxis("Mouse Y");
+        //rotX += mx * Time.deltaTime * 200f;
+        //rotX = Mathf.Clamp(rotX, -40f, 80f);
+        //parentController.eulerAngles = new Vector3(-rotX, angle.y, angle.z);
+        //parentController.localEulerAngles = new Vector3(Mathf.LerpAngle(parentController.localEulerAngles.x, pressing ? RemapCamera(cameraArm.transform.localEulerAngles.y, 0, 360, 25, -25) : 0, .3f), angle.y, angle.z);
+        //parentController.localEulerAngles = new Vector3(RemapCamera(cameraArm.transform.localEulerAngles.x, 0, 360, -25, 25), angle.y, angle.z);
+        //parentController.localEulerAngles = new Vector3()
         //if (Shooting == true)
         //{
-        parentController.rotation = Quaternion.Euler(cameraArm.transform.localEulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
+        //parentController.rotation = Quaternion.Euler(RemapCamera(cameraArm.transform.localEulerAngles.x, 0, 360, 50, -50), parentController.localEulerAngles.y, parentController.localEulerAngles.z);
         //}
-        //parentController.rotation = Quaternion.Euler(cameraArm.transform.localEulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
-
+        parentController.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x - 20, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
+        Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+       // Gun.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x + 90f, 0, -90f);
+        //Gun.eulerAngles = new Vector3(0, parentController.rotation.x, 0);
+        //float tmp = parentController.rotation.x;
+        //tmp = Mathf.Clamp(tmp, -25, 25);
+        //parentController.rotation = Quaternion.Euler(tmp, parentController.localEulerAngles.y, angle.z);
     }
 
     void VisualPolish()
