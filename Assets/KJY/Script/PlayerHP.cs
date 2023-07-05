@@ -7,9 +7,10 @@ public class PlayerHP : MonoBehaviour
     public static PlayerHP instance;
     
     int hp;
-    int MaxHp;
+    public int MaxHp;
     public MeshRenderer bodyRenderer;
     public bool isDie;
+    bool Damage;
 
     public Camera mainCamera;
     public Vector3 cameraPos;
@@ -36,6 +37,7 @@ public class PlayerHP : MonoBehaviour
     {
         HP = MaxHp;
         isDie = false;
+        Damage = false;
     }
 
     // Update is called once per frame
@@ -55,9 +57,14 @@ public class PlayerHP : MonoBehaviour
         }
         else
         {
-            StartCoroutine(PlayerDamageManager());
-            Shake();
-            print("Damage");
+            if (Damage == false)
+            {
+                StartCoroutine(PlayerDamageManager());
+                Shake();
+                //StartCoroutine(UnBeat());
+                //Damage = true;
+                print("Damage");
+            }
             //내 체력 0이 아닐 때
         }
     }
@@ -121,7 +128,6 @@ public class PlayerHP : MonoBehaviour
         {
             yield return PlayerDamage(false);
             yield return PlayerDamage(true);
-            print(i);
         }
     }
 
@@ -132,5 +138,11 @@ public class PlayerHP : MonoBehaviour
             bodyRenderer.enabled = value;
             yield return 0;
         }
+    }
+
+    IEnumerator UnBeat()
+    {
+        yield return new WaitForSeconds(1f);
+        Damage = false;
     }
 }
