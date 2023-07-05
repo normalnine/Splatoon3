@@ -91,7 +91,7 @@ public class Fist : MonoBehaviour
     {
         // 바닥에 닿았다면
         // 고정하고 시간을 초기화
-        if (other.gameObject.CompareTag("Floor"))
+        if (other.gameObject.CompareTag("Ground"))
         {
             isForword = false;
             rb.useGravity = false;
@@ -113,12 +113,16 @@ public class Fist : MonoBehaviour
                 Boss.instance.bossHP--;
             }
         }
+        if(other.gameObject.CompareTag("Player"))
+        {
+            PlayerHP.instance.PlayerStrongDamageProcess();
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
         // 바닥에 닿는동안
-        if (other.gameObject.CompareTag("Floor"))
+        if (other.gameObject.CompareTag("Ground"))
         {
             // 시간을 누적하고
             currentTime += Time.deltaTime;

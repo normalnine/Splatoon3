@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,7 +15,7 @@ public class Hand : MonoBehaviour
 
     public float trackingTime = 1f;
     float trackingBossTime = 5.7f;
-    Vector3 dir; //¹æÇâÀ» ´ãÀ» º¯¼ö
+    Vector3 dir; //ë°©í–¥ì„ ë‹´ì„ ë³€ìˆ˜
     // Start is called before the first frame update
     void Start()
     {
@@ -28,21 +28,21 @@ public class Hand : MonoBehaviour
     {
         currentTime += Time.deltaTime;
 
-        // ¹Ù´Ú¿¡ ´ê±âÀü±îÁö¸¸
+        // ë°”ë‹¥ì— ë‹¿ê¸°ì „ê¹Œì§€ë§Œ
         if (isForword)
         {
             body.transform.Rotate(body.transform.forward, 360 * Time.deltaTime, Space.World);
             if (currentTime < trackingTime)
             {
-                GameObject target = GameObject.Find("Player");//°ÔÀÓ¿ÀºêÁ§Æ®¸¦ Ã£¾ÆÁà(Find) Player
+                GameObject target = GameObject.Find("Player");//ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ì¤˜(Find) Player
                 dir = target.transform.position - transform.position;
                 rb.velocity = dir.normalized * speed;
-                // ¾Õ¹æÇâÀ» rb.velocityÀÇ ¹æÇâ°ú °°°Ô
+                // ì•ë°©í–¥ì„ rb.velocityì˜ ë°©í–¥ê³¼ ê°™ê²Œ
                 transform.forward = rb.velocity.normalized;
             }
             else
             {
-                // ¾Õ¹æÇâÀ» rb.velocityÀÇ ¹æÇâ°ú °°°Ô
+                // ì•ë°©í–¥ì„ rb.velocityì˜ ë°©í–¥ê³¼ ê°™ê²Œ
                 transform.forward = rb.velocity.normalized;
             }
         }
@@ -53,7 +53,7 @@ public class Hand : MonoBehaviour
             Destroy(gameObject, 1.2f);
             if (currentTime > trackingBossTime)
             {
-                GameObject boss = GameObject.Find("LFirePos").gameObject;//°ÔÀÓ¿ÀºêÁ§Æ®¸¦ Ã£¾ÆÁà(Find) Player
+                GameObject boss = GameObject.Find("LFirePos").gameObject;//ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ì¤˜(Find) Player
                 dir = boss.transform.position - transform.position;
                 rb.velocity = dir.normalized * speed;
             }
@@ -62,8 +62,8 @@ public class Hand : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // ¹Ù´Ú¿¡ ´ê¾Ò´Ù¸é
-        if (other.gameObject.CompareTag("Floor"))
+        // ë°”ë‹¥ì— ë‹¿ì•˜ë‹¤ë©´
+        if (other.gameObject.CompareTag("Ground"))
         {
             isForword = false;
             rb.useGravity = false;
@@ -74,13 +74,13 @@ public class Hand : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Floor"))
+        if (other.gameObject.CompareTag("Ground"))
         {
             currentTime += Time.deltaTime;
             if (currentTime > attackDelayTime)
             {
                 rb.useGravity = true;
-                // ¾Õ ¹æÇâÀ» ÀüÈ¯
+                // ì• ë°©í–¥ì„ ì „í™˜
                 rb.velocity = -transform.forward * speed * 1.5f;
                 isBack = true;
             }
