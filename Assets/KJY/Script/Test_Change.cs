@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,8 +14,7 @@ public class Test_Change : MonoBehaviour
     //public Transform cameraArm_tmp;
     public Collider humanBodyCollider;
     public bool changeFormNow;
-    private Vector3 desiredMoveDirection;
-
+    public Transform cam;
     private void Awake()
     {
         instance = this;
@@ -74,8 +73,8 @@ public class Test_Change : MonoBehaviour
             if (Test_Move.instance.jumping == false)
             {
                 Vector3 tmp = humanBody.transform.position;
-                tmp.y = -2.5f;
-                humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
+                tmp.y = -2f;
+                humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.1f);
             }
             if (humanBody.transform.position.y <= 0f)
             {
@@ -117,6 +116,8 @@ public class Test_Change : MonoBehaviour
             Vector3 tmp = humanBody.transform.position;
             tmp.y = 0.1f;
             humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 5f * Time.deltaTime);
+            if (isHuman == false)
+                break;
             yield return null;
         }
     }
@@ -126,14 +127,14 @@ public class Test_Change : MonoBehaviour
         Vector3 startPos = humanBody.transform.position;
         Vector3 targetPos = new Vector3(startPos.x, 0f, startPos.z);
         float elapsedTime = 0f;
-        float duration = 1f; // º¯°æ¿¡ °É¸®´Â ½Ã°£
+        float duration = 1f; // ë³€ê²½ì— ê±¸ë¦¬ëŠ” ì‹œê°„
 
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / duration); // º¸°£ °è¼ö
+            float t = Mathf.Clamp01(elapsedTime / duration); // ë³´ê°„ ê³„ìˆ˜
 
-            // º¸°£µÈ À§Ä¡ °è»ê
+            // ë³´ê°„ëœ ìœ„ì¹˜ ê³„ì‚°
             Vector3 newPos = Vector3.Lerp(startPos, targetPos, t);
             humanBody.transform.position = newPos;
 

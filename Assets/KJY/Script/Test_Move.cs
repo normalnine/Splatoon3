@@ -1,4 +1,4 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,12 +21,13 @@ public class Test_Move : MonoBehaviour
     private float camera_dist = 0f;
     public float camera_width = -11f;
     public float camera_height = 3f;
-    public float camera_fix = 3f;
+    public float camera_fix = -5f;
     Vector3 dir;
 
     public float rotateSpeed;
     Material material;
     public GameObject testTmp;
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -49,41 +50,26 @@ public class Test_Move : MonoBehaviour
         Move();
         Jump();
         FormControl();
-        //if (characterBody.transform.position.y >= 0f && Test_Change.instance.isHuman == true)
-        //{
-        //    SpringArm();
-        //}
         SpringArm();
     }
 
     private void LookAround()
     {
-        Vector2 mousedelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")); // ¿Ã∞≈ ø÷ ø¥¥¬¡ˆ ±‚æÔ¿Ã ¿ﬂ æ»≥≤
-        Vector3 camAngle = cameraArm.rotation.eulerAngles; // ø‰∞« ¿Ã«ÿ∞° ∞°¥¬µ•
-        float x = camAngle.x - mousedelta.y;//ø÷ ¿Ã∑∏∞‘ «ﬂ¥ı∂Û ¥ŸΩ√ ∫¡æﬂ¡ˆ
+        Vector2 mousedelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")); // Ïù¥Í±∞ Ïôú ÏòÄÎäîÏßÄ Í∏∞ÏñµÏù¥ Ïûò ÏïàÎÇ®
+        Vector3 camAngle = cameraArm.rotation.eulerAngles; // ÏöîÍ±¥ Ïù¥Ìï¥Í∞Ä Í∞ÄÎäîÎç∞
+        float x = camAngle.x - mousedelta.y;//Ïôú Ïù¥Î†áÍ≤å ÌñàÎçîÎùº Îã§Ïãú Î¥êÏïºÏßÄ
         if (x < 180f)
         {
-            x = Mathf.Clamp(x, -1f, 70f);
-            if (x > 60)
+            if (Test_Change.instance.isHuman == false)
             {
-                float alpha = Mathf.InverseLerp(100f, 50f, x);
-                Color color = material.color;
-                color.a = alpha;
-                material.color = color;
+                x = Mathf.Clamp(x, -1f, 50f);
             }
-            else
-            {
-                Color color = material.color;
-                color.a = 1f;
-                material.color = color;
-            }
-        }
-        else
-        {
-                x = Mathf.Clamp(x, 325f, 361f);
-                if (x < 330)
+           else
+           {
+                x = Mathf.Clamp(x, -1f, 70f);
+                if (x > 60)
                 {
-                    float alpha = Mathf.InverseLerp(310f, 361f, x);
+                    float alpha = Mathf.InverseLerp(100f, 50f, x);
                     Color color = material.color;
                     color.a = alpha;
                     material.color = color;
@@ -94,6 +80,32 @@ public class Test_Move : MonoBehaviour
                     color.a = 1f;
                     material.color = color;
                 }
+           }
+        }
+        else
+        {
+            if (Test_Change.instance.isHuman == false)
+            {
+                x = Mathf.Clamp(x, 340f, 361f);
+            }
+            else
+            {
+                x = Mathf.Clamp(x, 330f, 361f);
+                if (x < 345)
+                {
+                    float alpha = Mathf.InverseLerp(325f, 361f, x);
+                    Color color = material.color;
+                    color.a = alpha;
+                    material.color = color;
+                }
+                else
+                {
+                    Color color = material.color;
+                    color.a = 1f;
+                    material.color = color;
+                }
+
+            }
 
         }
         cameraArm.rotation = Quaternion.Euler(x, (camAngle.y + mousedelta.x), camAngle.z);
@@ -146,7 +158,7 @@ public class Test_Move : MonoBehaviour
         }
         if(Input.GetButtonUp("Jump") && rb.velocity.y > 0)
         {
-            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 0.5f, rb.velocity.z);
+            rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 0.7f, rb.velocity.z);
         }
     }
 
@@ -155,12 +167,12 @@ public class Test_Move : MonoBehaviour
         if (Test_Change.instance.isHuman == false)
         {
             moveSpeed = 2;
-            jumpSpeed = 7;
+            jumpSpeed = 13;
        }
         else
         {
             moveSpeed = 1;
-            jumpSpeed = 5;
+            jumpSpeed = 12;
         }
     }
 
@@ -172,13 +184,13 @@ public class Test_Move : MonoBehaviour
         if (hitinfo.point != Vector3.zero)
         {
             cam.transform.position = hitinfo.point;
-            //cam.transform.Translate(dir * -1 * camera_fix);
+            cam.transform.Translate(dir * -1 * camera_fix);
         }
         else
         {
             cam.transform.localPosition = Vector3.zero;
             cam.transform.Translate(dir * camera_dist);
-            //cam.transform.Translate(dir * -1 * camera_fix);
+            cam.transform.Translate(dir * -1 * camera_fix);
         }
     }
 
