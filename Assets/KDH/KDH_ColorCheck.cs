@@ -11,7 +11,7 @@ public class KDH_ColorCheck : MonoBehaviour
         instance = this;
     }
 
-    void ColorCheck()
+    public bool ColorCheck()
     {
         // Cast a ray from the character's position downward
         Ray ray = new Ray(transform.position, Vector3.down);
@@ -51,9 +51,10 @@ public class KDH_ColorCheck : MonoBehaviour
 
                 Debug.Log("Color at hit point: " + pixelColor);
 
-                CheckColorRGB(pixelColor);
+                return CheckColorRGB(pixelColor);
             }
         }
+        return false;
     }
 
 
@@ -67,22 +68,22 @@ public class KDH_ColorCheck : MonoBehaviour
     public ColorRange redRange;
     public ColorRange greenRange;
     public ColorRange blueRange;
-
-    public void CheckColorRGB(Color color)
+    
+    public bool CheckColorRGB(Color color)
     {
         if (ColorComponentInRange(color.r, redRange) &&
             ColorComponentInRange(color.g, greenRange) &&
             ColorComponentInRange(color.b, blueRange))
         {
             // Perform your desired action here
-            Debug.Log("RGB values are within range!");
-            GetComponent<MeshRenderer>().enabled = false;
+            //Debug.Log("RGB values are within range!");
+            return true;
         }
         else
         {
             // RGB values are not within range
-            Debug.Log("RGB values are not within range.");
-            GetComponent<MeshRenderer>().enabled = true;
+            //Debug.Log("RGB values are not within range.");
+            return false;
 
         }
     }
