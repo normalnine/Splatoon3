@@ -810,6 +810,7 @@ MonoBehaviour:
   pattern2: 0
   LFirepos: {fileID: 1850009834}
   RFirepos: {fileID: 842885863}
+  didths: 0
 --- !u!1 &2136122132
 GameObject:
   m_ObjectHideFlags: 0
