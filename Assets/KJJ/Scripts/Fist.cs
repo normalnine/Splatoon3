@@ -1,9 +1,15 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Fist : MonoBehaviour
 {
+    public static Fist instance;
+    private void Awake()
+    {
+        instance = this;
+    }
+
     public float speed = 10;
     Rigidbody rb;
 
@@ -11,10 +17,13 @@ public class Fist : MonoBehaviour
     public float attackDelayTime = 5f;
     bool isForword;
     bool isBack;
+    bool bossDie;
 
     public float trackingTime = 0.3f;
     float trackingBossTime = 5.7f;
-    Vector3 dir; //¹æÇâÀ» ´ãÀ» º¯¼ö
+
+    public float bossFistHP = 8;
+    Vector3 dir; //ë°©í–¥ì„ ë‹´ì„ ë³€ìˆ˜
     // Start is called before the first frame update
     void Start()
     {
@@ -27,58 +36,97 @@ public class Fist : MonoBehaviour
     {
         currentTime += Time.deltaTime;
 
-        // ¹Ù´Ú¿¡ ´ê±âÀü±îÁö¸¸
+        // ë°”ë‹¥ì— ë‹¿ê¸°ì „ê¹Œì§€ë§Œ
         if (isForword)
         {
+            // ì¼ì •ì‹œê°„ì„ ì¶”ì 
             if (currentTime < trackingTime)
             {
-                GameObject target = GameObject.Find("Player");//°ÔÀÓ¿ÀºêÁ§Æ®¸¦ Ã£¾ÆÁà(Find) Player
+                GameObject target = GameObject.Find("Player");//ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ì¤˜(Find) Player
                 dir = target.transform.position - transform.position;
                 rb.velocity = dir.normalized * speed;
-                // ¾Õ¹æÇâÀ» rb.velocityÀÇ ¹æÇâ°ú °°°Ô
+                // ì•ë°©í–¥ì„ rb.velocityì˜ ë°©í–¥ê³¼ ê°™ê²Œ
                 transform.forward = rb.velocity.normalized;
             }
-            else
+            else// ì¶”ì í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´
             {
-                // ¾Õ¹æÇâÀ» rb.velocityÀÇ ¹æÇâ°ú °°°Ô
+                // ì•ë°©í–¥ì„ rb.velocityì˜ ë°©í–¥ê³¼ ê°™ê²Œ
                 transform.forward = rb.velocity.normalized;
             }
         }
 
         if (isBack == true)
         {
+            // ë‚ ì•„ê°€ëŠ”ë°©í–¥ê³¼ ì£¼ë¨¹ì„ ì¼ì¹˜
             transform.forward = -rb.velocity.normalized;
             Destroy(gameObject, 1.2f);
             if (currentTime > trackingBossTime)
             {
-                GameObject boss = GameObject.Find("LFirePos").gameObject;//°ÔÀÓ¿ÀºêÁ§Æ®¸¦ Ã£¾ÆÁà(Find) Player
-                dir = boss.transform.position - transform.position;
-                rb.velocity = dir.normalized * speed;
+                if(BossAttack.instance.didths == false)
+                {
+                    GameObject boss = GameObject.Find("RFirePos").gameObject;//ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ì¤˜(Find) Player
+                    dir = boss.transform.position - transform.position;
+                    rb.velocity = dir.normalized * speed;
+                }
+                else
+                {
+                    GameObject boss = GameObject.Find("LFirePos").gameObject;//ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ì¤˜(Find) Player
+                    dir = boss.transform.position - transform.position;
+                    rb.velocity = dir.normalized * speed;
+                }
             }
+        }
+
+        if (bossDie == true)
+        {
+            transform.forward = -rb.velocity.normalized;
+            Destroy(gameObject, 0.6f);
+            GameObject boss = GameObject.Find("Boss");//ê²Œì„ì˜¤ë¸Œì íŠ¸ë¥¼ ì°¾ì•„ì¤˜(Find) Player
+            dir = boss.transform.position - transform.position;
+            rb.velocity = dir.normalized * speed * 2.5f;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // ¹Ù´Ú¿¡ ´ê¾Ò´Ù¸é
+        // ë°”ë‹¥ì— ë‹¿ì•˜ë‹¤ë©´
+        // ê³ ì •í•˜ê³  ì‹œê°„ì„ ì´ˆê¸°í™”
         if (other.gameObject.CompareTag("Floor"))
         {
             isForword = false;
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
             currentTime = 0;
+            if (bossFistHP < 1)
+            {
+                rb.useGravity = true;
+                bossDie = true;
+            }
+        }
+        if (other.gameObject.CompareTag("bullet"))
+        {
+            bossFistHP--;
+            if (bossFistHP < 1)
+            {
+                rb.useGravity = true;
+                bossDie = true;
+                Boss.instance.bossHP--;
+            }
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
+        // ë°”ë‹¥ì— ë‹¿ëŠ”ë™ì•ˆ
         if (other.gameObject.CompareTag("Floor"))
         {
+            // ì‹œê°„ì„ ëˆ„ì í•˜ê³ 
             currentTime += Time.deltaTime;
+            // ì¼ì •ì‹œê°„ì´ ì§€ë‚˜ë©´ ê³µê²©ì„ ë’¤ë¡œ ëŒì•„ê°€ê²Œí•¨
             if (currentTime > attackDelayTime)
             {
                 rb.useGravity = true;
-                // ¾Õ ¹æÇâÀ» ÀüÈ¯
+                // ì• ë°©í–¥ì„ ì „í™˜
                 rb.velocity = -transform.forward * speed * 1.5f;
                 isBack = true;
             }
