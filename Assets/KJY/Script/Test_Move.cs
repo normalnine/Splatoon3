@@ -168,7 +168,11 @@ public class Test_Move : MonoBehaviour
         {
             moveSpeed = 2;
             jumpSpeed = 13;
-       }
+            if (Test_Change.instance.sameColor == false)
+            {
+                moveSpeed = 0.2f;
+            }
+        }
         else
         {
             moveSpeed = 1;

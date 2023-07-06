@@ -64,7 +64,7 @@ public class ShootingTest : MonoBehaviour
         //{
         //parentController.rotation = Quaternion.Euler(RemapCamera(cameraArm.transform.localEulerAngles.x, 0, 360, 50, -50), parentController.localEulerAngles.y, parentController.localEulerAngles.z);
         //}
-        parentController.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x - 20, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
+        parentController.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
         Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
        // Gun.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x + 90f, 0, -90f);
         //Gun.eulerAngles = new Vector3(0, parentController.rotation.x, 0);

@@ -7439,6 +7439,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 6631549967629831991, guid: 2a18d5241e786184fa7d78e913da65ff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a18d5241e786184fa7d78e913da65ff, type: 3}
 --- !u!1001 &901084928
@@ -7506,6 +7510,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c38eb12ea954ef04d826bc032821dcef, type: 3}
+--- !u!4 &906403973 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7531821976025686903, guid: dc7050094b9029a4d874f8b888a3a159, type: 3}
+  m_PrefabInstance: {fileID: 7531821976896316439}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &916009020
 GameObject:
   m_ObjectHideFlags: 0
@@ -7605,7 +7614,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-28364
+  m_Name: pb_Mesh-7462
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -7763,6 +7772,58 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1112349501
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1112349502}
+  - component: {fileID: 1112349503}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1112349502
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112349501}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 906403973}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1112349503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112349501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b29667fcc1db5a4ea6ededd11149951, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redRange:
+    minValue: 0.9
+    maxValue: 1
+  greenRange:
+    minValue: 0.2
+    maxValue: 0.3
+  blueRange:
+    minValue: 0.3
+    maxValue: 0.5
 --- !u!1001 &1344109972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7891,7 +7952,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-10956
+  m_Name: pb_Mesh-7476
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -8120,6 +8181,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 7531821976025686897, guid: dc7050094b9029a4d874f8b888a3a159, type: 3}
+      propertyPath: MaxlimitTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7531821976025686901, guid: dc7050094b9029a4d874f8b888a3a159, type: 3}
       propertyPath: m_IsTrigger
       value: 0
@@ -8171,6 +8236,14 @@ PrefabInstance:
     - target: {fileID: 7531821976025686908, guid: dc7050094b9029a4d874f8b888a3a159, type: 3}
       propertyPath: MaxHp
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7531821977165155612, guid: dc7050094b9029a4d874f8b888a3a159, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8073509215660453746, guid: dc7050094b9029a4d874f8b888a3a159, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc7050094b9029a4d874f8b888a3a159, type: 3}
