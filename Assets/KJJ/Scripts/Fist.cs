@@ -62,7 +62,7 @@ public class Fist : MonoBehaviour
             Destroy(gameObject, 1.2f);
             if (currentTime > trackingBossTime)
             {
-                if (BossAttack.instance.didths == false)
+                if(BossAttack.instance.didths == false)
                 {
                     GameObject boss = GameObject.Find("RFirePos").gameObject;//게임오브젝트를 찾아줘(Find) Player
                     dir = boss.transform.position - transform.position;
@@ -113,9 +113,8 @@ public class Fist : MonoBehaviour
                 Boss.instance.bossHP--;
             }
         }
-        if (other.gameObject.CompareTag("Player"))
+        if(other.gameObject.CompareTag("Player"))
         {
-            print("닿았다");
             PlayerHP.instance.PlayerStrongDamageProcess();
         }
     }
