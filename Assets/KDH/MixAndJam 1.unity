@@ -52676,7 +52676,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-18546
+  m_Name: pb_Mesh-1254
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -60135,9 +60135,7 @@ GameObject:
   - component: {fileID: 1949608727}
   - component: {fileID: 1949608726}
   - component: {fileID: 1949608725}
-  - component: {fileID: 1949608724}
   - component: {fileID: 1949608730}
-  - component: {fileID: 1949608731}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -60145,18 +60143,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1949608724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1949608723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e515b85c0f489d45b84c5cb0bdbc554, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1949608725
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -60245,19 +60231,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbdc07b160e0be647ae92ed81db8bf29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1949608731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1949608723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c3ea44eef20b0b4396ebe666c9a6eeb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  extendsIslandOffset: 1
 --- !u!1 &1973281608
 GameObject:
   m_ObjectHideFlags: 0
@@ -63944,8 +63917,6 @@ GameObject:
   - component: {fileID: 3541754001687102237}
   - component: {fileID: 3541754001687102236}
   - component: {fileID: 3541754001687102238}
-  - component: {fileID: 3541754001687102239}
-  - component: {fileID: 3541754001687102240}
   m_Layer: 3
   m_Name: Jammo_Player
   m_TagString: Player
@@ -64069,46 +64040,6 @@ MonoBehaviour:
   parentController: {fileID: 895936853}
   splatGunNozzle: {fileID: 1132077972659446630}
   freeLookCamera: {fileID: 209627690}
---- !u!114 &3541754001687102239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3541754001687102235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f07e6b2c2389c0d4ba8578321bc23109, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3541754001687102240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3541754001687102235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3c067acc4d43e04ba7d004ca2b890c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraArm: {fileID: 0}
-  characterBody: {fileID: 0}
-  cam: {fileID: 0}
-  mesh: {fileID: 0}
-  rb: {fileID: 0}
-  moveSpeed: 0
-  isGround: 0
-  jumping: 0
-  jumpSpeed: 0
-  currenTime: 0
-  change: 0
-  camera_width: -11
-  camera_height: 3
-  camera_fix: 3
-  rotateSpeed: 0
-  testTmp: {fileID: 0}
 --- !u!4 &3609869344849030578
 Transform:
   m_ObjectHideFlags: 0
@@ -65552,6 +65483,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1589681633}
+    - target: {fileID: 5260943025968018906, guid: d095da2a6c4b99143b38138e75d40604, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5260943025968018907, guid: d095da2a6c4b99143b38138e75d40604, type: 3}
       propertyPath: m_Mesh
       value: 
