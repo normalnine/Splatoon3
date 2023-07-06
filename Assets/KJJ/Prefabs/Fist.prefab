@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3665400174777453102}
   - component: {fileID: 3665400174777453105}
   - component: {fileID: 7364472532458955857}
+  - component: {fileID: 5089853674790492392}
   m_Layer: 0
   m_Name: Fist
   m_TagString: Untagged
@@ -66,6 +67,18 @@ MonoBehaviour:
   attackDelayTime: 5
   trackingTime: 1
   bossFistHP: 2
+--- !u!114 &5089853674790492392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3665400174777453107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbdc07b160e0be647ae92ed81db8bf29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3665400175020852785
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5452899161329411620}
   - component: {fileID: 5452899161329411643}
   - component: {fileID: 1326995917653690144}
+  - component: {fileID: 7169597408281179952}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -66,6 +67,18 @@ MonoBehaviour:
   attackDelayTime: 5
   body: {fileID: 5452899161505966625}
   trackingTime: 1
+--- !u!114 &7169597408281179952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5452899161329411641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbdc07b160e0be647ae92ed81db8bf29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5452899161505966651
 GameObject:
   m_ObjectHideFlags: 0

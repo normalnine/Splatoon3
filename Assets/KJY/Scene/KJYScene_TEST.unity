@@ -7441,7 +7441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6631549967629831991, guid: 2a18d5241e786184fa7d78e913da65ff, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a18d5241e786184fa7d78e913da65ff, type: 3}
@@ -7815,15 +7815,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b29667fcc1db5a4ea6ededd11149951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redRange:
-    minValue: 0.9
-    maxValue: 1
-  greenRange:
-    minValue: 0.2
-    maxValue: 0.3
-  blueRange:
-    minValue: 0.3
-    maxValue: 0.5
+  player_redRange:
+    minValue: 0
+    maxValue: 0
+  player_greenRange:
+    minValue: 0
+    maxValue: 0
+  player_blueRange:
+    minValue: 0
+    maxValue: 0
+  enemy_redRange:
+    minValue: 0
+    maxValue: 0
+  enemy_greenRange:
+    minValue: 0
+    maxValue: 0
+  enemy_blueRange:
+    minValue: 0
+    maxValue: 0
 --- !u!1001 &1344109972
 PrefabInstance:
   m_ObjectHideFlags: 0

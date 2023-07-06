@@ -11,7 +11,7 @@ public class KDH_ColorCheck : MonoBehaviour
         instance = this;
     }
 
-    public bool ColorCheck()
+    public int ColorCheck()
     {
         // Cast a ray from the character's position downward
         Ray ray = new Ray(transform.position, Vector3.down);
@@ -55,7 +55,7 @@ public class KDH_ColorCheck : MonoBehaviour
                 return CheckColorRGB(pixelColor);
             }
         }
-        return false;
+        return 3;
     }
 
 
@@ -66,25 +66,35 @@ public class KDH_ColorCheck : MonoBehaviour
         public float maxValue;
     }
 
-    public ColorRange redRange;
-    public ColorRange greenRange;
-    public ColorRange blueRange;
-    
-    public bool CheckColorRGB(Color color)
+    public ColorRange player_redRange;
+    public ColorRange player_greenRange;
+    public ColorRange player_blueRange;
+
+    public ColorRange enemy_redRange;
+    public ColorRange enemy_greenRange;
+    public ColorRange enemy_blueRange;
+
+    public int CheckColorRGB(Color color)
     {
-        if (ColorComponentInRange(color.r, redRange) &&
-            ColorComponentInRange(color.g, greenRange) &&
-            ColorComponentInRange(color.b, blueRange))
+        if (ColorComponentInRange(color.r, player_redRange) &&
+            ColorComponentInRange(color.g, player_greenRange) &&
+            ColorComponentInRange(color.b, player_blueRange))
         {
-            // Perform your desired action here
-            //Debug.Log("RGB values are within range!");
-            return true;
+            Debug.Log("Player Paint");
+            return 1;
         }
+        else if (ColorComponentInRange(color.r, enemy_redRange) &&
+                ColorComponentInRange(color.g, enemy_greenRange) &&
+                ColorComponentInRange(color.b, enemy_blueRange))
+        {
+            Debug.Log("Enemy Paint");
+            return 2;
+        }
+
         else
         {
-            // RGB values are not within range
-            //Debug.Log("RGB values are not within range.");
-            return false;
+            Debug.Log("No Paint");
+            return 3;
 
         }
     }

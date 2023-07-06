@@ -89,7 +89,7 @@ public class Test_Change : MonoBehaviour
 
     void ChangeSquid()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && KDH_ColorCheck.instance.ColorCheck() == false)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && KDH_ColorCheck.instance.ColorCheck() == 1)
         {
             isHuman = false;
             sameColor = false;
@@ -99,7 +99,7 @@ public class Test_Change : MonoBehaviour
         {
             isHuman = false;
             changeImm = false;
-            if (KDH_ColorCheck.instance.ColorCheck() == false)
+            if (KDH_ColorCheck.instance.ColorCheck() == 3)
             {
                 currentTime += Time.deltaTime;
                 if (currentTime > MaxlimitTime)
@@ -131,7 +131,7 @@ public class Test_Change : MonoBehaviour
         if (isHuman == false)
         {
             humanBody.GetComponent<MeshRenderer>().enabled = false;
-            if (KDH_ColorCheck.instance.ColorCheck() == false)
+            if (KDH_ColorCheck.instance.ColorCheck() == 3)
             {
               squidBody.GetComponent<MeshRenderer>().enabled = true;
             }
