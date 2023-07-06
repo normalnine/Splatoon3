@@ -15,6 +15,11 @@ public class Test_Change : MonoBehaviour
     public Collider humanBodyCollider;
     public bool changeFormNow;
     public Transform cam;
+
+    public bool sameColor;
+    public float currentTime;
+    public float MaxlimitTime;
+    bool changeImm;
     private void Awake()
     {
         instance = this;
@@ -26,6 +31,9 @@ public class Test_Change : MonoBehaviour
         squidBody.GetComponent<MeshRenderer>().enabled = false;
         otherBody = GameObject.Find("otherBody");
         changeFormNow = false;
+        sameColor = true;
+        currentTime = 0;
+        changeImm = false;
     }
 
     // Update is called once per frame
@@ -34,16 +42,17 @@ public class Test_Change : MonoBehaviour
         SamePosition();
         ChangeHuman();
         ChangeSquid();
-        if (changeFormNow == true)
-        {
-            ChangeNow();
-        }
+        ChangeNow();
+        //if (changeFormNow == true)
+        //{
+        //}
     }
 
     void ChangeHuman()
     {
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
+            sameColor = true;
             //cameraArm_tmp = cameraArm_tmp.transform;
             isHuman = true;
             //humanBodyCollider.transform.position = humanBody.transform.position;
@@ -53,12 +62,25 @@ public class Test_Change : MonoBehaviour
                 //StartCoroutine(MoveBodyUp());
                 StartCoroutine(Up());
             }
-            else
+            if (transform.position.y > 0f)
             {
                 changeFormNow = true;
             }
         }
     }
+
+    void ChangeHumanImm()
+    {
+        isHuman = true;
+        sameColor = true;
+        changeImm = true;
+        TurnBody();
+        if (humanBody.transform.position.y < 0f)
+        {
+            StartCoroutine(Up());
+        }
+    }
+
 
     void ChangeNow()
     {
@@ -67,18 +89,39 @@ public class Test_Change : MonoBehaviour
 
     void ChangeSquid()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && KDH_ColorCheck.instance.ColorCheck() == false)
         {
             isHuman = false;
+            sameColor = false;
+            TurnBody();
+        }
+        else if (Input.GetKey(KeyCode.LeftShift) && sameColor == true && changeImm == false)
+        {
+            isHuman = false;
+            changeImm = false;
+            if (KDH_ColorCheck.instance.ColorCheck() == false)
+            {
+                currentTime += Time.deltaTime;
+                if (currentTime > MaxlimitTime)
+                {
+                    sameColor = false;
+                    currentTime = 0;
+                    //ChangeHumanImm();
+                }
+            }
+            else
+            {
+                currentTime = 0;
+            }
             if (Test_Move.instance.jumping == false)
             {
                 Vector3 tmp = humanBody.transform.position;
-                tmp.y = -2f;
-                humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.1f);
-            }
-            if (humanBody.transform.position.y <= 0f)
-            {
-                TurnBody();
+                tmp.y = -1f;
+                humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
+                if (humanBody.transform.position.y <= -0.5f)
+                {
+                    TurnBody();
+                }
             }
         }
     }
@@ -88,7 +131,10 @@ public class Test_Change : MonoBehaviour
         if (isHuman == false)
         {
             humanBody.GetComponent<MeshRenderer>().enabled = false;
-            squidBody.GetComponent<MeshRenderer>().enabled = true;
+            if (KDH_ColorCheck.instance.ColorCheck() == false)
+            {
+              squidBody.GetComponent<MeshRenderer>().enabled = true;
+            }
             //humanBodyCollider.enabled = false;
             //squidBodyCollider.enabled = true;
             otherBody.SetActive(false);
@@ -100,6 +146,7 @@ public class Test_Change : MonoBehaviour
             //squidBodyCollider.enabled = false;
            // humanBodyCollider.enabled= true;
             otherBody.SetActive(true);
+
         }
     }
 
@@ -107,6 +154,7 @@ public class Test_Change : MonoBehaviour
     {
         squidBody.transform.position = humanBody.transform.position;
         squidBody.transform.rotation = humanBody.transform.rotation;
+
     }
 
     IEnumerator Up()
