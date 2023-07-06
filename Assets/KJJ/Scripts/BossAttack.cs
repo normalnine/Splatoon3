@@ -11,14 +11,17 @@ public class BossAttack : MonoBehaviour
     }
     public GameObject handFactory;
     public GameObject fistFactory;
+    public GameObject inkboomFactory;
     public float currentTime;
     public float attackTime = 5;
 
     public bool pattern1 = false;
     public bool pattern2 = false;
+    public bool pattern3 = false;
 
     public Transform LFirepos;
     public Transform RFirepos;
+    public Transform Firepos;
     public bool didths;
 
     //Hand attack;
@@ -41,20 +44,10 @@ public class BossAttack : MonoBehaviour
             print("2페이지 시작");
             Page2();
         }
-    }
-
-    void Page1()
-    {
-        if (currentTime > attackTime)
+        else if(pattern3 == true)
         {
-            if (didths == false)
-            {
-                LFirePos();
-            }
-            else
-            {
-                RFirePos();
-            }
+            print("3페이지 시작");
+            Page3();
         }
     }
 
@@ -77,6 +70,22 @@ public class BossAttack : MonoBehaviour
             }
         }
     }
+
+    #region 1페이지
+    void Page1()
+    {
+        if (currentTime > attackTime)
+        {
+            if (didths == false)
+            {
+                LFirePos();
+            }
+            else
+            {
+                RFirePos();
+            }
+        }
+    }
     void LFirePos()
     {
         GameObject fist = Instantiate(fistFactory);
@@ -92,4 +101,32 @@ public class BossAttack : MonoBehaviour
         currentTime = 0;
         didths = false;
     }
+    #endregion
+
+    void Page3()
+    {
+        if (currentTime > attackTime)
+        {
+            int rValue = Random.Range(0, 8); // 랜덤한 0~8까지의 수를 만든다.
+            if (rValue < 3)
+            {
+                GameObject hand = Instantiate(handFactory);
+                hand.transform.position = transform.position;
+                currentTime = 0;
+            }
+            else if(2 < rValue && rValue < 6)
+            {
+                GameObject fist = Instantiate(fistFactory);
+                fist.transform.position = transform.position;
+                currentTime = 0;
+            }
+            else
+            {
+                GameObject inkboom = Instantiate(fistFactory);
+                inkboom.transform.position = transform.position;
+                currentTime = 0;
+            }
+        }
+    }
+
 }
