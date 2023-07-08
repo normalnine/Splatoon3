@@ -14,12 +14,11 @@ public class Test_Change : MonoBehaviour
     //public Transform cameraArm_tmp;
     public Collider humanBodyCollider;
     public bool changeFormNow;
-    public Transform cam;
 
     public bool sameColor;
     public float currentTime;
     public float MaxlimitTime;
-    bool changeImm;
+    //bool changeImm;
     private void Awake()
     {
         instance = this;
@@ -33,7 +32,6 @@ public class Test_Change : MonoBehaviour
         changeFormNow = false;
         sameColor = true;
         currentTime = 0;
-        changeImm = false;
     }
 
     // Update is called once per frame
@@ -73,7 +71,6 @@ public class Test_Change : MonoBehaviour
     {
         isHuman = true;
         sameColor = true;
-        changeImm = true;
         TurnBody();
         if (humanBody.transform.position.y < 0f)
         {
@@ -89,16 +86,15 @@ public class Test_Change : MonoBehaviour
 
     void ChangeSquid()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && KDH_ColorCheck.instance.ColorCheck() == 1)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && KDH_ColorCheck.instance.ColorCheck() == 3)
         {
             isHuman = false;
             sameColor = false;
             TurnBody();
         }
-        else if (Input.GetKey(KeyCode.LeftShift) && sameColor == true && changeImm == false)
+        else if (Input.GetKey(KeyCode.LeftShift) && sameColor == true)
         {
             isHuman = false;
-            changeImm = false;
             if (KDH_ColorCheck.instance.ColorCheck() == 3)
             {
                 currentTime += Time.deltaTime;
@@ -133,7 +129,12 @@ public class Test_Change : MonoBehaviour
             humanBody.GetComponent<MeshRenderer>().enabled = false;
             if (KDH_ColorCheck.instance.ColorCheck() == 3)
             {
-              squidBody.GetComponent<MeshRenderer>().enabled = true;
+                squidBody.GetComponent<MeshRenderer>().enabled = true;
+            }
+            else if(KDH_ColorCheck.instance.ColorCheck() == 1)
+            {
+                squidBody.GetComponent<MeshRenderer>().enabled = false;
+
             }
             //humanBodyCollider.enabled = false;
             //squidBodyCollider.enabled = true;

@@ -5,10 +5,12 @@ using UnityEngine;
 public class KDH_ColorCheck : MonoBehaviour
 {
     public static KDH_ColorCheck instance;
-
+    Texture2D texture;
+    public RenderTexture renderTexture;
     private void Awake()
     {
         instance = this;
+        texture = new Texture2D(1024, 1024, TextureFormat.RGB24, false);
     }
 
     public int ColorCheck()
@@ -23,16 +25,16 @@ public class KDH_ColorCheck : MonoBehaviour
 
             if (renderer != null)
             {
-                print(hit.collider.name);
+                //print(hit.collider.name);
                 // Get the UV coordinates at the hit point
                 Vector2 uv = hit.textureCoord;
                 //print(uv);
                 // Get the texture on the object
 
-                RenderTexture renderTexture = hit.collider.gameObject.GetComponent<Paintable>().getMask();
+                renderTexture = hit.collider.gameObject.GetComponent<Paintable>().getMask();
 
                 // Create a new Texture2D with the same dimensions as the RenderTexture
-                Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
+                //Texture2D texture = new Texture2D(renderTexture.width, renderTexture.height, TextureFormat.RGB24, false);
 
                 // Set the active RenderTexture and read the pixels from it into the Texture2D
                 RenderTexture.active = renderTexture;
@@ -80,20 +82,20 @@ public class KDH_ColorCheck : MonoBehaviour
             ColorComponentInRange(color.g, player_greenRange) &&
             ColorComponentInRange(color.b, player_blueRange))
         {
-            Debug.Log("Player Paint");
+            //Debug.Log("Player Paint");
             return 1;
         }
         else if (ColorComponentInRange(color.r, enemy_redRange) &&
                 ColorComponentInRange(color.g, enemy_greenRange) &&
                 ColorComponentInRange(color.b, enemy_blueRange))
         {
-            Debug.Log("Enemy Paint");
+           // Debug.Log("Enemy Paint");
             return 2;
         }
 
         else
         {
-            Debug.Log("No Paint");
+            //Debug.Log("No Paint");
             return 3;
 
         }
