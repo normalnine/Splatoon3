@@ -20,7 +20,7 @@ public class Fist : MonoBehaviour
     bool bossDie;
 
     public float trackingTime = 0.3f;
-    float trackingBossTime = 5.7f;
+    float trackingBossTime = 5f;
 
     public float bossFistHP = 8;
     Vector3 dir; //방향을 담을 변수

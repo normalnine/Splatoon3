@@ -62,10 +62,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a68cc2381999077499c494275ecc1657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 15
   currentTime: 0
   attackDelayTime: 5
-  trackingTime: 1
+  trackingTime: 2
   bossFistHP: 2
 --- !u!114 &5089853674790492392
 MonoBehaviour:
@@ -107,8 +107,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3665400175020852785}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.019000113, z: -0.7249997}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 2}
+  m_LocalPosition: {x: 0, y: -0.019000113, z: -5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 10}
   m_Children: []
   m_Father: {fileID: 3665400174777453102}
   m_RootOrder: 0

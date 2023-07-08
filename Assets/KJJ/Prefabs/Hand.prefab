@@ -66,7 +66,7 @@ MonoBehaviour:
   currentTime: 0
   attackDelayTime: 5
   body: {fileID: 5452899161505966625}
-  trackingTime: 1
+  trackingTime: 2
 --- !u!114 &7169597408281179952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,8 +106,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5452899161505966651}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.019000113, z: -0.7249997}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 2}
+  m_LocalPosition: {x: 0, y: -0.019000113, z: -5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 10}
   m_Children: []
   m_Father: {fileID: 5452899161329411620}
   m_RootOrder: 0

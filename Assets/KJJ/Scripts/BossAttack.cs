@@ -13,7 +13,7 @@ public class BossAttack : MonoBehaviour
     public GameObject fistFactory;
     public GameObject inkboomFactory;
     public float currentTime;
-    public float attackTime = 5;
+    public float attackTime = 7;
 
     public bool pattern1 = false;
     public bool pattern2 = false;
@@ -122,7 +122,7 @@ public class BossAttack : MonoBehaviour
             }
             else
             {
-                GameObject inkboom = Instantiate(fistFactory);
+                GameObject inkboom = Instantiate(inkboomFactory);
                 inkboom.transform.position = transform.position;
                 currentTime = 0;
             }
