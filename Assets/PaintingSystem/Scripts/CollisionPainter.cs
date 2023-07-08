@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CollisionPainter : MonoBehaviour{
     public Color paintColor;
@@ -14,4 +14,6 @@ public class CollisionPainter : MonoBehaviour{
             PaintManager.instance.paint(p, pos, radius, hardness, strength, paintColor);
         }
     }
+
+   
 }
