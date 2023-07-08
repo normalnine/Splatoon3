@@ -10,7 +10,7 @@ public class Boss : MonoBehaviour
         instance = this;
     }
     public float bossHP = 4;
-
+    public bool bossmoving = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,14 +22,34 @@ public class Boss : MonoBehaviour
     {
         if (1 < bossHP && bossHP < 3)
         {
+            // 공격 중지
             BossAttack.instance.pattern1 = false;
-            BossAttack.instance.pattern2 = true;
+            //bossmoving = true;
+            //if (bossmoving == true)
+            //{
+               // BossAttack.instance.pattern2 = false;
+                //gameObject.GetComponent<BossMove>().enabled = true;
+            //}
+            //if (bossmoving == false)
+            //{
+                //gameObject.GetComponent<BossMove>().enabled = false;
+                BossAttack.instance.pattern2 = true;
+            //}
         }
-        else if(bossHP < 2)
+        else if (bossHP < 2)
         {
             BossAttack.instance.pattern2 = false;
+            //bossmoving = true;
+            //if (bossmoving == true)
+            //{
+            //    BossAttack.instance.pattern3 = false;
+            //    gameObject.GetComponent<BossMove>().enabled = true;
+            //}
+            //if (bossmoving == false)
+            //{
+            //    gameObject.GetComponent<BossMove>().enabled = false;
             BossAttack.instance.pattern3 = true;
-            return;
+            //}
         }
     }
 }

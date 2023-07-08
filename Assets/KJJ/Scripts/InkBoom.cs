@@ -17,6 +17,7 @@ public class InkBoom : MonoBehaviour
     bool isForword;
     // 추적시간
     public float trackingTime = 0.3f;
+    public float boomTime = 2.4f;
     Vector3 dir; //방향을 담을 변수
     // Start is called before the first frame update
     void Start()
@@ -48,23 +49,34 @@ public class InkBoom : MonoBehaviour
         // 바닥에 닿았다면
         if (other.gameObject.CompareTag("Ground"))
         {
+            currentTime = 0;
             isForword = false;
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
             // 내 공격도 파괴하고싶다.
-            Destroy(gameObject,3.5f);
-            IEBoom();
+            Destroy(gameObject, 2.4f);
         }
 
-        IEnumerator IEBoom()
-        {
-            // 3초후
-            yield return new WaitForSeconds(1);
-            yield return new WaitForSeconds(1);
-            yield return new WaitForSeconds(1);
-            // 반경 3M 안의 충돌체중에 적이있다면
-            int layer = 1 << LayerMask.NameToLayer("Player");
 
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.gameObject.CompareTag("Ground"))
+        {
+            Inkboom();
+        }
+    }
+
+    void Inkboom()
+    {
+        //시간누적 2초
+        if (currentTime > boomTime)
+        {
+            //터지는 이펙트
+
+            // 반경 5M 안의 충돌체중에 적이있다면
+            int layer = 1 << LayerMask.NameToLayer("Player");
             Collider[] cols = Physics.OverlapSphere(transform.position, 5, layer);
             for (int i = 0; i < cols.Length; i++)
             {
@@ -73,4 +85,6 @@ public class InkBoom : MonoBehaviour
             }
         }
     }
+
+
 }
