@@ -85,6 +85,7 @@ public class PlayerHP : MonoBehaviour
         {
             StartCoroutine(PlayerDamageManager());
             StartCoroutine(UnBeat());
+            Shake();
         }
     }
 
