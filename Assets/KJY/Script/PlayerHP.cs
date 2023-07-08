@@ -15,7 +15,13 @@ public class PlayerHP : MonoBehaviour
     public Camera mainCamera;
     public Vector3 cameraPos;
     [Range(0.01f, 0.1f)] float shakeRange = 0.05f;
-    [Range(0.1f, 1f)] float duration = 0.5f;
+    [Range(0.1f, 0.5f)] float duration = 0.2f;
+
+    [Range(0.01f, 0.5f)] float shakeAttackRange = 0.2f;
+    [Range(0.1f, 0.8f)] float Attackduration = 0.4f;
+
+    [Range(0.01f, 0.02f)] float shakeInkRange = 0.01f;
+
     public int HP
     {
         get
@@ -44,6 +50,7 @@ public class PlayerHP : MonoBehaviour
     void Update()
     {
         Test();
+        PlayerInkDamageProcess();
     }
 
     public void PlayerStrongDamageProcess()
@@ -60,10 +67,9 @@ public class PlayerHP : MonoBehaviour
             if (Damage == false)
             {
                 StartCoroutine(PlayerDamageManager());
-                Shake();
-                //StartCoroutine(UnBeat());
-                //Damage = true;
-                print("Damage");
+                AttackShake();
+                StartCoroutine(UnBeat());
+                Damage = true;
             }
             //내 체력 0이 아닐 때
         }
@@ -71,12 +77,27 @@ public class PlayerHP : MonoBehaviour
 
     public void PlayerWeakDamageProcess()
     {
-
+        if (HP <= 0)
+        {
+            print("Die");
+        }
+        else
+        {
+            StartCoroutine(PlayerDamageManager());
+            StartCoroutine(UnBeat());
+        }
     }
 
     public void PlayerInkDamageProcess()
     {
-
+        if (Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other)
+        {
+            InkShake();
+        }
+        else if (Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
+        {
+            StopInkShake();
+        }
     }
 
     public void Test()
@@ -84,16 +105,32 @@ public class PlayerHP : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             StartCoroutine(PlayerDamageManager());
-            Shake();
-            print("Damage");
+            AttackShake();
         }
     }
 
     public void Shake()
     {
-        cameraPos = mainCamera.transform.position;
-        InvokeRepeating("StartShake", 0f, 0.005f);
-        Invoke("StopShake", duration);
+        if (Damage == false)
+        {
+            cameraPos = mainCamera.transform.position;
+            InvokeRepeating("StartShake", 0f, 0.05f);
+            Invoke("StopShake", duration);
+        }
+    }
+
+    public void InkShake()
+    {
+        if (Damage == false)
+        {
+            cameraPos = mainCamera.transform.position;
+            InvokeRepeating("StartInkShake", 0f, 0.05f);
+        }
+        //if(Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
+        //{
+        //    CancelInvoke("Shake");
+        //    mainCamera.transform.position = cameraPos;
+        //}
     }
 
     public void StartShake()
@@ -109,6 +146,46 @@ public class PlayerHP : MonoBehaviour
     public void StopShake()
     {
         CancelInvoke("StartShake");
+        mainCamera.transform.position = cameraPos;
+    }
+
+
+    public void StartInkShake()
+    {
+        float cameraPosX = Random.value * shakeInkRange * 2 - shakeInkRange;
+        float cameraPosY = Random.value * shakeInkRange * 2 - shakeInkRange;
+        Vector3 cameraPos = mainCamera.transform.position;
+        cameraPos.x += cameraPosX;
+        cameraPos.y += cameraPosY;
+        mainCamera.transform.position = cameraPos;
+    }
+
+    public void StopInkShake()
+    {
+        CancelInvoke("StartInkShake");
+       // mainCamera.transform.position = cameraPos;
+    }
+
+    public void AttackShake()
+    {
+        cameraPos = mainCamera.transform.position;
+        InvokeRepeating("StartAttackShake", 0f, 0.001f);
+        Invoke("StopAttackShake", Attackduration);
+    }
+
+    public void StartAttackShake()
+    {
+        float cameraPosX = Random.value * shakeAttackRange * 2 - shakeAttackRange;
+        float cameraPosY = Random.value * shakeAttackRange * 2 - shakeAttackRange;
+        Vector3 cameraPos = mainCamera.transform.position;
+        cameraPos.x += cameraPosX;
+        cameraPos.y += cameraPosY;
+        mainCamera.transform.position = cameraPos;
+    }
+
+    public void StopAttackShake()
+    {
+        CancelInvoke("StartAttackShake");
         mainCamera.transform.position = cameraPos;
     }
 

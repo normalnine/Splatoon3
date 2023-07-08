@@ -93,6 +93,7 @@ public class Fist : MonoBehaviour
         // 고정하고 시간을 초기화
         if (other.gameObject.CompareTag("Ground"))
         {
+            PlayerHP.instance.Shake();
             isForword = false;
             rb.useGravity = false;
             rb.velocity = Vector3.zero;

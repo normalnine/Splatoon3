@@ -27,18 +27,17 @@ public class ParticlesController: MonoBehaviour{
         //    print("groundpaint");
         //    return;
         //}
-
         int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);
 
-        Paintable p = other.GetComponent<Paintable>();
-        if(p != null){
+        Paintable p = other.GetComponent<Paintable>();//GetComponentInChildren<Paintable>();// GetComponent<Paintable>();
+        if (p != null){
             for  (int i = 0; i< numCollisionEvents; i++){
                 Vector3 pos = collisionEvents[i].intersection;
                 float radius = Random.Range(minRadius, maxRadius);
                 PaintManager.instance.paint(p, pos, radius, hardness, strength, paintColor);
                 if (other.gameObject.name.Contains("Fist") || other.gameObject.name.Contains("Hand"))
                 {
-                    Fist.instance.bossFistHP--;
+                   // Fist.instance.bossFistHP--;
                     print("Fist Collision");
                 }
             }

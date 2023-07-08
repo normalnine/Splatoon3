@@ -65,6 +65,7 @@ public class Hand : MonoBehaviour
         // 바닥에 닿았다면
         if (other.gameObject.CompareTag("Ground"))
         {
+            PlayerHP.instance.Shake();
             isForword = false;
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
