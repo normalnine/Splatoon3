@@ -112,12 +112,9 @@ public class PlayerHP : MonoBehaviour
 
     public void Shake()
     {
-        if (Damage == false)
-        {
-            cameraPos = mainCamera.transform.position;
-            InvokeRepeating("StartShake", 0f, 0.05f);
-            Invoke("StopShake", duration);
-        }
+        cameraPos = mainCamera.transform.position;
+        InvokeRepeating("StartShake", 0f, 0.05f);
+        Invoke("StopShake", duration);
     }
 
     public void InkShake()

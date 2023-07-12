@@ -37,10 +37,10 @@ public class Player_CameraAndMove : MonoBehaviour
     public GameObject testTmp;
     public bool otherInk;
 
-    public float zoom = 40;
+    public float zoom = 50;
     public float normal = 60;
     public float smooth = 5;
-    bool isZoom;
+    public bool isZoom;
     public GameObject SalmonFactory;
     public GameObject salmon;
     // Start is called before the first frame update
@@ -57,6 +57,7 @@ public class Player_CameraAndMove : MonoBehaviour
         material = mesh.material;
         currenTime = 0;
         otherInk = false;
+        isZoom = false;
     }
 
     // Update is called once per frame
@@ -156,11 +157,19 @@ public class Player_CameraAndMove : MonoBehaviour
             {
                 characterBody.transform.forward = Vector3.Slerp(characterBody.transform.forward, moveDir, 0.05f);
             }
+
             transform.position += moveDir * moveSpeed * Time.deltaTime * 5f;
+        }
+        //transform.Rotate(Vector3.up, 360 * Time.deltaTime);
+        if (isZoom)
+        {
+           // float rotationSpeed = 5f;
+          //  float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
+            //transform.Rotate(Vector3.up, mouseX);
         }
         if (ShootingTest.instance.Shooting == true)
         {
-            characterBody.transform.forward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
+            characterBody.transform.forward = new Vector3(cameraArm.forward.x, 0, cameraArm.forward.z).normalized;
         }
     }
 
@@ -278,21 +287,24 @@ public class Player_CameraAndMove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
-            salmon = Instantiate(SalmonFactory);
-            salmon.transform.position = GameObject.Find("ThrowTarget").transform.position;
+            //salmon = Instantiate(SalmonFactory);
+            //salmon.transform.position = GameObject.Find("ThrowTarget").transform.position;
             isZoom = true;
         }
         if (Input.GetMouseButton(1))
         {
             Invoke("ZoomIn", 0.5f);
-            salmon.transform.position = GameObject.Find("ThrowTarget").transform.position;
         }
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetMouseButtonUp(1) || PlayerShoot.instance.isShoot == true)
         {
-            Destroy(salmon);
             CancelInvoke("ZoomIn");
         }
-        else if(Input.GetMouseButton(1) == false && Camera.main.fieldOfView < 60f)
+        else if ((Input.GetMouseButton(1) == false && Camera.main.fieldOfView < 60f))
+        {
+            isZoom = false;
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 60, smooth * Time.deltaTime);
+        }
+        if (PlayerShoot.instance.isShoot == true && Camera.main.fieldOfView < 60f && Input.GetMouseButtonDown(1) == false)
         {
             isZoom = false;
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 60, smooth * Time.deltaTime);
