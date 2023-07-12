@@ -12,6 +12,7 @@ public class PlayerShoot : MonoBehaviour
     public GameObject SalmonFactory;
     public bool isShoot;
     GameObject salmon;
+    public float force;
 
     float rotX;
     float rotY;
@@ -68,7 +69,7 @@ public class PlayerShoot : MonoBehaviour
                 salmon = Instantiate(SalmonFactory);
                 Rigidbody rb = salmon.GetComponent<Rigidbody>();
                 salmon.transform.position = muzzle.transform.position;
-                rb.AddForce(muzzle.transform.forward * 10f, ForceMode.Impulse);
+                rb.AddForce(muzzle.transform.forward * force, ForceMode.Impulse);
             }
         }
 
@@ -78,7 +79,7 @@ public class PlayerShoot : MonoBehaviour
             float y = Input.GetAxis("Mouse Y");
             rotX += y * 200 * Time.deltaTime;
             rotY += x * 200 * Time.deltaTime;
-            rotX = Mathf.Clamp(rotX, -90, 90);
+            rotX = Mathf.Clamp(rotX, -80, 80);
             transform.eulerAngles = new Vector3(0, rotY, 0);
             muzzle.localEulerAngles = new Vector3(-rotX, 0, 0);
 
@@ -89,7 +90,7 @@ public class PlayerShoot : MonoBehaviour
     {
         lr.positionCount = count;
         Vector3 pos = muzzle.transform.position; //어디에서 쏠건지
-        Vector3 velocity = muzzle.transform.forward * 10f; // 어느 방향으로 힘을 줄건지
+        Vector3 velocity = muzzle.transform.forward * force; // 어느 방향으로 힘을 줄건지
         for (int i = 0; i < count; i++)
         {
             pos += gravity * 0.5f * Time.deltaTime * Time.deltaTime + velocity * Time.deltaTime; // 자유 낙하 운동

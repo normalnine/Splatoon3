@@ -64,7 +64,7 @@ public class Player_CameraAndMove : MonoBehaviour
     void Update()
     {
         transform.eulerAngles = Vector3.zero;
-        CameraSetting();
+        //CameraSetting();
         LookAround();
         Move();
         Jump();
@@ -72,6 +72,11 @@ public class Player_CameraAndMove : MonoBehaviour
         SpringArm();
         CheckInk();
         ZoomManager();
+    }
+
+    private void LateUpdate()
+    {
+        CameraSetting();
     }
 
     private void LookAround()
@@ -264,7 +269,14 @@ public class Player_CameraAndMove : MonoBehaviour
 
     private void CameraSetting()
     {
-        cameraArm.position = testTmp.transform.position;
+        if (SpecialAttack.instance.specialAttack == true)
+        {
+            cameraArm.position = Vector3.Lerp(transform.position, testTmp.transform.position, 0.00000001f * Time.deltaTime);
+        }
+        else
+        {
+            cameraArm.position = testTmp.transform.position;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -318,5 +330,12 @@ public class Player_CameraAndMove : MonoBehaviour
         Color color = material.color;
         color.a = alpha;
         material.color = color;
+    }
+
+    IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1f);
+        print("in");
+        cameraArm.position = testTmp.transform.position;
     }
 }

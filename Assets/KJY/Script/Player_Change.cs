@@ -95,7 +95,11 @@ public class Player_Change : MonoBehaviour
                 tmp.y = -1f;
                 humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
             }
-            TurnBody();
+            if (Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.my)
+            {
+                ShootingTest.instance.INKGAGE += 0.5f;
+            }
+                TurnBody();
         }
         else if(Input.GetKey(KeyCode.LeftShift) && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.none)
         {

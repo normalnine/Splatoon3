@@ -6,7 +6,7 @@ using UnityEngine;
 public class ShootingTest : MonoBehaviour
 {
     public static ShootingTest instance;
-   // MovementInput input;
+    // MovementInput input;
 
     [SerializeField] ParticleSystem inkParticle;
     [SerializeField] Transform parentController;
@@ -19,6 +19,21 @@ public class ShootingTest : MonoBehaviour
     public bool Shooting;
     private Vector3 desiredMoveDirection;
     public float desiredRotationSpeed = 0.1f;
+    public float inkGage;
+    float MaxInkGage = 100;
+
+    public float INKGAGE
+    {
+        get
+        {
+            return inkGage;
+        }
+        set
+        {
+            inkGage = value;
+            inkGage = Mathf.Clamp(value, 0, MaxInkGage);
+        }
+    }
 
     float rotX;
     private void Awake()
@@ -27,6 +42,7 @@ public class ShootingTest : MonoBehaviour
     }
     void Start()
     {
+        INKGAGE = MaxInkGage;
         //input = GetComponent<MovementInput>();
     }
 
@@ -42,17 +58,25 @@ public class ShootingTest : MonoBehaviour
         {
             VisualPolish();
             Shooting = true;
-
+            INKGAGE -= 0.3f;
             //RotateToCamera(transform);
         }
         if (Input.GetMouseButtonDown(0) && Shooting == true)
-            inkParticle.Play();
+        {
+            if (INKGAGE >= 0)
+            {
+                inkParticle.Play();
+            }
+        }
         else if (Input.GetMouseButtonUp(0))
         {
             inkParticle.Stop();
             Shooting = false;
         }
-
+        if (INKGAGE <= 0)
+        {
+            inkParticle.Stop();
+        }
         //float mx = Input.GetAxis("Mouse Y");
         //rotX += mx * Time.deltaTime * 200f;
         //rotX = Mathf.Clamp(rotX, -40f, 80f);

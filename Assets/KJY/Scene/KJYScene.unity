@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 736595631}
   - component: {fileID: 736595630}
   - component: {fileID: 736595629}
+  - component: {fileID: 736595633}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -453,6 +454,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &736595633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 736595628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88e07d02ca85fd4a8675e6fdf0898dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 1904227776}
 --- !u!1001 &901084928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -774,6 +788,8 @@ MonoBehaviour:
   muzzle: {fileID: 1811659299}
   count: 1000
   SalmonFactory: {fileID: 2071989228}
+  isShoot: 0
+  force: 0
 --- !u!4 &1026801836
 Transform:
   m_ObjectHideFlags: 0
@@ -1401,6 +1417,7 @@ MonoBehaviour:
   nozzle: {fileID: 1757969861}
   Shooting: 0
   desiredRotationSpeed: 0.1
+  inkGage: 0
 --- !u!75 &1411336042
 ConstantForce:
   m_ObjectHideFlags: 0
@@ -1428,6 +1445,8 @@ MonoBehaviour:
   MaxHp: 0
   bodyRenderer: {fileID: 269117705}
   isDie: 0
+  damageImage: {fileID: 0}
+  recoveryTime: 0
   mainCamera: {fileID: 1051669518}
   cameraPos: {x: 0, y: 0, z: 0}
 --- !u!198 &1436662971 stripped
@@ -1754,6 +1773,8 @@ MonoBehaviour:
   muzzle: {fileID: 1811659299}
   count: 1000
   SalmonFactory: {fileID: 2071989228}
+  isShoot: 0
+  force: 0
 --- !u!136 &1904227773
 CapsuleCollider:
   m_ObjectHideFlags: 0

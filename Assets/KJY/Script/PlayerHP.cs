@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
@@ -10,7 +11,12 @@ public class PlayerHP : MonoBehaviour
     public int MaxHp;
     public MeshRenderer bodyRenderer;
     public bool isDie;
+    public Image damageImage;
     bool Damage;
+    bool die;
+    bool InkDamage;
+    float currentTime;
+    public float recoveryTime;
 
     public Camera mainCamera;
     public Vector3 cameraPos;
@@ -41,34 +47,41 @@ public class PlayerHP : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        MaxHp = 100;
         HP = MaxHp;
         isDie = false;
         Damage = false;
+        damageImage.enabled = false;
+        die = false;
+        InkDamage = false;
+        currentTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Test();
         PlayerInkDamageProcess();
+        ShowPlayerDamageUIImage();
     }
 
     public void PlayerStrongDamageProcess()
     {
         //내 체력 1 감소
-        HP -= 1;
+        HP -= 60;
         //내 체력 0일때
         if (HP <= 0)
         {
-            print("Die");
+            Die();
         }
         else
         {
             if (Damage == false)
             {
                 StartCoroutine(PlayerDamageManager());
+                StartCoroutine(DamageUIManage());
                 AttackShake();
                 StartCoroutine(UnBeat());
+                Recure();
                 Damage = true;
             }
             //내 체력 0이 아닐 때
@@ -77,15 +90,18 @@ public class PlayerHP : MonoBehaviour
 
     public void PlayerWeakDamageProcess()
     {
+        HP -= 20;
         if (HP <= 0)
         {
-            print("Die");
+            Die();
         }
         else
         {
             StartCoroutine(PlayerDamageManager());
+            StartCoroutine(DamageUIManage());
             StartCoroutine(UnBeat());
             Shake();
+            Recure();
         }
     }
 
@@ -93,20 +109,20 @@ public class PlayerHP : MonoBehaviour
     {
         if (Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other)
         {
+            if (HP >= 100)
+            {
+                HP -= 20;
+            }
             InkShake();
+            InkDamage = true;
         }
         else if (Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
         {
             StopInkShake();
-        }
-    }
-
-    public void Test()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            StartCoroutine(PlayerDamageManager());
-            AttackShake();
+            if (InkDamage == true && die == false)
+            {
+                Recure();
+            }
         }
     }
 
@@ -187,6 +203,63 @@ public class PlayerHP : MonoBehaviour
         mainCamera.transform.position = cameraPos;
     }
 
+    public void Die()
+    {
+        GameObject beforeimage = DamageUIManager.instance.imageList[3];
+        beforeimage.SetActive(false);
+        GameObject image = DamageUIManager.instance.imageList[4];
+        image.SetActive(true);
+        bodyRenderer.enabled = false;
+        die = true;
+    }
+
+    public void ShowPlayerDamageUIImage()
+    {
+        if (HP >= 100)
+        {
+            ;
+        }
+        else if (HP < 100 && HP >= 80)
+        {
+            GameObject image = DamageUIManager.instance.imageList[1];
+            image.SetActive(true);
+        }
+        else if (HP < 80 && HP >= 40)
+        {
+            GameObject beforeimage = DamageUIManager.instance.imageList[1];
+            beforeimage.SetActive(false);
+            GameObject image = DamageUIManager.instance.imageList[2];
+            image.SetActive(true);
+        }
+        else if (hp < 40 && die == false)
+        {
+            for (int i = 1; i < 3; i++)
+            {
+                GameObject beforeimage = DamageUIManager.instance.imageList[(int)i];
+                beforeimage.SetActive(false);
+            }
+            GameObject image = DamageUIManager.instance.imageList[3];
+            image.SetActive(true);
+        }
+    }
+
+    public void Recure()
+    {
+        currentTime += Time.deltaTime;
+        if (currentTime > recoveryTime)
+        {
+            HP = 100;
+            for (int i = 1; i < DamageUIManager.instance.count; i++)
+            {
+                GameObject image = DamageUIManager.instance.imageList[i];
+                image.SetActive(false);
+                currentTime = 0;
+                InkDamage = false;
+            }
+        }
+
+    }
+
     //private void OnCollisionEnter(Collision collision)
     //{
     //    if (collision.gameObject.name.Contains("Fist") || collision.gameObject.name.Contains("Hand"))
@@ -196,19 +269,30 @@ public class PlayerHP : MonoBehaviour
     //        print("Hit");
     //    }
     //}
+    IEnumerator DamageUIManage()
+    {
+        yield return DamageUI();
+        yield return damageImage.enabled = false;
+    }
+
+    IEnumerator DamageUI()
+    {
+        for(float t = 0; t < 1f; t += Time.deltaTime)
+        {
+            damageImage.enabled = true;
+            yield return 0;
+        }
+    }
 
     IEnumerator PlayerDamageManager()
     {
-        for (int i = 0; i < 4; i++)
-        {
-            yield return PlayerDamage(false);
-            yield return PlayerDamage(true);
-        }
+        yield return PlayerDamage(false);
+        yield return bodyRenderer.enabled = true;
     }
 
     IEnumerator PlayerDamage(bool value)
     {
-        for (float t = 0; t < 0.2f; t += Time.deltaTime)
+        for (float t = 0; t < 1.5f; t += Time.deltaTime)
         {
             bodyRenderer.enabled = value;
             yield return 0;
