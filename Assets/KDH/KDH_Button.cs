@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class KDH_Button : MonoBehaviour
 {
     Vector2 originSize;
-    public float upSizeValue;
-    Text buttonText;
+    float upSizeValue = 1.2f;
+    public Text buttonText;
+    public Text triangle;
     RectTransform rectTransfrom;
     
     // Start is called before the first frame update
@@ -15,26 +16,33 @@ public class KDH_Button : MonoBehaviour
     {
         rectTransfrom = GetComponent<RectTransform>();
         originSize = rectTransfrom.sizeDelta;
-        buttonText = GetComponentInChildren<Text>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        triangle.enabled = false;
     }
 
     public void OnMyPointEnter()
     {
         rectTransfrom.sizeDelta = new Vector2(originSize.x * upSizeValue, originSize.y);
         buttonText.color = Color.black;
+        triangle.enabled = true;
     }
 
     public void OnMyPointExit()
     {
         rectTransfrom.sizeDelta = originSize;
         buttonText.color = Color.white;
+        triangle.enabled = false;
+
     }
 
+    public void Restart()
+    {
+        // 보스 씬 열기
+    }
+
+    public void GoLobby()
+    {
+        // 대기실 씬 열기
+    }
+    
 
 }
