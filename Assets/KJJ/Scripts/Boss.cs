@@ -1,55 +1,62 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
+
     public static Boss instance;
     private void Awake()
     {
         instance = this;
     }
+    // 보스 체력
     public float bossHP = 4;
     public bool bossmoving = false;
+    // 문추냉이 소환위치
+    public Transform moonPosition;
+    // 문추냉이 소환공장
+    public GameObject bossFactory;
+    // 문추냉이 소환 on/off
+    public bool act;
     // Start is called before the first frame update
     void Start()
     {
-        bossHP = 4;
+        act = true;
+        bossHP = 5;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (1 < bossHP && bossHP < 3)
+        if (bossHP == 3 && act == false)
         {
             // 공격 중지
             BossAttack.instance.pattern1 = false;
-            //bossmoving = true;
-            //if (bossmoving == true)
-            //{
-               // BossAttack.instance.pattern2 = false;
-                //gameObject.GetComponent<BossMove>().enabled = true;
-            //}
-            //if (bossmoving == false)
-            //{
-                //gameObject.GetComponent<BossMove>().enabled = false;
-                BossAttack.instance.pattern2 = true;
-            //}
+            BossAttack.instance.pattern2 = true;
         }
-        else if (bossHP < 2)
+        else if(bossHP == 3 && act == true)
+        {
+            MakeBoss();
+            BossAttack.instance.currentTime = 0;
+        }
+        if(bossHP == 2 && act == false)
         {
             BossAttack.instance.pattern2 = false;
-            //bossmoving = true;
-            //if (bossmoving == true)
-            //{
-            //    BossAttack.instance.pattern3 = false;
-            //    gameObject.GetComponent<BossMove>().enabled = true;
-            //}
-            //if (bossmoving == false)
-            //{
-            //    gameObject.GetComponent<BossMove>().enabled = false;
             BossAttack.instance.pattern3 = true;
-            //}
         }
+        else if (bossHP == 0 && act == true)
+        {
+            MakeBoss();
+        }
+    }
+
+    void MakeBoss()
+    {
+        Instantiate(bossFactory);
+        bossFactory.transform.position = moonPosition.position;
+        bossFactory.transform.up = moonPosition.up;
+        act = false;
     }
 }

@@ -35,10 +35,17 @@ public class ParticlesController: MonoBehaviour{
                 Vector3 pos = collisionEvents[i].intersection;
                 float radius = Random.Range(minRadius, maxRadius);
                 PaintManager.instance.paint(p, pos, radius, hardness, strength, paintColor);
-                if (other.gameObject.name.Contains("Fist") || other.gameObject.name.Contains("Hand"))
+                if (other.gameObject.name.Contains("Fist"))
                 {
-                   // Fist.instance.bossFistHP--;
-                    print("Fist Collision");
+                   FistC.instance.bossFistHP--;
+                }
+                else if(other.gameObject.name.Contains("Hand") && HandC.instance.attackOK == true)
+                {
+                   HandC.instance.bossHandHP--;
+                }
+                else if (other.gameObject.name.Contains("Moon"))
+                {
+                    Moon1.instance.bossMoonHP--;
                 }
             }
         }

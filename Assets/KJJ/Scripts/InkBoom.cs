@@ -10,7 +10,7 @@ public class InkBoom : MonoBehaviour
         instance = this;
     }
 
-    public float speed = 10;
+    public float speed = 15;
     Rigidbody rb;
 
     public float currentTime;
@@ -24,6 +24,7 @@ public class InkBoom : MonoBehaviour
     {
         isForword = true;
         rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * speed;
     }
 
     // Update is called once per frame
@@ -35,11 +36,17 @@ public class InkBoom : MonoBehaviour
         if (isForword)
         {
             // 일정시간을 추적
-            if (currentTime < trackingTime)
+            if (1.8f < currentTime && currentTime < trackingTime)
             {
                 GameObject target = GameObject.Find("Player");//게임오브젝트를 찾아줘(Find) Player
                 dir = target.transform.position - transform.position;
                 rb.velocity = dir.normalized * speed;
+                transform.forward = rb.velocity.normalized;
+            }
+            else if (currentTime < 1.8f)
+            {
+                // 앞방향을 rb.velocity의 방향과 같게
+                transform.forward = rb.velocity.normalized;
             }
         }
     }
@@ -56,8 +63,6 @@ public class InkBoom : MonoBehaviour
             // 내 공격도 파괴하고싶다.
             Destroy(gameObject, 2.4f);
         }
-
-
     }
 
     private void OnTriggerStay(Collider other)
