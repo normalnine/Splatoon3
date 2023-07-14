@@ -9,7 +9,7 @@ public class PlayerHP : MonoBehaviour
     
     int hp;
     public int MaxHp;
-    public MeshRenderer bodyRenderer;
+    public SkinnedMeshRenderer[] bodyRendererList;
     public bool isDie;
     public Image damageImage;
     bool Damage;
@@ -17,6 +17,7 @@ public class PlayerHP : MonoBehaviour
     bool InkDamage;
     float currentTime;
     public float recoveryTime;
+    int count;
 
     public Camera mainCamera;
     public Vector3 cameraPos;
@@ -55,6 +56,8 @@ public class PlayerHP : MonoBehaviour
         die = false;
         InkDamage = false;
         currentTime = 0;
+        bodyRendererList = HumanBodyMeshManager.Instance.MeshList;
+        count = HumanBodyMeshManager.Instance.count;
     }
 
     // Update is called once per frame
@@ -209,7 +212,10 @@ public class PlayerHP : MonoBehaviour
         beforeimage.SetActive(false);
         GameObject image = DamageUIManager.instance.imageList[4];
         image.SetActive(true);
-        bodyRenderer.enabled = false;
+        for (int i = 0; i <count; i++)
+        {
+            bodyRendererList[i].enabled = false;
+        }
         die = true;
     }
 
@@ -287,15 +293,23 @@ public class PlayerHP : MonoBehaviour
     IEnumerator PlayerDamageManager()
     {
         yield return PlayerDamage(false);
-        yield return bodyRenderer.enabled = true;
+        BodyChange(true);
     }
 
     IEnumerator PlayerDamage(bool value)
     {
         for (float t = 0; t < 1.5f; t += Time.deltaTime)
         {
-            bodyRenderer.enabled = value;
+            BodyChange(value);
             yield return 0;
+        }
+    }
+
+    void BodyChange(bool value)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            bodyRendererList[i].enabled = value;
         }
     }
 

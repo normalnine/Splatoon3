@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.ProBuilder;
@@ -16,9 +17,10 @@ public class Player_CameraAndMove : MonoBehaviour
     public Transform cameraArm;
     public GameObject characterBody;
     public GameObject cam;
-    public MeshRenderer mesh;
+    SkinnedMeshRenderer[] meshList;
     public Rigidbody rb;
     public float moveSpeed;
+    int count;
 
     public bool isGround;
     public bool jumping;
@@ -33,7 +35,7 @@ public class Player_CameraAndMove : MonoBehaviour
     Vector3 dir;
 
     public float rotateSpeed;
-    Material material;
+    Material[] materialList;
     public GameObject testTmp;
     public bool otherInk;
 
@@ -54,17 +56,18 @@ public class Player_CameraAndMove : MonoBehaviour
     {
         camera_dist = Mathf.Sqrt(camera_width * camera_width + camera_height * camera_height);
         dir = new Vector3(0, camera_height, camera_width).normalized;
-        material = mesh.material;
+        meshList = HumanBodyMeshManager.Instance.MeshList;
+        materialList = HumanBodyMeshManager.Instance.materialsList;
         currenTime = 0;
         otherInk = false;
         isZoom = false;
+        count = HumanBodyMeshManager.Instance.count;
     }
 
     // Update is called once per frame
     void Update()
     {
         transform.eulerAngles = Vector3.zero;
-        //CameraSetting();
         LookAround();
         Move();
         Jump();
@@ -98,18 +101,24 @@ public class Player_CameraAndMove : MonoBehaviour
                     if (isZoom == false)
                     {
                         float alpha = Mathf.InverseLerp(100f, 50f, x);
-                        Color color = material.color;
-                        color.a = alpha;
-                        material.color = color;
+                        for(int i = 0; i < count; i++)
+                        {
+                            Color color = materialList[i].color;
+                            color.a = alpha;
+                            materialList[i].color = color;
+                        }
                     }
                 }
                 else
                 {
                     if (isZoom == false)
                     {
-                        Color color = material.color;
-                        color.a = 1f;
-                        material.color = color;
+                        for (int i = 0; i < count; i++)
+                        {
+                            Color color = materialList[i].color;
+                            color.a = 1f;
+                            materialList[i].color = color;
+                        }
                     }
                 }
             }
@@ -125,21 +134,24 @@ public class Player_CameraAndMove : MonoBehaviour
                 x = Mathf.Clamp(x, 330f, 361f);
                 if (x < 345)
                 {
-                    float alpha = Mathf.InverseLerp(325f, 361f, x);
                     if (isZoom == false)
                     {
-                        Color color = material.color;
-                        color.a = alpha;
-                        material.color = color;
+                        float alpha = Mathf.InverseLerp(325f, 361f, x);
+                        for (int i = 0; i < count; i++)
+                        {
+                            Color color = materialList[i].color;
+                            color.a = alpha;
+                            materialList[i].color = color;
+                        }
                     }
                 }
                 else
                 {
-                    if (isZoom == false)
+                    for (int i = 0; i < count; i++)
                     {
-                        Color color = material.color;
+                        Color color = materialList[i].color;
                         color.a = 1f;
-                        material.color = color;
+                        materialList[i].color = color;
                     }
                 }
 
@@ -164,13 +176,6 @@ public class Player_CameraAndMove : MonoBehaviour
             }
 
             transform.position += moveDir * moveSpeed * Time.deltaTime * 5f;
-        }
-        //transform.Rotate(Vector3.up, 360 * Time.deltaTime);
-        if (isZoom)
-        {
-           // float rotationSpeed = 5f;
-          //  float mouseX = Input.GetAxis("Mouse X") * rotationSpeed;
-            //transform.Rotate(Vector3.up, mouseX);
         }
         if (ShootingTest.instance.Shooting == true)
         {
@@ -271,11 +276,21 @@ public class Player_CameraAndMove : MonoBehaviour
     {
         if (SpecialAttack.instance.specialAttack == true)
         {
-            cameraArm.position = Vector3.Lerp(transform.position, testTmp.transform.position, 0.00000001f * Time.deltaTime);
+            Vector3 tmp = cameraArm.position;
+            tmp.x = testTmp.transform.position.x;
+            tmp.z = testTmp.transform.position.z;
+            tmp.y = Mathf.Lerp(tmp.y, testTmp.transform.position.y, 2f * Time.deltaTime);
+            cameraArm.position = tmp;
         }
         else
         {
-            cameraArm.position = testTmp.transform.position;
+            Vector3 tmp = cameraArm.position;
+            tmp.x = testTmp.transform.position.x;
+            tmp.z = testTmp.transform.position.z;
+            tmp.y = Mathf.Lerp(tmp.y, testTmp.transform.position.y, 3f * Time.deltaTime);
+            cameraArm.position = tmp;
+            //cameraArm.position = Vector3.Lerp(cameraArm.position, testTmp.transform.position, 2f * Time.deltaTime);
+            //cameraArm.position = testTmp.transform.position;
         }
     }
 
@@ -306,6 +321,13 @@ public class Player_CameraAndMove : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             Invoke("ZoomIn", 0.5f);
+            float alpha = 0.6f;
+            for (int i = 0; i < count; i++)
+            {
+                Color color = materialList[i].color;
+                color.a = alpha;
+                materialList[i].color = color;
+            }
         }
         if (Input.GetMouseButtonUp(1) || PlayerShoot.instance.isShoot == true)
         {
@@ -325,11 +347,8 @@ public class Player_CameraAndMove : MonoBehaviour
 
     void ZoomIn()
     {
-        Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 40, smooth * Time.deltaTime);
-        float alpha = Mathf.InverseLerp(60, 30, Camera.main.fieldOfView);
-        Color color = material.color;
-        color.a = alpha;
-        material.color = color;
+        Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 50, smooth * Time.deltaTime);
+        float alpha = Mathf.InverseLerp(60, 40, Camera.main.fieldOfView);
     }
 
     IEnumerator Delay()

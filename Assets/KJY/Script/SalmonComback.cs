@@ -34,36 +34,13 @@ public class SalmonComback : MonoBehaviour
         s1 = PlayerShoot.instance.muzzle.transform;
         ground = false;
         combakcTime = 0;
-        StartCoroutine(SimulateProjectile());
+        //StartCoroutine(SimulateProjectile());
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (ground)
-        //{
-        //    currentTime += Time.deltaTime;
-        //}
-        //if (currentTime > MaxTime)
-        //{
-        //    combakcTime += Time.deltaTime * 0.5f;
-        //    endPos = s1.position;
-        //    startPos = s2.position;
-
-        //    Vector3 center = (startPos + endPos) * 0.5f;
-        //    center.y -= 3;
-
-        //    startPos -= center;
-        //    endPos -= center;
-
-        //    transform.position = Vector3.Slerp(startPos, endPos, combakcTime);
-        //}
-        //if (combakcTime > 1)
-        //{
-        //    currentTime = 0;
-        //    //combakcTime = 0;
-        //    Destroy(this.gameObject);
-        //}
+        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -72,6 +49,7 @@ public class SalmonComback : MonoBehaviour
         ground = true;
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
+        StartCoroutine(SimulateProjectile());
     }
 
     IEnumerator SimulateProjectile()

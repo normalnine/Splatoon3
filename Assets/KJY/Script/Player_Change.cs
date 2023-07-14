@@ -19,6 +19,11 @@ public class Player_Change : MonoBehaviour
     public GameObject otherBody;
     public Collider humanBodyCollider;
 
+    SkinnedMeshRenderer[] humanMeshList;
+    public SkinnedMeshRenderer[] squidMeshList;
+    int humanCount;
+    int squidCount;
+
     public float currentTime;
     public float MaxlimitTime;
 
@@ -27,14 +32,20 @@ public class Player_Change : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        squidCount = 2;
+        for (int i = 0; i < squidCount; i++)
+        {
+            squidMeshList[i].enabled = false;
+        }
     }
     // Start is called before the first frame update
     void Start()
     {
        state = State.Human;
-       squidBody.GetComponent<MeshRenderer>().enabled = false;
        currentTime = 0;
        changeImm = false;
+       humanCount = HumanBodyMeshManager.Instance.count;
+       humanMeshList = HumanBodyMeshManager.Instance.MeshList;
     }
 
     // Update is called once per frame
@@ -92,7 +103,7 @@ public class Player_Change : MonoBehaviour
             if (Player_CameraAndMove.instance.jumping == false)
             {
                 Vector3 tmp = humanBody.transform.position;
-                tmp.y = -1f;
+                tmp.y = -2f;
                 humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
             }
             if (Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.my)
@@ -108,7 +119,7 @@ public class Player_Change : MonoBehaviour
             if (Player_CameraAndMove.instance.jumping == false)
             {
                 Vector3 tmp = humanBody.transform.position;
-                tmp.y = -1f;
+                tmp.y = -2f;
                 humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
             }
             TurnBody();
@@ -117,7 +128,9 @@ public class Player_Change : MonoBehaviour
 
     void SetBodyPosition()
     {
-        squidBody.transform.position = humanBody.transform.position;
+        Vector3 changeTmp = humanBody.transform.position;
+        changeTmp.y = humanBody.transform.position.y + 2;
+        squidBody.transform.position = changeTmp;
         squidBody.transform.rotation = humanBody.transform.rotation;
     }
 
@@ -130,26 +143,51 @@ public class Player_Change : MonoBehaviour
     {
         if (state == State.Human)
         {
-            humanBody.GetComponent<MeshRenderer>().enabled = true;
-            squidBody.GetComponent<MeshRenderer>().enabled = false;
+            for(int  i = 0; i < humanCount; i++)
+            {
+                humanMeshList[i].enabled = true;
+            }
+            for (int i = 0; i < squidCount; i++)
+            {
+                squidMeshList[i].enabled = false;
+            }
             otherBody.SetActive(true);
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.none && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
         {
-            humanBody.GetComponent<MeshRenderer>().enabled = false;
-            squidBody.GetComponent<MeshRenderer>().enabled = false;
+            for (int i = 0; i < humanCount; i++)
+            {
+                humanMeshList[i].enabled = false;
+            }
+            for (int i = 0; i < squidCount; i++)
+            {
+                squidMeshList[i].enabled = false;
+            }
             otherBody.SetActive(false);
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.none)
         {
-            humanBody.GetComponent<MeshRenderer>().enabled = false;
-            squidBody.GetComponent<MeshRenderer>().enabled = true;
+            for (int i = 0; i < humanCount; i++)
+            {
+                humanMeshList[i].enabled = false;
+            }
+            for (int i = 0; i < squidCount; i++)
+            {
+                squidMeshList[i].enabled = true;
+            }
             otherBody.SetActive(false);
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other || Player_CameraAndMove.instance.jumping == true)
         {
-            humanBody.GetComponent<MeshRenderer>().enabled = false;
-            squidBody.GetComponent<MeshRenderer>().enabled = true;
+            print("Int");
+            for (int i = 0; i < humanCount; i++)
+            {
+                humanMeshList[i].enabled = false;
+            }
+            for (int i = 0; i < squidCount; i++)
+            {
+                squidMeshList[i].enabled = true;
+            }
             otherBody.SetActive(false);
         }
     }

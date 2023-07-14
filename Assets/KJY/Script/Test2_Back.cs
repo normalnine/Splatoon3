@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Test2_Back : MonoBehaviour
 {
+    public static Test2_Back instance;
     public Transform Target;
     public float firingAngle = 45.0f;
     public float gravity = 9.8f;
@@ -11,9 +12,11 @@ public class Test2_Back : MonoBehaviour
     public Transform Projectile;
     private Transform myTransform;
     float currentTime;
-    bool isGround;
+    bool salmonisGround;
+    public bool comeback;
     void Awake()
     {
+        instance = this;
         myTransform = transform;
     }
 
@@ -22,12 +25,14 @@ public class Test2_Back : MonoBehaviour
         currentTime = 0;
         Target = PlayerShoot.instance.muzzle.transform;
         Projectile = transform;
+        salmonisGround = false;
+        comeback = true;
         //StartCoroutine(SimulateProjectile());
     }
 
     private void Update()
     {
-        if (isGround)
+        if (salmonisGround && Input.GetMouseButtonDown(1) == false)
         {
             currentTime += Time.deltaTime;
             if (currentTime > 5f)
@@ -35,17 +40,30 @@ public class Test2_Back : MonoBehaviour
                 StartCoroutine(SimulateProjectile_self());
             }
         }
-       if (Input.GetMouseButtonDown(1))
+       else if(Input.GetMouseButtonDown(1))
        {
-           StartCoroutine(SimulateProjectile());
+            comeback = false;
+            PlayerShoot.instance.lr.enabled = false;
+            StartCoroutine(ComebackManager());
        }
+       if (Player_CameraAndMove.instance.isZoom == false && PlayerShoot.instance.isShoot == false && comeback == true)
+       {
+           Destroy(this.gameObject);
+       }
+    }
+
+    IEnumerator ComebackManager()
+    {
+        yield return SimulateProjectile();
+        yield return comeback = true;
+        print(comeback);
     }
 
     IEnumerator SimulateProjectile()
     {
         // Short delay added before Projectile is thrown
         //yield return new WaitForSeconds(1.5f);
-        isGround = false;
+        salmonisGround = false;
         currentTime = 0;
         // Move projectile to the position of throwing object + add some offset if needed.
         Projectile.position = myTransform.position + new Vector3(0, 0.0f, 0);
@@ -55,7 +73,6 @@ public class Test2_Back : MonoBehaviour
 
         // Calculate the velocity needed to throw the object to the target at specified angle.
         float projectile_Velocity = target_Distance / (Mathf.Sin(2 * firingAngle * Mathf.Deg2Rad) / gravity);
-
         // Extract the X  Y componenent of the velocity
         float Vx = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(firingAngle * Mathf.Deg2Rad);
         float Vy = Mathf.Sqrt(projectile_Velocity) * Mathf.Sin(firingAngle * Mathf.Deg2Rad);
@@ -73,7 +90,6 @@ public class Test2_Back : MonoBehaviour
             Projectile.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
 
             elapse_time += Time.deltaTime;
-
             yield return null;
         }
     }
@@ -82,7 +98,7 @@ public class Test2_Back : MonoBehaviour
     {
         // Short delay added before Projectile is thrown
         //yield return new WaitForSeconds(1.5f);
-        isGround = false;
+        salmonisGround = false;
         currentTime = 0;
         // Move projectile to the position of throwing object + add some offset if needed.
         Projectile.position = myTransform.position + new Vector3(0, 0.0f, 0);
@@ -118,8 +134,11 @@ public class Test2_Back : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        collision.gameObject.CompareTag("Floor");
-        isGround = true;
+        if (collision.gameObject.tag == "Ground" && PlayerShoot.instance.isShoot == true)
+        {
+            print("in here");
+            salmonisGround = true;
+        }
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
     }

@@ -39,10 +39,6 @@ public class PlayerShoot : MonoBehaviour
         {
             lr.enabled = false;
         }
-        if (Player_CameraAndMove.instance.isZoom == false && isShoot == false)
-        {
-            Destroy(salmon);
-        }
         if (Input.GetMouseButtonDown(1))
         {
             isShoot = false;
@@ -50,7 +46,6 @@ public class PlayerShoot : MonoBehaviour
             {
                 salmon = Instantiate(SalmonFactory);
             }
-            salmon.transform.position = muzzle.transform.position;
         }
         else if (Input.GetMouseButton(1) == true)
         {
@@ -58,7 +53,7 @@ public class PlayerShoot : MonoBehaviour
             {
                 isShoot = true;
             }
-            if (isShoot == false)
+            if (isShoot == false && Test2_Back.instance.comeback == true)
             {
                 salmon.transform.position = muzzle.transform.position;
             }
@@ -82,7 +77,7 @@ public class PlayerShoot : MonoBehaviour
             rotX = Mathf.Clamp(rotX, -80, 80);
             transform.eulerAngles = new Vector3(0, rotY, 0);
             muzzle.localEulerAngles = new Vector3(-rotX, 0, 0);
-
+            salmon.transform.eulerAngles = new Vector3(0, rotY, 0);
         }
     }
 

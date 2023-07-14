@@ -58,7 +58,7 @@ public class ShootingTest : MonoBehaviour
         {
             VisualPolish();
             Shooting = true;
-            INKGAGE -= 0.3f;
+            //INKGAGE -= 0.3f;
             //RotateToCamera(transform);
         }
         if (Input.GetMouseButtonDown(0) && Shooting == true)

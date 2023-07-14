@@ -45,14 +45,20 @@ public class Test_Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CameraSetting();
-        LookAround();
-        Move();
-        Jump();
-        FormControl();
-        SpringArm();
+        transform.eulerAngles = Vector3.zero;
+        cam.transform.position = cameraArm.position;
+        CameraSetting();// 두 개중 하나가 문제임
+        LookAround();//아니고
+        Move(); // 두 개중 하나가 문제임
+        Jump();// 아니고
+        FormControl(); //아니고
+        SpringArm(); //아니고,
     }
 
+    private void LateUpdate()
+    {
+        CameraSetting();// 두 개중 하나가 문제임
+    }
     private void LookAround()
     {
         Vector2 mousedelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")); // 이거 왜 였는지 기억이 잘 안남
@@ -121,11 +127,11 @@ public class Test_Move : MonoBehaviour
             Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
            if (ShootingTest.instance.Shooting == false)
-            {
+           {
                 characterBody.transform.forward = Vector3.Slerp(characterBody.transform.forward, moveDir, 0.05f);
-            }
+           }
             transform.position += moveDir * moveSpeed * Time.deltaTime * 5f;
-        }
+       }
         if (ShootingTest.instance.Shooting == true)
         {
             characterBody.transform.forward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
@@ -200,10 +206,10 @@ public class Test_Move : MonoBehaviour
 
     private void CameraSetting()
     {
-        cameraArm.position = testTmp.transform.position;
+        cameraArm.transform.position = characterBody.transform.position;
         //cameraArm.position = Vector3.Lerp(cameraArm.transform.position, testTmp.transform.position, 0.1f);
-       // Vector3 tmp = cameraArm.transform.position;
-       // tmp.y = Mathf.Clamp(tmp.y, -1f, 4f);
+        //Vector3 tmp = cameraArm.transform.position;
+        //tmp.y = Mathf.Clamp(tmp.y, -1f, 4f);
         //cameraArm.position = tmp;
     }
 
@@ -216,7 +222,7 @@ public class Test_Move : MonoBehaviour
             jumping = false;
             Test_Change.instance.changeFormNow = false;
             if (Test_Change.instance.isHuman == true)
-            {
+           {
                 Vector3 tmp = characterBody.transform.position;
                 tmp.y = 0;
                 characterBody.transform.position = tmp;
