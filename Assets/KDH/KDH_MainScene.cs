@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class KDH_MainScene : MonoBehaviour
 { 
@@ -9,7 +10,7 @@ public class KDH_MainScene : MonoBehaviour
     {
         if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Escape))
         {
-            // 튜토리얼 씬 열기
+            SceneManager.LoadScene("LowPolyFPS_Lite_Demo 1");
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
