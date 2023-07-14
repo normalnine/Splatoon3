@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/PaintingSystem/Scenes/MixAndJam.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: Assets/KDH/Scene/MainScene.unity
+    guid: 16b1cf13b1e0aae48afa10867374b1b7
+  - enabled: 1
+    path: Assets/KJY/Scene/KJYScene_TEST.unity
+    guid: 59c15935b6fff074387b78937c6482f5
+  - enabled: 1
+    path: Assets/KDH/Scene/LowPolyFPS_Lite_Demo 1.unity
+    guid: 868c3a435d3a44b42bb575f6c4e06f8c
   m_configObjects: {}

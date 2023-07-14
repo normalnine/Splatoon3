@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class KDH_BossPaintAttack : MonoBehaviour
 {
+    [SerializeField] ParticleSystem inkParticle;
+
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Ground"))
         {
             Paintable p = other.GetComponent<Paintable>();
             PaintManager.instance.paint(p, transform.position, 5, 1, 1, new Color(0, 0.2877133f, 1));
+            inkParticle.Play();
         }           
     }
 }
