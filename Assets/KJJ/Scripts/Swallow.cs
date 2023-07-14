@@ -15,11 +15,4 @@ public class Swallow : MonoBehaviour
     {
         transform.Rotate(0, 90 * Time.deltaTime, 0);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name.Contains("Bullet"))
-        {
-            Destroy(other.gameObject);
-        }
-    }
 }

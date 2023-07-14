@@ -16,28 +16,17 @@ public class BossMove : MonoBehaviour
     public Transform Projectile;
     private Transform myTransform;
 
-    void Start()
+    public void Start()
     {
         myTransform = transform;
         StartCoroutine(SimulateProjectile());
     }
 
-    private void Update()
-    {
-        if(BossAttack.instance.currentTime > 7)
-        {
-            Boss.instance.bossmoving = false;
-            BossAttack.instance.currentTime = 0;
-        }
-    }
     IEnumerator SimulateProjectile()
     {
-        // 발사체를 던지기 전에 짧은 지연이 추가되었습니다.
-        yield return new WaitForSeconds(1.5f);
 
         // 발사체를 던지는 물체의 위치로 이동 + 필요한 경우 일부 오프셋을 추가합니다.
-        Projectile.position = myTransform.position + new Vector3(0, 0f, 0);
-
+        Projectile.position = myTransform.position;
         // 타겟까지의 거리 계산
         float target_Distance = Vector3.Distance(Projectile.position, Target.position);
 
@@ -64,5 +53,4 @@ public class BossMove : MonoBehaviour
             yield return null;
         }
     }
-
 }

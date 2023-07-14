@@ -24,7 +24,6 @@ public class BossAttack : MonoBehaviour
     public Transform Firepos;
     public bool didths;
 
-    //Hand attack;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,98 +34,153 @@ public class BossAttack : MonoBehaviour
     void Update()
     {
         currentTime += Time.deltaTime;
-        if (pattern1 == true)
-        {
-            Page1();
-        }
+        if (pattern1 == true) Page1();
         else if (pattern2 == true)
         {
-            print("2페이지 시작");
+            //gameObject.GetComponent<BossAttack>();
             Page2();
         }
-        else if(pattern3 == true)
-        {
-            print("3페이지 시작");
-            Page3();
-        }
+        //else if (pattern3 == true) Page3();
     }
 
-    void Page2()
-    {
-        if (currentTime > attackTime)
-        {
-            int rValue = Random.Range(0, 9); // 랜덤한 0~9까지의 수를 만든다.
-            if (rValue < 5)
-            {
-                GameObject hand = Instantiate(handFactory);
-                hand.transform.position = transform.position;
-                currentTime = 0;
-            }
-            else
-            {
-                GameObject fist = Instantiate(fistFactory);
-                fist.transform.position = transform.position;
-                currentTime = 0;
-            }
-        }
-    }
+    // 1페이지 공격패턴
+    //void Page1()
+    //{
+    //    if (currentTime > attackTime)
+    //    {
+    //        if (didths == false) LFirePos1P();
+    //        else RFirePos1P();
+    //    }
+    //}
+    //void LFirePos1P()
+    //{
+    //    GameObject fist = Instantiate(fistFactory);
+    //    fist.transform.position = LFirepos.position;
+    //    currentTime = 0;
+    //    didths = true;
+    //}
+    //void RFirePos1P()
+    //{
+    //    GameObject fist = Instantiate(fistFactory);
+    //    fist.transform.position = RFirepos.position;
+    //    currentTime = 0;
+    //    didths = false;
+    //}
 
-    #region 1페이지
+    // 2페이지 공격패턴
     void Page1()
     {
         if (currentTime > attackTime)
         {
             if (didths == false)
             {
-                LFirePos();
+                LFirePos1P();
+                didths = true;
             }
             else
             {
-                RFirePos();
+                RFirePos1P();
+                didths = false;
             }
         }
     }
-    void LFirePos()
+
+    void LFirePos1P()
     {
-        GameObject fist = Instantiate(fistFactory);
-        fist.transform.position = LFirepos.position;
-        currentTime = 0;
-        didths = true;
+        int rValue = Random.Range(0, 9); // 랜덤한 0~9까지의 수를 만든다.
+        if (rValue < 5)
+        {
+            GameObject hand = Instantiate(handFactory);
+            hand.transform.position = LFirepos.position;
+            currentTime = 0;
+        }
+        else
+        {
+            GameObject fist = Instantiate(fistFactory);
+            fist.transform.position = LFirepos.position;
+            currentTime = 0;
+        }
     }
 
-    void RFirePos()
+    void RFirePos1P()
     {
-        GameObject fist = Instantiate(fistFactory);
-        fist.transform.position = RFirepos.position;
-        currentTime = 0;
-        didths = false;
+        int rValue = Random.Range(0, 9); // 랜덤한 0~9까지의 수를 만든다.
+        if (rValue < 5)
+        {
+            GameObject hand = Instantiate(handFactory);
+            hand.transform.position = RFirepos.position;
+            currentTime = 0;
+        }
+        else
+        {
+            GameObject fist = Instantiate(fistFactory);
+            fist.transform.position = RFirepos.position;
+            currentTime = 0;
+        }
     }
-    #endregion
 
-    void Page3()
+    // 3페이지 공격패턴
+    void Page2()
     {
         if (currentTime > attackTime)
         {
-            int rValue = Random.Range(0, 8); // 랜덤한 0~8까지의 수를 만든다.
-            if (rValue < 3)
+            if (didths == false)
             {
-                GameObject hand = Instantiate(handFactory);
-                hand.transform.position = transform.position;
-                currentTime = 0;
-            }
-            else if(2 < rValue && rValue < 6)
-            {
-                GameObject fist = Instantiate(fistFactory);
-                fist.transform.position = transform.position;
-                currentTime = 0;
+                LFirePos2P();
             }
             else
             {
-                GameObject inkboom = Instantiate(inkboomFactory);
-                inkboom.transform.position = transform.position;
-                currentTime = 0;
+                RFirePos2P();
             }
         }
     }
+    void LFirePos2P()
+    {
+        int rValue = Random.Range(0, 8); // 랜덤한 0~8까지의 수를 만든다.
+        if (rValue < 3)
+        {
+            GameObject hand = Instantiate(handFactory);
+            hand.transform.position = LFirepos.position;
+            didths = true;
+            currentTime = 0;
+        }
+        else if (2 < rValue && rValue < 6)
+        {
+            GameObject fist = Instantiate(fistFactory);
+            fist.transform.position = LFirepos.position;
+            didths = true;
+            currentTime = 0;
+        }
+        else
+        {
+            GameObject inkboom = Instantiate(inkboomFactory);
+            inkboom.transform.position = Firepos.position;
+            currentTime = 0;
+        }
+    }
 
+    void RFirePos2P()
+    {
+        int rValue = Random.Range(0, 8); // 랜덤한 0~8까지의 수를 만든다.
+        if (rValue < 3)
+        {
+            GameObject hand = Instantiate(handFactory);
+            hand.transform.position = RFirepos.position;
+            didths = false;
+            currentTime = 0;
+        }
+        else if (2 < rValue && rValue < 6)
+        {
+            GameObject fist = Instantiate(fistFactory);
+            fist.transform.position = RFirepos.position;
+            didths = false;
+            currentTime = 0;
+        }
+        else
+        {
+            GameObject inkboom = Instantiate(inkboomFactory);
+            inkboom.transform.position = Firepos.position;
+            currentTime = 0;
+        }
+    }
 }
