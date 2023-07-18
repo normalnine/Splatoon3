@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player_Change : MonoBehaviour
 {
@@ -9,8 +10,6 @@ public class Player_Change : MonoBehaviour
     {
         Human,
         Squid,
-        //SquidGround,
-        //SquidAnotherInk
     }
     public State state;
 
@@ -29,6 +28,8 @@ public class Player_Change : MonoBehaviour
 
     private bool changeImm;
 
+    public Canvas InkImage;
+
     private void Awake()
     {
         instance = this;
@@ -46,6 +47,7 @@ public class Player_Change : MonoBehaviour
        changeImm = false;
        humanCount = HumanBodyMeshManager.Instance.count;
        humanMeshList = HumanBodyMeshManager.Instance.MeshList;
+       InkImage.enabled = false;
     }
 
     // Update is called once per frame
@@ -103,7 +105,7 @@ public class Player_Change : MonoBehaviour
             if (Player_CameraAndMove.instance.jumping == false)
             {
                 Vector3 tmp = humanBody.transform.position;
-                tmp.y = -2f;
+                tmp.y = -1.5f;
                 humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
             }
             if (Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.my)
@@ -119,7 +121,7 @@ public class Player_Change : MonoBehaviour
             if (Player_CameraAndMove.instance.jumping == false)
             {
                 Vector3 tmp = humanBody.transform.position;
-                tmp.y = -2f;
+                tmp.y = -1.5f;
                 humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
             }
             TurnBody();
@@ -129,7 +131,7 @@ public class Player_Change : MonoBehaviour
     void SetBodyPosition()
     {
         Vector3 changeTmp = humanBody.transform.position;
-        changeTmp.y = humanBody.transform.position.y + 2;
+        changeTmp.y = humanBody.transform.position.y + 1.5f;
         squidBody.transform.position = changeTmp;
         squidBody.transform.rotation = humanBody.transform.rotation;
     }
@@ -143,7 +145,8 @@ public class Player_Change : MonoBehaviour
     {
         if (state == State.Human)
         {
-            for(int  i = 0; i < humanCount; i++)
+            InkImage.enabled = false;
+            for (int  i = 0; i < humanCount; i++)
             {
                 humanMeshList[i].enabled = true;
             }
@@ -155,6 +158,7 @@ public class Player_Change : MonoBehaviour
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.none && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
         {
+            InkImage.enabled = true;
             for (int i = 0; i < humanCount; i++)
             {
                 humanMeshList[i].enabled = false;
@@ -167,6 +171,7 @@ public class Player_Change : MonoBehaviour
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.none)
         {
+            InkImage.enabled = true;
             for (int i = 0; i < humanCount; i++)
             {
                 humanMeshList[i].enabled = false;
@@ -179,7 +184,7 @@ public class Player_Change : MonoBehaviour
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other || Player_CameraAndMove.instance.jumping == true)
         {
-            print("Int");
+            InkImage.enabled = true;
             for (int i = 0; i < humanCount; i++)
             {
                 humanMeshList[i].enabled = false;

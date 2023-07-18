@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 23076264033391583}
   m_Layer: 0
   m_Name: Fist C
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

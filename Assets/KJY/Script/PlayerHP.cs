@@ -12,6 +12,8 @@ public class PlayerHP : MonoBehaviour
     public SkinnedMeshRenderer[] bodyRendererList;
     public bool isDie;
     public Image damageImage;
+    public GameObject otherbody;
+    public GameObject throwBody;
     bool Damage;
     bool die;
     bool InkDamage;
@@ -44,6 +46,7 @@ public class PlayerHP : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        throwBody.SetActive(false);
     }
     // Start is called before the first frame update
     void Start()
@@ -211,7 +214,9 @@ public class PlayerHP : MonoBehaviour
         GameObject beforeimage = DamageUIManager.instance.imageList[3];
         beforeimage.SetActive(false);
         GameObject image = DamageUIManager.instance.imageList[4];
+        otherbody.SetActive(false);
         image.SetActive(true);
+        throwBody.SetActive(true);
         for (int i = 0; i <count; i++)
         {
             bodyRendererList[i].enabled = false;

@@ -27,7 +27,7 @@ public class SpecialAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             specialAttack = true;
-            rb.AddForce(new Vector3(0, 1, 0) * 25, ForceMode.Impulse);
+            rb.AddForce(new Vector3(0, 1, 0) * 14, ForceMode.Impulse);
         }
         if (specialAttack == true)
         {
@@ -40,7 +40,7 @@ public class SpecialAttack : MonoBehaviour
             if (currentTime > 1)
             {
                 rb.isKinematic = false;
-                rb.AddForce(new Vector3(0, -1, 0) * 30, ForceMode.Impulse);
+                rb.AddForce(new Vector3(0, -1, 0) * 25, ForceMode.Impulse);
                 currentTime = 0;
                 specialAttack = false;
             }

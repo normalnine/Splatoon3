@@ -17,13 +17,13 @@ public class DamageUIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        imageList = new GameObject[transform.childCount];
-        for (int i = 1; i < transform.childCount; i++)
+        count = 5;
+        imageList = new GameObject[count];
+        for (int i = 1; i < count; i++)
         {
             imageList[i] = transform.GetChild(i).gameObject;
             imageList[i].SetActive(false);
         }
-        count = transform.childCount;
     }
 
     // Update is called once per frame

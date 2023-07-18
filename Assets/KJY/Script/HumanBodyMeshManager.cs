@@ -15,12 +15,14 @@ public class HumanBodyMeshManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        count = 11;
-        materialsList = new Material[11];
-        for (int i = 0; i < 11; i++)
+        count = 10;
+        materialsList = new Material[10];
+        for (int i = 0; i < 8; i++)
         {
-            materialsList[i] = MeshList[i].material;
+            materialsList[i] = MeshList[0].materials[i];
         }
+        materialsList[8] = MeshList[1].material;
+        materialsList[9] = MeshList[2].material;
     }
 
     // Update is called once per frame
