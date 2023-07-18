@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShootingTest : MonoBehaviour
 {
@@ -22,6 +23,9 @@ public class ShootingTest : MonoBehaviour
     public float inkGage;
     float MaxInkGage = 100;
 
+    public Slider InkGageSlider;
+    public SkinnedMeshRenderer InkGageMaterial;
+    Animator anim;
     public float INKGAGE
     {
         get
@@ -32,6 +36,8 @@ public class ShootingTest : MonoBehaviour
         {
             inkGage = value;
             inkGage = Mathf.Clamp(value, 0, MaxInkGage);
+            InkGageSlider.value = inkGage;
+            InkGageMaterial.material.mainTextureOffset = new Vector2(0, 0.5f - (value / 200));
         }
     }
 
@@ -39,17 +45,22 @@ public class ShootingTest : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        INKGAGE = MaxInkGage;
+        InkGageSlider.maxValue = MaxInkGage;
+        InkGageMaterial.material.mainTextureOffset = new Vector2(0, 0);
     }
     void Start()
     {
         INKGAGE = MaxInkGage;
+        InkGageSlider.maxValue = MaxInkGage;
+        InkGageMaterial.material.mainTextureOffset = new Vector2(0, 0);
+        anim = GetComponent<Animator>();
         //input = GetComponent<MovementInput>();
     }
 
     void Update()
     {
         Vector3 angle = parentController.localEulerAngles;
-        ////input.blockRotationPlayer = Input.GetMouseButton(0);
         parentController.transform.rotation = nozzle.transform.rotation;
         parentController.transform.position = nozzle.transform.position;
         bool pressing = Input.GetMouseButton(0);
@@ -58,7 +69,8 @@ public class ShootingTest : MonoBehaviour
         {
             VisualPolish();
             Shooting = true;
-            //INKGAGE -= 0.3f;
+            INKGAGE -= 0.03f;
+            anim.SetBool("Shoot", true);
             //RotateToCamera(transform);
         }
         if (Input.GetMouseButtonDown(0) && Shooting == true)
@@ -70,6 +82,7 @@ public class ShootingTest : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            anim.SetBool("Shoot", false);
             inkParticle.Stop();
             Shooting = false;
         }
@@ -77,25 +90,10 @@ public class ShootingTest : MonoBehaviour
         {
             inkParticle.Stop();
         }
-        //float mx = Input.GetAxis("Mouse Y");
-        //rotX += mx * Time.deltaTime * 200f;
-        //rotX = Mathf.Clamp(rotX, -40f, 80f);
-        //parentController.eulerAngles = new Vector3(-rotX, angle.y, angle.z);
-        //parentController.localEulerAngles = new Vector3(Mathf.LerpAngle(parentController.localEulerAngles.x, pressing ? RemapCamera(cameraArm.transform.localEulerAngles.y, 0, 360, 25, -25) : 0, .3f), angle.y, angle.z);
-        //parentController.localEulerAngles = new Vector3(RemapCamera(cameraArm.transform.localEulerAngles.x, 0, 360, -25, 25), angle.y, angle.z);
-        //parentController.localEulerAngles = new Vector3()
-        //if (Shooting == true)
-        //{
-        //parentController.rotation = Quaternion.Euler(RemapCamera(cameraArm.transform.localEulerAngles.x, 0, 360, 50, -50), parentController.localEulerAngles.y, parentController.localEulerAngles.z);
-        //}
-        //parentController.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
-        parentController.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
+        //parentController.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
+        //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+        parentController.forward = (Camera.main.transform.position + Camera.main.transform.forward * 10) - nozzle.transform.position;
         Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
-       // Gun.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x + 90f, 0, -90f);
-        //Gun.eulerAngles = new Vector3(0, parentController.rotation.x, 0);
-        //float tmp = parentController.rotation.x;
-        //tmp = Mathf.Clamp(tmp, -25, 25);
-        //parentController.rotation = Quaternion.Euler(tmp, parentController.localEulerAngles.y, angle.z);
     }
 
     void VisualPolish()

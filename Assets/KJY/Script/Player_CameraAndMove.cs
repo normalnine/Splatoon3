@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.ProBuilder;
+using UnityEngine.UI;
 
 public class Player_CameraAndMove : MonoBehaviour
 {
@@ -36,6 +36,8 @@ public class Player_CameraAndMove : MonoBehaviour
 
     public float rotateSpeed;
     Material[] materialList;
+    Material[] tankList;
+    int tankCount;
     public GameObject testTmp;
     public bool otherInk;
 
@@ -46,7 +48,8 @@ public class Player_CameraAndMove : MonoBehaviour
     public GameObject SalmonFactory;
     public GameObject salmon;
     // Start is called before the first frame update
-
+    public Image aim;
+    Animator anim;
     private void Awake()
     {
         instance = this;
@@ -62,6 +65,9 @@ public class Player_CameraAndMove : MonoBehaviour
         otherInk = false;
         isZoom = false;
         count = HumanBodyMeshManager.Instance.count;
+        tankList = TankManager.instance.TankMaterialsList;
+        tankCount = TankManager.instance.TankCount;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -72,7 +78,8 @@ public class Player_CameraAndMove : MonoBehaviour
         Move();
         Jump();
         FormControl();
-        SpringArm();
+        if (SpecialAttack.instance.specialAttack == false)
+            SpringArm();
         CheckInk();
         ZoomManager();
     }
@@ -107,6 +114,12 @@ public class Player_CameraAndMove : MonoBehaviour
                             color.a = alpha;
                             materialList[i].color = color;
                         }
+                        for (int i = 0; i < tankCount; i++)
+                        {
+                            Color color2 = tankList[i].color;
+                            color2.a = alpha;
+                            tankList[i].color = color2;
+                        }
                     }
                 }
                 else
@@ -119,9 +132,29 @@ public class Player_CameraAndMove : MonoBehaviour
                             color.a = 1f;
                             materialList[i].color = color;
                         }
+                        for (int i = 0; i < tankCount; i++)
+                        {
+                            Color color2 = tankList[i].color;
+                            color2.a = 1f;
+                            tankList[i].color = color2;
+                        }
                     }
                 }
             }
+            //x = Mathf.Clamp(x, 0f, 90f);
+            /*if (x > 60f)
+            {
+                Vector3 tmp = aim.rectTransform.localPosition;
+                rotY = Input.GetAxis("Mouse X");
+                //rotY = Mathf.Clamp(rotY, -40f, 0f);
+                tmp.y += rotY * 3;
+                aim.rectTransform.localPosition = tmp;
+                print("here");
+            }
+            else
+            {
+                aim.rectTransform.localPosition = Vector3.zero;
+            }*/
         }
         else
         {
@@ -143,6 +176,12 @@ public class Player_CameraAndMove : MonoBehaviour
                             color.a = alpha;
                             materialList[i].color = color;
                         }
+                        for (int i = 0; i < tankCount; i++)
+                        {
+                            Color color2 = tankList[i].color;
+                            color2.a = alpha;
+                            tankList[i].color = color2;
+                        }
                     }
                 }
                 else
@@ -153,8 +192,25 @@ public class Player_CameraAndMove : MonoBehaviour
                         color.a = 1f;
                         materialList[i].color = color;
                     }
+                    for (int i = 0; i < tankCount; i++)
+                    {
+                        Color color2 = tankList[i].color;
+                        color2.a = 1f;
+                        tankList[i].color = color2;
+                    }
                 }
-
+                /*if (x < 345f)
+                {
+                    Vector3 tmp = aim.rectTransform.localPosition;
+                    rotY = Input.GetAxis("Mouse X");
+                    //rotY = Mathf.Clamp(rotY, -40f, 0f);
+                    tmp.y += rotY * 3;
+                    aim.rectTransform.localPosition = tmp;
+                }
+                else
+                {
+                    aim.rectTransform.localPosition = Vector3.zero;
+                }*/
             }
 
         }
@@ -167,6 +223,7 @@ public class Player_CameraAndMove : MonoBehaviour
         bool isMove = moveInput.magnitude != 0;
         if (isMove)
         {
+            anim.SetBool("Move", true);
             Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
             Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
             Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
@@ -176,6 +233,10 @@ public class Player_CameraAndMove : MonoBehaviour
             }
 
             transform.position += moveDir * moveSpeed * Time.deltaTime * 5f;
+        }
+        if (moveInput.x == 0 && moveInput.y == 0)
+        {
+            anim.SetBool("Move", false);
         }
         if (ShootingTest.instance.Shooting == true)
         {
@@ -187,6 +248,7 @@ public class Player_CameraAndMove : MonoBehaviour
     {
         if (Input.GetButton("Jump"))
         {
+            anim.SetBool("Jump", true);
             //currenTime += Time.deltaTime;
             if (isGround == true)
             {
@@ -213,30 +275,21 @@ public class Player_CameraAndMove : MonoBehaviour
         {
             if (Player_Change.instance.state == Player_Change.State.Human)
             {
-                moveSpeed = 1;
-                jumpSpeed = 12;
+                moveSpeed = 1f;
+                jumpSpeed = 12f;
             }
             else if (inkState != InkState.none && Player_Change.instance.state == Player_Change.State.Squid)
             {
-                moveSpeed = 2;
-                jumpSpeed = 12;
+                moveSpeed = 2f;
+                jumpSpeed = 9f;
             }
             else if (inkState == InkState.none && Player_Change.instance.state == Player_Change.State.Squid)
             {
                 moveSpeed = 0.2f;
-                jumpSpeed = 12;
+                jumpSpeed = 9f;
             }
         }
     }
-
-    //IEnumerator InkCheck()
-    //{
-    //    while (true)
-    //    {
-    //        CheckInk();
-    //        yield return new WaitForSeconds(1);
-    //    }
-    //}
 
     private void CheckInk()
     {
@@ -274,23 +327,19 @@ public class Player_CameraAndMove : MonoBehaviour
 
     private void CameraSetting()
     {
+        //cameraArm.transform.position = testTmp.transform.position;
         if (SpecialAttack.instance.specialAttack == true)
         {
-            Vector3 tmp = cameraArm.position;
+            /*Vector3 tmp = cameraArm.position;
             tmp.x = testTmp.transform.position.x;
             tmp.z = testTmp.transform.position.z;
             tmp.y = Mathf.Lerp(tmp.y, testTmp.transform.position.y, 2f * Time.deltaTime);
-            cameraArm.position = tmp;
+            cameraArm.position = tmp;*/
+            cameraArm.position = Vector3.Lerp(cameraArm.position, testTmp.transform.position, Time.deltaTime * 3f);
         }
         else
         {
-            Vector3 tmp = cameraArm.position;
-            tmp.x = testTmp.transform.position.x;
-            tmp.z = testTmp.transform.position.z;
-            tmp.y = Mathf.Lerp(tmp.y, testTmp.transform.position.y, 3f * Time.deltaTime);
-            cameraArm.position = tmp;
-            //cameraArm.position = Vector3.Lerp(cameraArm.position, testTmp.transform.position, 2f * Time.deltaTime);
-            //cameraArm.position = testTmp.transform.position;
+            cameraArm.position = testTmp.transform.position;
         }
     }
 
@@ -307,18 +356,19 @@ public class Player_CameraAndMove : MonoBehaviour
                 tmp.y = 0;
                 characterBody.transform.position = tmp;
             }
+            anim.SetBool("Jump", false);
         }
     }
 
     void ZoomManager()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) && Input.GetMouseButton(0) == false)
         {
             //salmon = Instantiate(SalmonFactory);
             //salmon.transform.position = GameObject.Find("ThrowTarget").transform.position;
             isZoom = true;
         }
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1) && Input.GetMouseButton(0) == false)
         {
             Invoke("ZoomIn", 0.5f);
             float alpha = 0.6f;
@@ -328,8 +378,14 @@ public class Player_CameraAndMove : MonoBehaviour
                 color.a = alpha;
                 materialList[i].color = color;
             }
+            for (int i = 0; i < tankCount; i++)
+            {
+                Color color2 = tankList[i].color;
+                color2.a = alpha;
+                tankList[i].color = color2;
+            }
         }
-        if (Input.GetMouseButtonUp(1) || PlayerShoot.instance.isShoot == true)
+        if (Input.GetMouseButtonUp(1) || PlayerShoot.instance.isShoot == true || Input.GetMouseButton(0) == true)
         {
             CancelInvoke("ZoomIn");
         }
@@ -338,7 +394,12 @@ public class Player_CameraAndMove : MonoBehaviour
             isZoom = false;
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 60, smooth * Time.deltaTime);
         }
-        if (PlayerShoot.instance.isShoot == true && Camera.main.fieldOfView < 60f && Input.GetMouseButtonDown(1) == false)
+        if (PlayerShoot.instance.isShoot == true && Camera.main.fieldOfView < 60f)
+        {
+            isZoom = false;
+            Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 60, smooth * Time.deltaTime);
+        }
+        if (Input.GetMouseButton(0) == true && Camera.main.fieldOfView < 60f)
         {
             isZoom = false;
             Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 60, smooth * Time.deltaTime);
@@ -348,7 +409,6 @@ public class Player_CameraAndMove : MonoBehaviour
     void ZoomIn()
     {
         Camera.main.fieldOfView = Mathf.Lerp(Camera.main.fieldOfView, 50, smooth * Time.deltaTime);
-        float alpha = Mathf.InverseLerp(60, 40, Camera.main.fieldOfView);
     }
 
     IEnumerator Delay()

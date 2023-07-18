@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  firingAngle: 45
-  gravity: 9.8
+  firingAngle: 70
+  gravity: 100
   Projectile: {fileID: 0}
   comeback: 0
 --- !u!1001 &2018404939109031313

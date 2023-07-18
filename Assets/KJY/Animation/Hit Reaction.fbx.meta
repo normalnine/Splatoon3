@@ -1,39 +1,12 @@
 fileFormatVersion: 2
-guid: 9eca28f823e74aa40924e091fbed46bf
+guid: 6e7ae99ab477104479234efcd5e4e322
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable: []
-  externalObjects:
+  internalIDToNameTable:
   - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Body
-    second: {fileID: 2100000, guid: 53fc41805c432f84c9b44bc0a0a6fd6f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Eye
-    second: {fileID: 2100000, guid: c5942d68fb4c5b64fbd3e99dfe2286f6, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Eyelids
-    second: {fileID: 2100000, guid: f5ab9500b69a1934696fcdaf7252bb95, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Face
-    second: {fileID: 2100000, guid: 3ed0c01959c3c5d4f838d6096c2fafdf, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_Inner
-    second: {fileID: 2100000, guid: 07c33cee8bf228e4f9c63a1374d2a617, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: M_TeamColor
-    second: {fileID: 2100000, guid: c2601ab5f37cf654dbdc4904973122f9, type: 2}
+      74: -203655887218126122
+    second: mixamo.com
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0

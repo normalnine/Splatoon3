@@ -73,6 +73,7 @@ public class Test2_Back : MonoBehaviour
 
         // Calculate the velocity needed to throw the object to the target at specified angle.
         float projectile_Velocity = target_Distance / (Mathf.Sin(2 * firingAngle * Mathf.Deg2Rad) / gravity);
+
         // Extract the X  Y componenent of the velocity
         float Vx = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(firingAngle * Mathf.Deg2Rad);
         float Vy = Mathf.Sqrt(projectile_Velocity) * Mathf.Sin(firingAngle * Mathf.Deg2Rad);
@@ -90,6 +91,7 @@ public class Test2_Back : MonoBehaviour
             Projectile.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
 
             elapse_time += Time.deltaTime;
+
             yield return null;
         }
     }
@@ -134,12 +136,12 @@ public class Test2_Back : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        Rigidbody rb = GetComponent<Rigidbody>();
         if (collision.gameObject.tag == "Ground" && PlayerShoot.instance.isShoot == true)
         {
             print("in here");
             salmonisGround = true;
         }
-        Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
     }
 }
