@@ -47,6 +47,11 @@ public class ParticlesController: MonoBehaviour{
                 {
                     Moon.instance.bossMoonHP--;
                 }
+                else if (other.gameObject.name.Contains("training"))
+                {
+                    other.gameObject.GetComponentInParent<KDH_Target>().Damaged();
+                    
+                }
             }
         }
     }

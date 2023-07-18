@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class KDH_Button : MonoBehaviour
@@ -37,11 +38,13 @@ public class KDH_Button : MonoBehaviour
     public void Restart()
     {
         // 보스 씬 열기
+        SceneManager.LoadScene("KJYScene_TEST");
     }
 
     public void GoLobby()
     {
         // 대기실 씬 열기
+        SceneManager.LoadScene("LowPolyFPS_Lite_Demo 1");
     }
     
 
