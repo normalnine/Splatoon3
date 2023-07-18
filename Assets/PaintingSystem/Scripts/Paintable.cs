@@ -39,7 +39,7 @@ public class Paintable : MonoBehaviour {
         PaintManager.instance.initTextures(this);
     }
 
-    void OnDisable(){
+    public void OnDisable(){
         maskRenderTexture.Release();
         uvIslandsRenderTexture.Release();
         extendIslandsRenderTexture.Release();
