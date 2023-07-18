@@ -103,9 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298e0cb48c3826a48a09a485f32198ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTarget: {fileID: 0}
+  floor: {fileID: 851861367857448376, guid: 4d0cdc9f44c976c47bca57df453fa504, type: 3}
   handFactory: {fileID: 7089481583754306726, guid: 52cae96b99b0c7243b122924d412a60d, type: 3}
   fistFactory: {fileID: 7485481726369323824, guid: c8a53d4608644094796fc700189e7f67, type: 3}
-  inkboomFactory: {fileID: 1949969030570866604, guid: 0817700bee1a29f49b397c39fa45207b, type: 3}
+  inkboomFactory: {fileID: 3655864567603919480, guid: 0817700bee1a29f49b397c39fa45207b, type: 3}
   currentTime: 0
   attackTime: 8
   pattern1: 0
@@ -129,7 +131,7 @@ GameObject:
   - component: {fileID: 4472529084145092561}
   - component: {fileID: 4472529084145092557}
   m_Layer: 0
-  m_Name: Boss(C) 1
+  m_Name: Boss(C)
   m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e392263694dce74ca02af5fdb35128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossHP: 4
+  bossHP: 6
   bossmoving: 0
   moonPosition: {fileID: 4472529082712152106}
   bossFactory: {fileID: 1566882517582554080, guid: 059f19407bd66844084142b4ef63f438, type: 3}

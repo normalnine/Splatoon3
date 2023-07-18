@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6142870247301584948}
   - component: {fileID: 6142870247301584949}
   - component: {fileID: 6142870247301584938}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Fist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -339,9 +339,9 @@ GameObject:
   - component: {fileID: 7485481726369323826}
   - component: {fileID: 1413304561257581035}
   - component: {fileID: 23076264033391583}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Fist C
-  m_TagString: Untagged
+  m_TagString: BossAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

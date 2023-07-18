@@ -9,6 +9,8 @@ public class BossAttack : MonoBehaviour
     {
         instance = this;
     }
+    public Transform playerTarget;
+    public GameObject floor;
     public GameObject handFactory;
     public GameObject fistFactory;
     public GameObject inkboomFactory;
@@ -35,37 +37,9 @@ public class BossAttack : MonoBehaviour
     {
         currentTime += Time.deltaTime;
         if (pattern1 == true) Page1();
-        else if (pattern2 == true)
-        {
-            //gameObject.GetComponent<BossAttack>();
-            Page2();
-        }
+        else if (pattern2 == true) Page2();
         //else if (pattern3 == true) Page3();
     }
-
-    // 1페이지 공격패턴
-    //void Page1()
-    //{
-    //    if (currentTime > attackTime)
-    //    {
-    //        if (didths == false) LFirePos1P();
-    //        else RFirePos1P();
-    //    }
-    //}
-    //void LFirePos1P()
-    //{
-    //    GameObject fist = Instantiate(fistFactory);
-    //    fist.transform.position = LFirepos.position;
-    //    currentTime = 0;
-    //    didths = true;
-    //}
-    //void RFirePos1P()
-    //{
-    //    GameObject fist = Instantiate(fistFactory);
-    //    fist.transform.position = RFirepos.position;
-    //    currentTime = 0;
-    //    didths = false;
-    //}
 
     // 2페이지 공격패턴
     void Page1()
@@ -124,14 +98,17 @@ public class BossAttack : MonoBehaviour
     {
         if (currentTime > attackTime)
         {
-            if (didths == false)
-            {
-                LFirePos2P();
-            }
-            else
-            {
-                RFirePos2P();
-            }
+            GameObject inkboom = Instantiate(inkboomFactory);
+            inkboom.transform.position = Firepos.position;
+            currentTime = 0;
+            //if (didths == false)
+            //{
+            //    LFirePos2P();
+            //}
+            //else
+            //{
+            //    RFirePos2P();
+            //}
         }
     }
     void LFirePos2P()

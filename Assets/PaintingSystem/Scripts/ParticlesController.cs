@@ -45,7 +45,7 @@ public class ParticlesController: MonoBehaviour{
                 }
                 else if (other.gameObject.name.Contains("Moon"))
                 {
-                    Moon1.instance.bossMoonHP--;
+                    Moon.instance.bossMoonHP--;
                 }
             }
         }

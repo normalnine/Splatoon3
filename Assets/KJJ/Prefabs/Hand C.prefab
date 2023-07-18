@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3566519571840869305}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Rotate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 5817801868575287202}
   - component: {fileID: 5817801868575287203}
   - component: {fileID: 5817801868575287228}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Fist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -370,9 +370,9 @@ GameObject:
   - component: {fileID: 7089481583754306724}
   - component: {fileID: 1593765239646598781}
   - component: {fileID: 3732497761071561591}
-  m_Layer: 0
+  m_Layer: 21
   m_Name: Hand C
-  m_TagString: Untagged
+  m_TagString: BossAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

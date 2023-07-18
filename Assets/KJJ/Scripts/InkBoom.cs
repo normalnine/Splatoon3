@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,50 +15,67 @@ public class InkBoom : MonoBehaviour
     Rigidbody rb;
 
     public float currentTime;
-    bool isForword;
-    // 추적시간
-    public float trackingTime = 0.3f;
     public float boomTime = 2.4f;
     Vector3 dir; //방향을 담을 변수
+
+    Vector3 playerTarget;
+    public float firingAngle = 45.0f;
+    public float gravity = 9.8f;
+
+    public Transform Projectile;
+    private Transform myTransform;
     // Start is called before the first frame update
     void Start()
     {
-        isForword = true;
         rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * speed;
+        myTransform = transform;
+        StartCoroutine(SimulateProjectile());
+    }
+
+    IEnumerator SimulateProjectile()
+    {
+        playerTarget = BossAttack.instance.playerTarget.position;
+        // 발사체를 던지는 물체의 위치로 이동 + 필요한 경우 일부 오프셋을 추가합니다.
+        Projectile.position = myTransform.position; // + new Vector3(0, 0, 0);
+        // 타겟까지의 거리 계산
+        float target_Distance = Vector3.Distance(Projectile.position, playerTarget);
+
+        // 지정된 각도에서 물체를 대상에 던지는 데 필요한 속도를 계산합니다.
+        float projectile_Velocity = target_Distance / (Mathf.Sin(2 * firingAngle * Mathf.Deg2Rad) / gravity);
+
+        // 속도의 X Y 성분 추출
+        float Vx = Mathf.Sqrt(projectile_Velocity) * Mathf.Cos(firingAngle * Mathf.Deg2Rad);
+        float Vy = Mathf.Sqrt(projectile_Velocity) * Mathf.Sin(firingAngle * Mathf.Deg2Rad);
+
+        // 비행 시간을 계산합니다.
+        float flightDuration = target_Distance / Vx;
+
+        // 대상을 향하도록 발사체를 회전합니다.
+        Projectile.rotation = Quaternion.LookRotation(playerTarget - Projectile.position);
+
+        float elapse_time = 0;
+
+        while (elapse_time < flightDuration)
+        {
+            Projectile.Translate(0, (Vy - (gravity * elapse_time)) * Time.deltaTime, Vx * Time.deltaTime);
+
+            elapse_time += Time.deltaTime;
+            yield return null;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         currentTime += Time.deltaTime;
-
-        // 바닥에 닿기전까지만
-        if (isForword)
-        {
-            // 일정시간을 추적
-            if (1.8f < currentTime && currentTime < trackingTime)
-            {
-                GameObject target = GameObject.Find("Player");//게임오브젝트를 찾아줘(Find) Player
-                dir = target.transform.position - transform.position;
-                rb.velocity = dir.normalized * speed;
-                transform.forward = rb.velocity.normalized;
-            }
-            else if (currentTime < 1.8f)
-            {
-                // 앞방향을 rb.velocity의 방향과 같게
-                transform.forward = rb.velocity.normalized;
-            }
-        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
         // 바닥에 닿았다면
-        if (other.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             currentTime = 0;
-            isForword = false;
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
             // 내 공격도 파괴하고싶다.
@@ -65,9 +83,9 @@ public class InkBoom : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnCollisionStay(Collision collision)
     {
-        if(other.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))
         {
             Inkboom();
         }

@@ -12,7 +12,7 @@ public class Boss : MonoBehaviour
         instance = this;
     }
     // 보스 체력
-    public float bossHP = 4;
+    public float bossHP =6;
     public bool bossmoving = false;
     // 문추냉이 소환위치
     public Transform moonPosition;
@@ -30,25 +30,29 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (bossHP == 3 && act == false)
+        if (bossHP == 4 && act == false)
         {
             // 공격 중지
             BossAttack.instance.pattern1 = false;
             BossAttack.instance.pattern2 = true;
         }
-        else if(bossHP == 3 && act == true)
+        else if(bossHP == 4 && act == true)
         {
             MakeBoss();
             BossAttack.instance.currentTime = 0;
         }
-        if(bossHP == 2 && act == false)
+        if(bossHP == 3 && act == false)
         {
             BossAttack.instance.pattern2 = false;
             BossAttack.instance.pattern3 = true;
         }
-        else if (bossHP == 0 && act == true)
+        else if (bossHP == 1 && act == true)
         {
             MakeBoss();
+        }
+        if(bossHP < 2)
+        {
+            BossAttack.instance.currentTime = 0;
         }
     }
 

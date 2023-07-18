@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Boss
   - Moon
+  - to
   layers:
   - Default
   - TransparentFX
@@ -32,7 +33,7 @@ TagManager:
   - 
   - Boss
   - BossAttack
-  - 
+  - Ink
   - 
   - 
   - 
