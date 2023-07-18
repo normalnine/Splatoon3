@@ -20,7 +20,8 @@ public class Player_CameraAndMove : MonoBehaviour
     SkinnedMeshRenderer[] meshList;
     public Rigidbody rb;
     public float moveSpeed;
-    int count;
+    int meshcount;
+    int materialCount;
 
     public bool isGround;
     public bool jumping;
@@ -64,7 +65,8 @@ public class Player_CameraAndMove : MonoBehaviour
         currenTime = 0;
         otherInk = false;
         isZoom = false;
-        count = HumanBodyMeshManager.Instance.count;
+        meshcount = HumanBodyMeshManager.Instance.MeshCount;
+        materialCount = HumanBodyMeshManager.Instance.Materialcount;
         tankList = TankManager.instance.TankMaterialsList;
         tankCount = TankManager.instance.TankCount;
         anim = GetComponent<Animator>();
@@ -108,7 +110,7 @@ public class Player_CameraAndMove : MonoBehaviour
                     if (isZoom == false)
                     {
                         float alpha = Mathf.InverseLerp(100f, 50f, x);
-                        for(int i = 0; i < count; i++)
+                        for(int i = 0; i < materialCount; i++)
                         {
                             Color color = materialList[i].color;
                             color.a = alpha;
@@ -126,7 +128,7 @@ public class Player_CameraAndMove : MonoBehaviour
                 {
                     if (isZoom == false)
                     {
-                        for (int i = 0; i < count; i++)
+                        for (int i = 0; i < materialCount; i++)
                         {
                             Color color = materialList[i].color;
                             color.a = 1f;
@@ -170,7 +172,7 @@ public class Player_CameraAndMove : MonoBehaviour
                     if (isZoom == false)
                     {
                         float alpha = Mathf.InverseLerp(325f, 361f, x);
-                        for (int i = 0; i < count; i++)
+                        for (int i = 0; i < materialCount; i++)
                         {
                             Color color = materialList[i].color;
                             color.a = alpha;
@@ -186,7 +188,7 @@ public class Player_CameraAndMove : MonoBehaviour
                 }
                 else
                 {
-                    for (int i = 0; i < count; i++)
+                    for (int i = 0; i < materialCount; i++)
                     {
                         Color color = materialList[i].color;
                         color.a = 1f;
@@ -372,7 +374,7 @@ public class Player_CameraAndMove : MonoBehaviour
         {
             Invoke("ZoomIn", 0.5f);
             float alpha = 0.6f;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < materialCount; i++)
             {
                 Color color = materialList[i].color;
                 color.a = alpha;

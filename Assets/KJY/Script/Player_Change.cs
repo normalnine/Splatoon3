@@ -45,7 +45,7 @@ public class Player_Change : MonoBehaviour
        state = State.Human;
        currentTime = 0;
        changeImm = false;
-       humanCount = HumanBodyMeshManager.Instance.count;
+       humanCount = HumanBodyMeshManager.Instance.MeshCount;
        humanMeshList = HumanBodyMeshManager.Instance.MeshList;
        InkImage.enabled = false;
     }

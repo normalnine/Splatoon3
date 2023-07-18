@@ -60,7 +60,7 @@ public class PlayerHP : MonoBehaviour
         InkDamage = false;
         currentTime = 0;
         bodyRendererList = HumanBodyMeshManager.Instance.MeshList;
-        count = HumanBodyMeshManager.Instance.count;
+        count = HumanBodyMeshManager.Instance.MeshCount;
     }
 
     // Update is called once per frame

@@ -7,7 +7,8 @@ public class HumanBodyMeshManager : MonoBehaviour
     public static HumanBodyMeshManager Instance;
     public SkinnedMeshRenderer[] MeshList;
     public Material[] materialsList;
-    public int count;
+    public int Materialcount;
+    public int MeshCount;
     private void Awake()
     {
         Instance = this;   
@@ -15,7 +16,8 @@ public class HumanBodyMeshManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        count = 10;
+        Materialcount = 10;
+        MeshCount = 3;
         materialsList = new Material[10];
         for (int i = 0; i < 8; i++)
         {
