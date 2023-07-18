@@ -7,6 +7,8 @@ public class Boss : MonoBehaviour
 {
 
     public static Boss instance;
+    public GameObject clearUI;
+
     private void Awake()
     {
         instance = this;
@@ -62,5 +64,10 @@ public class Boss : MonoBehaviour
         bossFactory.transform.position = moonPosition.position;
         bossFactory.transform.up = moonPosition.up;
         act = false;
+    }
+
+    public void ClearUI()
+    {
+        clearUI.SetActive(true);
     }
 }

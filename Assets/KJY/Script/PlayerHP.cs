@@ -7,7 +7,7 @@ public class PlayerHP : MonoBehaviour
 {
     public static PlayerHP instance;
     
-    int hp;
+    public int hp;
     public int MaxHp;
     public SkinnedMeshRenderer[] bodyRendererList;
     public bool isDie;
@@ -70,6 +70,8 @@ public class PlayerHP : MonoBehaviour
         ShowPlayerDamageUIImage();
     }
 
+    public GameObject gameOverUI;
+
     public void PlayerStrongDamageProcess()
     {
         //내 체력 1 감소
@@ -77,6 +79,7 @@ public class PlayerHP : MonoBehaviour
         //내 체력 0일때
         if (HP <= 0)
         {
+            gameOverUI.SetActive(true);
             Die();
         }
         else

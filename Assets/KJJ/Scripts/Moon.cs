@@ -77,6 +77,7 @@ public class Moon : MonoBehaviour
         {
             GameObject grenadeBoom = Instantiate(grenade);
             grenadeBoom.transform.position = transform.position;
+            Boss.instance.ClearUI();
             Destroy(gameObject);
         }
         if (collision.gameObject.CompareTag("Ground"))

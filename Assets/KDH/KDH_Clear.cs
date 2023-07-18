@@ -9,7 +9,7 @@ public class KDH_Clear : MonoBehaviour
 
     void Start()
     {
-        this.gameObject.SetActive(false);
-        //videoPlayer.Play();
+        
+       videoPlayer.Play();
     }
 }

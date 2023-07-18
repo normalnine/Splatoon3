@@ -39,13 +39,15 @@ public class KDH_Button : MonoBehaviour
     {
         // 보스 씬 열기
         SceneManager.LoadScene("KJYScene_TEST");
+        Time.timeScale = 1;
     }
 
     public void GoLobby()
     {
         // 대기실 씬 열기
         SceneManager.LoadScene("LowPolyFPS_Lite_Demo 1");
+        Time.timeScale = 1;
     }
-    
+
 
 }
