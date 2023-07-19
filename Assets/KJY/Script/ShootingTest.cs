@@ -65,7 +65,7 @@ public class ShootingTest : MonoBehaviour
         parentController.transform.position = nozzle.transform.position;
         bool pressing = Input.GetMouseButton(0);
 
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && Player_Change.instance.state == Player_Change.State.Human)
         {
             VisualPolish();
             Shooting = true;
@@ -74,7 +74,7 @@ public class ShootingTest : MonoBehaviour
             anim.SetBool("Shoot", true);
             //RotateToCamera(transform);
         }
-        if (Input.GetMouseButtonDown(0) && Shooting == true)
+        if (Input.GetMouseButtonDown(0) && Shooting == true && Player_Change.instance.state == Player_Change.State.Human)
         {
             if (INKGAGE >= 0)
             {
