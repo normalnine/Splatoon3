@@ -75,7 +75,7 @@ public class Player_CameraAndMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.eulerAngles = Vector3.zero;
+        transform.eulerAngles = new Vector3(0, 180, 0);
         LookAround();
         Move();
         Jump();
