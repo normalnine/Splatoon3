@@ -14,6 +14,7 @@ public class BossAttack : MonoBehaviour
     public GameObject handFactory;
     public GameObject fistFactory;
     public GameObject inkboomFactory;
+    public GameObject swallowFactory;
     public float currentTime;
     public float attackTime = 7;
 
@@ -25,7 +26,6 @@ public class BossAttack : MonoBehaviour
     public Transform RFirepos;
     public Transform Firepos;
     public bool didths;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -66,12 +66,14 @@ public class BossAttack : MonoBehaviour
         {
             GameObject hand = Instantiate(handFactory);
             hand.transform.position = LFirepos.position;
+            hand.transform.forward = LFirepos.forward;
             currentTime = 0;
         }
         else
         {
             GameObject fist = Instantiate(fistFactory);
             fist.transform.position = LFirepos.position;
+            fist.transform.forward = LFirepos.forward;
             currentTime = 0;
         }
     }
@@ -83,12 +85,14 @@ public class BossAttack : MonoBehaviour
         {
             GameObject hand = Instantiate(handFactory);
             hand.transform.position = RFirepos.position;
+            hand.transform.forward = RFirepos.forward;
             currentTime = 0;
         }
         else
         {
             GameObject fist = Instantiate(fistFactory);
             fist.transform.position = RFirepos.position;
+            fist.transform.forward = RFirepos.forward;
             currentTime = 0;
         }
     }
@@ -98,40 +102,43 @@ public class BossAttack : MonoBehaviour
     {
         if (currentTime > attackTime)
         {
-            GameObject inkboom = Instantiate(inkboomFactory);
-            inkboom.transform.position = Firepos.position;
-            currentTime = 0;
-            //if (didths == false)
-            //{
-            //    LFirePos2P();
-            //}
-            //else
-            //{
-            //    RFirePos2P();
-            //}
+            //GameObject inkboom = Instantiate(inkboomFactory);
+            //inkboom.transform.position = Firepos.position;
+            //currentTime = 0;
+            if (didths == false)
+            {
+                LFirePos2P();
+            }
+            else
+            {
+                RFirePos2P();
+            }
         }
     }
     void LFirePos2P()
     {
         int rValue = Random.Range(0, 8); // 랜덤한 0~8까지의 수를 만든다.
-        if (rValue < 3)
+        if (rValue <= 2)
         {
             GameObject hand = Instantiate(handFactory);
             hand.transform.position = LFirepos.position;
+            hand.transform.forward = LFirepos.forward;
             didths = true;
             currentTime = 0;
         }
-        else if (2 < rValue && rValue < 6)
+        else if (3 <= rValue && rValue <= 5)
         {
             GameObject fist = Instantiate(fistFactory);
             fist.transform.position = LFirepos.position;
+            fist.transform.forward = LFirepos.forward;
             didths = true;
             currentTime = 0;
         }
-        else
+        else if(6 <= rValue)
         {
             GameObject inkboom = Instantiate(inkboomFactory);
             inkboom.transform.position = Firepos.position;
+            inkboom.transform.forward = Firepos.forward;
             currentTime = 0;
         }
     }
@@ -139,25 +146,54 @@ public class BossAttack : MonoBehaviour
     void RFirePos2P()
     {
         int rValue = Random.Range(0, 8); // 랜덤한 0~8까지의 수를 만든다.
-        if (rValue < 3)
+        if (rValue <= 2)
         {
             GameObject hand = Instantiate(handFactory);
             hand.transform.position = RFirepos.position;
+            hand.transform.forward = RFirepos.forward;
             didths = false;
             currentTime = 0;
         }
-        else if (2 < rValue && rValue < 6)
+        else if (3 <= rValue && rValue <= 5)
         {
             GameObject fist = Instantiate(fistFactory);
             fist.transform.position = RFirepos.position;
+            fist.transform.forward = RFirepos.forward;
             didths = false;
             currentTime = 0;
         }
-        else
+        else if(6 <= rValue)
         {
+            currentTime = 0;
+            GameObject swallow = Instantiate(swallowFactory);
             GameObject inkboom = Instantiate(inkboomFactory);
             inkboom.transform.position = Firepos.position;
-            currentTime = 0;
+            inkboom.transform.forward = Firepos.forward;
         }
+    }
+
+    void Page3()
+    {
+        if (currentTime > attackTime)
+        {
+            if (didths == false)
+            {
+                LFirePos3P();
+            }
+            else
+            {
+                RFirePos3P();
+            }
+        }
+    }
+
+    private void LFirePos3P()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void RFirePos3P()
+    {
+        throw new System.NotImplementedException();
     }
 }
