@@ -77,6 +77,7 @@ public class Moon : MonoBehaviour
         {
             GameObject grenadeBoom = Instantiate(grenade);
             grenadeBoom.transform.position = transform.position;
+            Boss.instance.bgm.GetComponent<AudioSource>().Stop();
             Boss.instance.ClearUI();
             Destroy(gameObject);
         }
