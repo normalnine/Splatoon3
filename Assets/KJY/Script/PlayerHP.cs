@@ -116,7 +116,7 @@ public class PlayerHP : MonoBehaviour
 
     public void PlayerInkDamageProcess()
     {
-        if (Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other)
+        if (Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other && Player_CameraAndMove.instance.jumping == false)
         {
             if (HP >= 100)
             {
@@ -126,6 +126,14 @@ public class PlayerHP : MonoBehaviour
             InkDamage = true;
         }
         else if (Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
+        {
+            StopInkShake();
+            if (InkDamage == true && die == false)
+            {
+                Recure();
+            }
+        }
+        else if (Player_CameraAndMove.instance.jumping == true)
         {
             StopInkShake();
             if (InkDamage == true && die == false)
@@ -144,7 +152,7 @@ public class PlayerHP : MonoBehaviour
 
     public void InkShake()
     {
-        if (Damage == false)
+        if (Damage == false && Player_CameraAndMove.instance.jumping == false)
         {
             cameraPos = mainCamera.transform.position;
             InvokeRepeating("StartInkShake", 0f, 0.05f);

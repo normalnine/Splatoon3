@@ -9,7 +9,6 @@ public class SpecialAttack : MonoBehaviour
     public bool specialAttack;
     public Transform cameraTarget;
     Rigidbody rb;
-
     private void Awake()
     {
         instance = this;
@@ -24,7 +23,7 @@ public class SpecialAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && SpecialSkillGageManager.instance.charge)
         {
             specialAttack = true;
             rb.AddForce(new Vector3(0, 1, 0) * 14, ForceMode.Impulse);
@@ -45,7 +44,6 @@ public class SpecialAttack : MonoBehaviour
                 specialAttack = false;
             }
         }
-
         
     }
 }

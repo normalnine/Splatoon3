@@ -70,6 +70,7 @@ public class ShootingTest : MonoBehaviour
             VisualPolish();
             Shooting = true;
             INKGAGE -= 0.03f;
+            SpecialSkillGageManager.instance.SkillGage += 0.1f;
             anim.SetBool("Shoot", true);
             //RotateToCamera(transform);
         }

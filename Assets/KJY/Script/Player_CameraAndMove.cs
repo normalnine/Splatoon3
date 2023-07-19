@@ -246,6 +246,8 @@ public class Player_CameraAndMove : MonoBehaviour
         }
     }
 
+    
+
     private void Jump()
     {
         if (Input.GetButton("Jump"))
@@ -337,7 +339,7 @@ public class Player_CameraAndMove : MonoBehaviour
             tmp.z = testTmp.transform.position.z;
             tmp.y = Mathf.Lerp(tmp.y, testTmp.transform.position.y, 2f * Time.deltaTime);
             cameraArm.position = tmp;*/
-            cameraArm.position = Vector3.Lerp(cameraArm.position, testTmp.transform.position, Time.deltaTime * 3f);
+            cameraArm.position = Vector3.Lerp(cameraArm.position, testTmp.transform.position, Time.deltaTime);
         }
         else
         {

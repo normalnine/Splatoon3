@@ -18,7 +18,7 @@ public class Player_Change : MonoBehaviour
     public GameObject otherBody;
     public Collider humanBodyCollider;
 
-    SkinnedMeshRenderer[] humanMeshList;
+    public SkinnedMeshRenderer[] humanMeshList;
     public SkinnedMeshRenderer[] squidMeshList;
     int humanCount;
     int squidCount;
@@ -45,8 +45,7 @@ public class Player_Change : MonoBehaviour
        state = State.Human;
        currentTime = 0;
        changeImm = false;
-       humanCount = HumanBodyMeshManager.Instance.MeshCount;
-       humanMeshList = HumanBodyMeshManager.Instance.MeshList;
+       humanCount = 3;
        InkImage.enabled = false;
     }
 
@@ -145,6 +144,7 @@ public class Player_Change : MonoBehaviour
     {
         if (state == State.Human)
         {
+            print("in here");
             InkImage.enabled = false;
             for (int  i = 0; i < humanCount; i++)
             {
@@ -158,6 +158,7 @@ public class Player_Change : MonoBehaviour
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.none && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
         {
+            print("In here2");
             InkImage.enabled = true;
             for (int i = 0; i < humanCount; i++)
             {
@@ -171,6 +172,7 @@ public class Player_Change : MonoBehaviour
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.none)
         {
+            print("In here3");
             InkImage.enabled = true;
             for (int i = 0; i < humanCount; i++)
             {

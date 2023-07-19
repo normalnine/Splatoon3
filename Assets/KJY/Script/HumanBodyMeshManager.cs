@@ -16,8 +16,13 @@ public class HumanBodyMeshManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Materialcount = 10;
         MeshCount = 3;
+        Materialcount = 10;
+        MeshList = new SkinnedMeshRenderer[MeshCount];
+        for (int i = 0; i < MeshCount; i++)
+        {
+            MeshList[i] = transform.GetChild(i).GetComponent<SkinnedMeshRenderer>();
+        }
         materialsList = new Material[10];
         for (int i = 0; i < 8; i++)
         {
