@@ -33,7 +33,7 @@ public class Boss : MonoBehaviour
     void Start()
     {
         act = true;
-        bossHP = 4;
+        bossHP = 6;
     }
 
     // Update is called once per frame
@@ -75,7 +75,7 @@ public class Boss : MonoBehaviour
             // 바라보는 방향을 중앙을보게
             if (moveTiem > 10 && moveTiem < 10.5f) transform.forward = -dir.normalized;
         }
-        else BossMoveOff();
+        else if(moveTiem > 12)BossMoveOff();
     }
 
     void MakeBoss()
