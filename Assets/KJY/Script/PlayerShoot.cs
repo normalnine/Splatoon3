@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -13,9 +14,12 @@ public class PlayerShoot : MonoBehaviour
     public bool isShoot;
     GameObject salmon;
     public float force;
+    float currentTime;
 
     float rotX;
     float rotY;
+
+    public Image nonSalmon;
 
     private void Awake()
     {
@@ -25,6 +29,7 @@ public class PlayerShoot : MonoBehaviour
     void Start()
     {
         isShoot = false;
+        nonSalmon.enabled = false;
     }
 
     // Update is called once per frame
@@ -46,10 +51,13 @@ public class PlayerShoot : MonoBehaviour
             {
                 salmon = Instantiate(SalmonFactory);
             }
-
         }
         else if (Input.GetMouseButton(1) == true)
         {
+            if (Test2_Back.instance.comeback == false)
+            {
+                nonSalmon.enabled = true;
+            }
             if (Input.GetKeyDown(KeyCode.R))
             {
                 isShoot = true;
@@ -88,6 +96,15 @@ public class PlayerShoot : MonoBehaviour
             muzzle.localEulerAngles = new Vector3(-rotX, 0, 0);
             if (Test2_Back.instance.comeback == true)
                 salmon.transform.eulerAngles = new Vector3(0, rotY, 0);
+        }
+        if (nonSalmon.enabled == true)
+        {
+            currentTime += Time.deltaTime;
+            if (currentTime > 0.5f)
+            {
+               nonSalmon.enabled = false;
+            }
+            
         }
     }
 
