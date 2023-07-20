@@ -28,18 +28,17 @@ public class Boss : MonoBehaviour
     public GameObject bossMove;
     public GameObject center;
     public Vector3 dir;
-    public float moveTiem;
-    // Start is called before the first frame update
+    //public float moveTiem;
     void Start()
     {
         act = true;
-        bossHP = 6;
+        bossHP = 3;
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveTiem += Time.deltaTime;
+        //moveTiem += Time.deltaTime;
         dir = transform.position - center.transform.position;
         if (bossHP == 3 && act == false)
         {
@@ -49,7 +48,7 @@ public class Boss : MonoBehaviour
         }
         else if (bossHP == 4 && act == true)
         {
-            moveTiem = 0;
+            //moveTiem = 0;
             MakeBoss();
             BossAttack.instance.currentTime = 0;
         }
@@ -72,10 +71,7 @@ public class Boss : MonoBehaviour
         {
             movePositionCount = 0;
             BossMoveOn();
-            // 바라보는 방향을 중앙을보게
-            if (moveTiem > 10 && moveTiem < 10.5f) transform.forward = -dir.normalized;
         }
-        else if(moveTiem > 12)BossMoveOff();
     }
 
     void MakeBoss()
@@ -101,4 +97,13 @@ public class Boss : MonoBehaviour
         clearUI.SetActive(true);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("to"))
+        {
+            transform.forward = -dir.normalized;
+            Destroy(collision.gameObject);
+            BossMoveOff();
+        }
+    }
 }
