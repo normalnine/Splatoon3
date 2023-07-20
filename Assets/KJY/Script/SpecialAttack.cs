@@ -8,6 +8,7 @@ public class SpecialAttack : MonoBehaviour
     public float currentTime;
     public bool specialAttack;
     public Transform cameraTarget;
+    public bool High;
     Rigidbody rb;
     private void Awake()
     {
@@ -18,6 +19,7 @@ public class SpecialAttack : MonoBehaviour
     {
         specialAttack = false;
         rb = GetComponent<Rigidbody>();
+        High = false;
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class SpecialAttack : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) && SpecialSkillGageManager.instance.charge)
         {
             specialAttack = true;
+            High = true;
             rb.AddForce(new Vector3(0, 1, 0) * 14, ForceMode.Impulse);
         }
         if (specialAttack == true)
@@ -38,6 +41,7 @@ public class SpecialAttack : MonoBehaviour
             }
             if (currentTime > 1)
             {
+                StartCoroutine("FindTarget");
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(0, -1, 0) * 25, ForceMode.Impulse);
                 currentTime = 0;
@@ -46,4 +50,39 @@ public class SpecialAttack : MonoBehaviour
         }
         
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+       {
+            int layer = 1 << LayerMask.NameToLayer("BossAttack");
+            High = false;
+            Collider[] cols = Physics.OverlapSphere(transform.position, 10f, layer);
+            for (int i = 0; i < cols.Length; i++)
+            {
+                FistC.instance.bossFistHP -= 100;
+                //HandC.instance.bossHandHP -= 100;
+            }
+        }
+    }
+
+    //IEnumerator FindTarget()
+    //{
+    //    yield return new WaitForSeconds(0.1f);
+    //    int layer = 1 << LayerMask.NameToLayer("BossAttack");
+    //    High = false;
+    //    Collider[] cols = Physics.OverlapSphere(transform.position, 10f, layer);
+    //    for (int i = 0; i < cols.Length; i++)
+    //    {
+    //        print("here2");
+    //        FistC.instance.bossFistHP -= 100;
+    //        //HandC.instance.bossHandHP -= 100;
+    //        if (cols[i].tag == "BossAttack")
+    //        {
+    //            print("here");
+    //            Debug.Log("Physics Enemy : Target found");
+    //            target = cols[i].gameObject.transform;
+    //        }
+    //    }
+    //}
 }
