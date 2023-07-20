@@ -16,6 +16,7 @@ public class Player_Change : MonoBehaviour
     public GameObject humanBody;
     public GameObject squidBody;
     public GameObject otherBody;
+    public GameObject gun;
     public Collider humanBodyCollider;
 
     public SkinnedMeshRenderer[] humanMeshList;
@@ -144,7 +145,6 @@ public class Player_Change : MonoBehaviour
     {
         if (state == State.Human)
         {
-            print("in here");
             InkImage.enabled = false;
             for (int  i = 0; i < humanCount; i++)
             {
@@ -155,10 +155,10 @@ public class Player_Change : MonoBehaviour
                 squidMeshList[i].enabled = false;
             }
             otherBody.SetActive(true);
+            gun.SetActive(true);
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.none && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
         {
-            print("In here2");
             InkImage.enabled = true;
             for (int i = 0; i < humanCount; i++)
             {
@@ -168,7 +168,15 @@ public class Player_Change : MonoBehaviour
             {
                 squidMeshList[i].enabled = false;
             }
+            if (Player_CameraAndMove.instance.jumping == true)
+            {
+                for (int i = 0; i < squidCount; i++)
+                {
+                    squidMeshList[i].enabled = true;
+                }
+            }
             otherBody.SetActive(false);
+            gun.SetActive(false);
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.none)
         {
@@ -183,6 +191,7 @@ public class Player_Change : MonoBehaviour
                 squidMeshList[i].enabled = true;
             }
             otherBody.SetActive(false);
+            gun.SetActive(false);
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other || Player_CameraAndMove.instance.jumping == true)
         {
@@ -196,6 +205,7 @@ public class Player_Change : MonoBehaviour
                 squidMeshList[i].enabled = true;
             }
             otherBody.SetActive(false);
+            gun.SetActive(false);
         }
     }
 

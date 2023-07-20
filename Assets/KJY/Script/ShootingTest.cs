@@ -25,6 +25,8 @@ public class ShootingTest : MonoBehaviour
 
     public Slider InkGageSlider;
     public SkinnedMeshRenderer InkGageMaterial;
+    public Image NonInkImage;
+    Vector3 ImageT;
     Animator anim;
     public float INKGAGE
     {
@@ -48,6 +50,7 @@ public class ShootingTest : MonoBehaviour
         INKGAGE = MaxInkGage;
         InkGageSlider.maxValue = MaxInkGage;
         InkGageMaterial.material.mainTextureOffset = new Vector2(0, 0);
+        NonInkImage.enabled = false;
     }
     void Start()
     {
@@ -90,11 +93,32 @@ public class ShootingTest : MonoBehaviour
         if (INKGAGE <= 0)
         {
             inkParticle.Stop();
+            NonInkImage.enabled = true;
+            ImageShake();
+        }
+        else
+        {
+            CancelInvoke("StartShake");
+            NonInkImage.enabled = false;
         }
         //parentController.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
         //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
         parentController.forward = (Camera.main.transform.position + Camera.main.transform.forward * 10) - nozzle.transform.position;
         Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+    }
+
+    public void ImageShake()
+    {
+        ImageT = NonInkImage.transform.position;
+        InvokeRepeating("StartShake", 1f, 0.01f);
+    }
+
+    public void StartShake()
+    {
+        float InkPosY = Random.value * 0.01f * 2 - 0.01f;
+        Vector3 ImagePosition = NonInkImage.transform.position;
+        ImagePosition.y += InkPosY;
+        NonInkImage.transform.position = ImagePosition;
     }
 
     void VisualPolish()
