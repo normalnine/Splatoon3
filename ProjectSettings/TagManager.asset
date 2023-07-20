@@ -11,6 +11,8 @@ TagManager:
   - Moon
   - to
   - BossAttack
+  - Fist
+  - Hand
   layers:
   - Default
   - TransparentFX

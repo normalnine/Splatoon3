@@ -23,6 +23,8 @@ public class PlayerHP : MonoBehaviour
 
     public Camera mainCamera;
     public Vector3 cameraPos;
+
+    Animator anim;
     [Range(0.01f, 0.1f)] float shakeRange = 0.05f;
     [Range(0.1f, 0.5f)] float duration = 0.2f;
 
@@ -61,6 +63,7 @@ public class PlayerHP : MonoBehaviour
         currentTime = 0;
         bodyRendererList = HumanBodyMeshManager.Instance.MeshList;
         count = HumanBodyMeshManager.Instance.MeshCount;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -123,11 +126,13 @@ public class PlayerHP : MonoBehaviour
                 HP -= 20;
             }
             InkShake();
+            anim.SetBool("Damage", true);
             InkDamage = true;
         }
         else if (Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
         {
             StopInkShake();
+            anim.SetBool("Damage", false);
             if (InkDamage == true && die == false)
             {
                 Recure();
@@ -136,6 +141,7 @@ public class PlayerHP : MonoBehaviour
         else if (Player_CameraAndMove.instance.jumping == true)
         {
             StopInkShake();
+            anim.SetBool("Damage", false);
             if (InkDamage == true && die == false)
             {
                 Recure();

@@ -101,6 +101,10 @@ public class ShootingTest : MonoBehaviour
             CancelInvoke("StartShake");
             NonInkImage.enabled = false;
         }
+        if (Player_Change.instance.state == Player_Change.State.Squid)
+        {
+            inkParticle.Stop();
+        }
         //parentController.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
         //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
         parentController.forward = (Camera.main.transform.position + Camera.main.transform.forward * 10) - nozzle.transform.position;

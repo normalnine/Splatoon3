@@ -41,11 +41,9 @@ public class SpecialAttack : MonoBehaviour
             }
             if (currentTime > 1)
             {
-                StartCoroutine("FindTarget");
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(0, -1, 0) * 25, ForceMode.Impulse);
                 currentTime = 0;
-                specialAttack = false;
             }
         }
         
@@ -53,15 +51,27 @@ public class SpecialAttack : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.tag == "Ground" && specialAttack == true)
        {
+            specialAttack = false;
             int layer = 1 << LayerMask.NameToLayer("BossAttack");
             High = false;
             Collider[] cols = Physics.OverlapSphere(transform.position, 10f, layer);
             for (int i = 0; i < cols.Length; i++)
             {
-                FistC.instance.bossFistHP -= 100;
-                //HandC.instance.bossHandHP -= 100;
+                if (cols[i].attachedRigidbody.CompareTag("Fist"))
+                { 
+                    FistC.instance.bossFistHP -= 100;
+                }
+                else if (cols[i].attachedRigidbody.CompareTag("Hand"))
+                {
+                    HandC.instance.bossHandHP -= 100;
+
+                }
+                else if (cols[i].attachedRigidbody.CompareTag("Moon"))
+                {
+                    Moon.instance.bossMoonHP -= 100;
+                }
             }
         }
     }

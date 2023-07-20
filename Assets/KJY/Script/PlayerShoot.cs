@@ -86,7 +86,6 @@ public class PlayerShoot : MonoBehaviour
 
         if (Player_CameraAndMove.instance.isZoom == true)
         {
-            print(Player_CameraAndMove.instance.isZoom);
             float x = Input.GetAxis("Mouse X");
             float y = Input.GetAxis("Mouse Y");
             rotX += y * 200 * Time.deltaTime;
@@ -100,9 +99,10 @@ public class PlayerShoot : MonoBehaviour
         if (nonSalmon.enabled == true)
         {
             currentTime += Time.deltaTime;
-            if (currentTime > 0.5f)
+            if (currentTime > 1f)
             {
                nonSalmon.enabled = false;
+                currentTime = 0;
             }
             
         }
