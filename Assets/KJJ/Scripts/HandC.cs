@@ -24,6 +24,7 @@ public class HandC : MonoBehaviour
     public bool attackOK;
     public float bossHandHP = 50;
     public bool bhpH;
+    public bool swallow = false;
 
     Vector3 dir; //방향을 담을 변수
     // Start is called before the first frame update
@@ -38,7 +39,6 @@ public class HandC : MonoBehaviour
     void Update()
     {
         currentTime += Time.deltaTime;
-
         if (isForword)
         {
             body.transform.Rotate(0, 0, 360 * Time.deltaTime);
@@ -104,6 +104,7 @@ public class HandC : MonoBehaviour
             transform.forward = -rb.velocity.normalized;
             bhpH = true;
         }
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -121,6 +122,7 @@ public class HandC : MonoBehaviour
             PlayerHP.instance.Shake();
             // 시간을 초기화
             currentTime = 0;
+            swallow = true;
         }
         if (collision.gameObject.CompareTag("Player"))
         {

@@ -26,6 +26,8 @@ public class BossAttack : MonoBehaviour
     public Transform RFirepos;
     public Transform Firepos;
     public bool didths;
+    public float inkTime;
+    bool page2 = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,9 +39,28 @@ public class BossAttack : MonoBehaviour
     {
         currentTime += Time.deltaTime;
         if (pattern1 == true) Page1();
-        else if (pattern2 == true) Page2();
-        //else if (pattern3 == true) Page3();
-    }
+        else if (pattern2 == true)
+        {
+            page2 = true;
+            Page2();
+        }
+        if (HandC.instance.swallow == true) inkTime += Time.deltaTime;
+        else inkTime = 0;
+        if ((inkTime > 0.4) && page2 == true)
+        {
+            GameObject swallow = Instantiate(swallowFactory);
+            swallow.transform.position = Firepos.position;
+            swallow.transform.forward = Firepos.forward;
+            HandC.instance.swallow = false;
+            inkTime = 0;
+        }
+        else if (inkTime > 0.4 && page2 == false)
+        {
+            inkTime = 0;
+            HandC.instance.swallow = false;
+        }
+            //else if (pattern3 == true) Page3();
+        }
 
     // 2페이지 공격패턴
     void Page1()
@@ -102,9 +123,6 @@ public class BossAttack : MonoBehaviour
     {
         if (currentTime > attackTime)
         {
-            //GameObject inkboom = Instantiate(inkboomFactory);
-            //inkboom.transform.position = Firepos.position;
-            //currentTime = 0;
             if (didths == false)
             {
                 LFirePos2P();
@@ -134,7 +152,7 @@ public class BossAttack : MonoBehaviour
             didths = true;
             currentTime = 0;
         }
-        else if(6 <= rValue)
+        else if (6 <= rValue)
         {
             GameObject inkboom = Instantiate(inkboomFactory);
             inkboom.transform.position = Firepos.position;
@@ -162,10 +180,9 @@ public class BossAttack : MonoBehaviour
             didths = false;
             currentTime = 0;
         }
-        else if(6 <= rValue)
+        else if (6 <= rValue)
         {
             currentTime = 0;
-            GameObject swallow = Instantiate(swallowFactory);
             GameObject inkboom = Instantiate(inkboomFactory);
             inkboom.transform.position = Firepos.position;
             inkboom.transform.forward = Firepos.forward;
