@@ -15,7 +15,7 @@ public class Boss : MonoBehaviour
         instance = this;
     }
     // 보스 체력
-    public float bossHP = 6;
+    public float bossHP = 9;
     public bool bossmoving = false;
     // 문추냉이 소환위치
     public Transform moonPosition;
@@ -32,43 +32,50 @@ public class Boss : MonoBehaviour
     void Start()
     {
         act = true;
-        bossHP = 6;
+        bossHP = 9;
     }
 
     // Update is called once per frame
     void Update()
     {
         dir = transform.position - center.transform.position;
-        if (bossHP == 3 && act == false)
+        // 보스 체력이 일정 체력으로 낮아지면 패턴이 넘어간다.
+        if (bossmoving == true)
         {
-            // 공격 중지
+            if (bossHP == 6 || bossHP == 3)
+            {
+                BossMoveOn();
+                bossmoving = false;
+            }
+        }
+        else BossMoveOff();
+        
+        if (bossHP == 7 && act == true)
+        {
+            MakeBoss();
+            bossmoving = true;
+            BossAttack.instance.currentTime = 0;
+        }
+        else if (bossHP < 7)
+        {
             BossAttack.instance.pattern1 = false;
             BossAttack.instance.pattern2 = true;
-        }
-        else if (bossHP == 4 && act == true)
-        {
-            MakeBoss();
-            BossAttack.instance.currentTime = 0;
-        }
-        //if(bossHP == 1 && act == false)
-        //{
-        //    movePositionCount = 1;
-        //    BossAttack.instance.pattern2 = false;
-        //    BossAttack.instance.pattern3 = true;
-        //}
-        //else
-        if (bossHP == 1 && act == true)
-        {
-            MakeBoss();
-        }
-        if (bossHP < 2)
-        {
-            BossAttack.instance.currentTime = 0;
-        }
-        if (bossHP == 3)
-        {
-            movePositionCount = 0;
-            BossMoveOn();
+            if (bossHP == 4 && act == true)
+            {
+                MakeBoss();
+                bossmoving = true;
+                BossAttack.instance.currentTime = 0;
+            }
+            if (bossHP < 4)
+            {
+                BossAttack.instance.pattern2 = false;
+                BossAttack.instance.pattern3 = true;
+                if (bossHP == 1 && act == true)
+                {
+                    MakeBoss();
+                    BossAttack.instance.currentTime = 0;
+                }
+            }
         }
     }
 
@@ -97,7 +104,7 @@ public class Boss : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("to"))
+        if (collision.gameObject.CompareTag("to"))
         {
             // 바라보는 방향을 중앙을보게
             transform.forward = -dir.normalized;

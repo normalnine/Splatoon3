@@ -24,6 +24,7 @@ public class HandC : MonoBehaviour
     public bool attackOK;
     public float bossHandHP = 50;
     public bool bhpH;
+    public bool swallow;
 
     Vector3 dir; //방향을 담을 변수
     // Start is called before the first frame update
@@ -160,31 +161,4 @@ public class HandC : MonoBehaviour
         }
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    // 바닥에 닿았다면
-    //    if (other.gameObject.CompareTag("Ground"))
-    //    {
-    //        PlayerHP.instance.Shake();
-    //        isForword = false;
-    //        rb.useGravity = false;
-    //        rb.velocity = Vector3.zero;
-    //        currentTime = 0;
-    //    }
-    //}
-
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.CompareTag("Ground"))
-    //    {
-    //        currentTime += Time.deltaTime;
-    //        if (currentTime > attackDelayTime)
-    //        {
-    //            rb.useGravity = true;
-    //            // 앞 방향을 전환
-    //            rb.velocity = -transform.forward * speed * 1.5f;
-    //            isBack = true;
-    //        }
-    //    }
-    //}
 }

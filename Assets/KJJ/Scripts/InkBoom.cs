@@ -27,6 +27,8 @@ public class InkBoom : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.Find("Player");
+        playerTarget = player.transform.position;
         rb = GetComponent<Rigidbody>();
         myTransform = transform;
         StartCoroutine(SimulateProjectile());
@@ -34,7 +36,6 @@ public class InkBoom : MonoBehaviour
 
     IEnumerator SimulateProjectile()
     {
-        playerTarget = BossAttack.instance.playerTarget.position;
         // 발사체를 던지는 물체의 위치로 이동 + 필요한 경우 일부 오프셋을 추가합니다.
         Projectile.position = myTransform.position; // + new Vector3(0, 0, 0);
         // 타겟까지의 거리 계산

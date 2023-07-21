@@ -24,6 +24,10 @@ public class FistC : MonoBehaviour
 
     public float bossFistHP = 50;
     public bool bhpF;
+
+    public bool attacked;
+    public float fistTime;
+    public float stiffnessTime = 0.1f;
     Vector3 dir; //방향을 담을 변수
     // Start is called before the first frame update
     void Start()
@@ -110,6 +114,17 @@ public class FistC : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
             rb.velocity = -transform.forward * speed * 2f;
             bossDie = true;
+        }
+
+        if(attacked == true)
+        {
+            fistTime += Time.deltaTime;
+            speed = 0.1f;
+            if(fistTime > stiffnessTime)
+            {
+                speed = 15;
+                attacked = false;
+            }
         }
     }
     private void OnCollisionEnter(Collision collision)

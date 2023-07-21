@@ -429,14 +429,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 7089481583754306726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fc777960a8d5334294d5647695d3588, type: 3}
+  m_Script: {fileID: 11500000, guid: 44015017b7e62a54a94e7fce630660db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
+  speed: 10
   currentTime: 0
   attackDelayTime: 5
   body: {fileID: 3566519571840869305}
-  trackingTime: 3.5
+  trackingTime: 2.5
   attackOK: 0
   bossHandHP: 50
   bhpH: 0
+  swallow: 0
