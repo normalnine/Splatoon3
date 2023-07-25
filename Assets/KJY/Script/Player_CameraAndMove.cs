@@ -29,7 +29,7 @@ public class Player_CameraAndMove : MonoBehaviour
     public float currenTime;
     public bool change;
 
-    private float camera_dist = 0f;
+    public float camera_dist = 0f;
     public float camera_width = -11f;
     public float camera_height = 3f;
     public float camera_fix = -5f;
@@ -51,10 +51,17 @@ public class Player_CameraAndMove : MonoBehaviour
     // Start is called before the first frame update
     public Image aim;
     Animator anim;
+
+    public RectTransform reticle;
+    public float restingSize;
+    public float maxSize;
+    public float speed;
+    private float currentSize;
+
+
     private void Awake()
     {
         instance = this;
-
     }
     void Start()
     {
@@ -76,19 +83,19 @@ public class Player_CameraAndMove : MonoBehaviour
     void Update()
     {
         transform.eulerAngles = new Vector3(0, 180, 0);
-        LookAround();
         Move();
         Jump();
         FormControl();
-        if (SpecialAttack.instance.specialAttack == false)
-            SpringArm();
         CheckInk();
-        ZoomManager();
     }
 
     private void LateUpdate()
     {
+        if (SpecialAttack.instance.specialAttack == false)
+            SpringArm();
+        LookAround();
         CameraSetting();
+        ZoomManager();
     }
 
     private void LookAround()
@@ -109,6 +116,7 @@ public class Player_CameraAndMove : MonoBehaviour
                 {
                     if (isZoom == false)
                     {
+                        reticle.sizeDelta = new Vector2(currentSize, currentSize);
                         float alpha = Mathf.InverseLerp(100f, 50f, x);
                         for(int i = 0; i < materialCount; i++)
                         {
@@ -166,12 +174,12 @@ public class Player_CameraAndMove : MonoBehaviour
             }
             else
             {
-                x = Mathf.Clamp(x, 330f, 361f);
+                x = Mathf.Clamp(x, 325f, 361f);
                 if (x < 345)
                 {
                     if (isZoom == false)
                     {
-                        float alpha = Mathf.InverseLerp(325f, 361f, x);
+                        float alpha = Mathf.InverseLerp(280f, 361f, x);
                         for (int i = 0; i < materialCount; i++)
                         {
                             Color color = materialList[i].color;
@@ -185,6 +193,8 @@ public class Player_CameraAndMove : MonoBehaviour
                             tankList[i].color = color2;
                         }
                     }
+                    currentSize = Mathf.Lerp(currentSize, maxSize, Time.deltaTime * speed);
+                    reticle.sizeDelta = new Vector2(currentSize, currentSize);
                 }
                 else
                 {
@@ -200,6 +210,8 @@ public class Player_CameraAndMove : MonoBehaviour
                         color2.a = 1f;
                         tankList[i].color = color2;
                     }
+                    currentSize = Mathf.Lerp(currentSize, restingSize, Time.deltaTime * speed);
+                    reticle.sizeDelta = new Vector2(currentSize, currentSize);
                 }
                 /*if (x < 345f)
                 {
@@ -225,13 +237,15 @@ public class Player_CameraAndMove : MonoBehaviour
         bool isMove = moveInput.magnitude != 0;
         if (isMove)
         {
+            anim.SetFloat("X", moveInput.x);
+            anim.SetFloat("Y", moveInput.y);
             anim.SetBool("Move", true);
             Vector3 lookForward = new Vector3(cameraArm.forward.x, 0f, cameraArm.forward.z).normalized;
             Vector3 lookRight = new Vector3(cameraArm.right.x, 0f, cameraArm.right.z).normalized;
-            Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
+            Vector3 moveDir = (lookForward * moveInput.y + lookRight * moveInput.x).normalized;
             if (ShootingTest.instance.Shooting == false)
             {
-                characterBody.transform.forward = Vector3.Slerp(characterBody.transform.forward, moveDir, 0.05f);
+                characterBody.transform.forward = Vector3.Slerp(characterBody.transform.forward, moveDir, 0.1f);
             }
 
             transform.position += moveDir * moveSpeed * Time.deltaTime * 5f;
@@ -265,6 +279,15 @@ public class Player_CameraAndMove : MonoBehaviour
         {
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 0.5f, rb.velocity.z);
         }
+        if (Player_CameraAndMove.instance.jumping)
+        {
+            currentSize = Mathf.Lerp(currentSize, maxSize, Time.deltaTime * speed);
+        }
+        else
+        {
+            currentSize = Mathf.Lerp(currentSize, restingSize, Time.deltaTime * speed);
+        }
+        reticle.sizeDelta = new Vector2(currentSize, currentSize);
     }
 
     private void FormControl()
@@ -316,7 +339,7 @@ public class Player_CameraAndMove : MonoBehaviour
         Vector3 ray_target = cameraArm.up * camera_height + cameraArm.forward * camera_width;
         RaycastHit hitinfo;
         Physics.Raycast(cameraArm.position, ray_target, out hitinfo, camera_dist);
-        if (hitinfo.point != Vector3.zero)
+        if (hitinfo.point != Vector3.zero && hitinfo.collider.tag != "Player")
         {
             cam.transform.position = hitinfo.point;
             cam.transform.Translate(dir * -1 * camera_fix);
@@ -343,7 +366,14 @@ public class Player_CameraAndMove : MonoBehaviour
         }
         else
         {
-            cameraArm.position = testTmp.transform.position;
+           // if (jumping)
+           //  {
+           //     cameraArm.position = Vector3.Lerp(cameraArm.position, jumpSpot.position, Time.deltaTime * 5f);
+           // }
+            //cameraArm.position = Vector3.Lerp(cameraArm.position, jumpSpot.position, Time.deltaTime * 5f);
+
+            cameraArm.position = Vector3.Lerp(cameraArm.position, testTmp.transform.position, Time.deltaTime * 5f);
+            //cameraArm.position = testTmp.transform.position;
         }
     }
 
@@ -354,12 +384,12 @@ public class Player_CameraAndMove : MonoBehaviour
             currenTime = 0;
             isGround = true;
             jumping = false;
-            if (Player_Change.instance.state == Player_Change.State.Human)
-            {
-                Vector3 tmp = characterBody.transform.position;
-                tmp.y = 0;
-                characterBody.transform.position = tmp;
-            }
+            //if (Player_Change.instance.state == Player_Change.State.Human)
+            //{
+            //    Vector3 tmp = characterBody.transform.position;
+            //    tmp.y = 0;
+            //    characterBody.transform.position = tmp;
+            //}
             anim.SetBool("Jump", false);
         }
     }

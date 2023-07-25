@@ -27,7 +27,11 @@ public class ShootingTest : MonoBehaviour
     public SkinnedMeshRenderer InkGageMaterial;
     public Image NonInkImage;
     Vector3 ImageT;
+    public Transform Aim;
     Animator anim;
+    
+    public float dist;
+    public float height;
     public float INKGAGE
     {
         get
@@ -68,7 +72,7 @@ public class ShootingTest : MonoBehaviour
         parentController.transform.position = nozzle.transform.position;
         bool pressing = Input.GetMouseButton(0);
 
-        if (Input.GetMouseButton(0) && Player_Change.instance.state == Player_Change.State.Human)
+        if (Input.GetButton("Fire1") && Player_Change.instance.state == Player_Change.State.Human)
         {
             VisualPolish();
             Shooting = true;
@@ -77,14 +81,14 @@ public class ShootingTest : MonoBehaviour
             anim.SetBool("Shoot", true);
             //RotateToCamera(transform);
         }
-        if (Input.GetMouseButtonDown(0) && Shooting == true && Player_Change.instance.state == Player_Change.State.Human)
+        if (Input.GetButtonDown("Fire1") && Shooting == true && Player_Change.instance.state == Player_Change.State.Human)
         {
             if (INKGAGE >= 0)
             {
                 inkParticle.Play();
             }
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetButtonUp("Fire1"))
         {
             anim.SetBool("Shoot", false);
             inkParticle.Stop();
@@ -107,8 +111,15 @@ public class ShootingTest : MonoBehaviour
         }
         //parentController.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
         //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
-        parentController.forward = (Camera.main.transform.position + Camera.main.transform.forward * 10) - nozzle.transform.position;
-        Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+        //Vector3 aimPos = (Camera.main.transform.position + Camera.main.transform.forward * 5 + Camera.main.transform.up);
+        //Vector3 dir = aimPos - nozzle.transform.position;
+        //parentController.forward = dir;
+        //Gun.position = dir;
+        //Vector3 aimPos = Camera.main.transform.position + Camera.main.transform.forward * 5;
+        //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+        parentController.forward = (Camera.main.transform.position + Camera.main.transform.forward * dist + Camera.main.transform.up * height) - nozzle.transform.position;
+        //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+        //Aim.position = (Camera.main.transform.position + Camera.main.transform.forward * dist) - nozzle.transform.position;
     }
 
     public void ImageShake()

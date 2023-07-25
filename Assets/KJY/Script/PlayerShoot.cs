@@ -20,7 +20,7 @@ public class PlayerShoot : MonoBehaviour
     float rotY;
 
     public Image nonSalmon;
-
+    public Animator anim;
     private void Awake()
     {
         instance = this;
@@ -30,6 +30,7 @@ public class PlayerShoot : MonoBehaviour
     {
         isShoot = false;
         nonSalmon.enabled = false;
+        //anim = GetComponentInParent<Animator>();
     }
 
     // Update is called once per frame
@@ -37,15 +38,18 @@ public class PlayerShoot : MonoBehaviour
     {
         if (Player_CameraAndMove.instance.isZoom == true)
         {
+            //anim.SetBool("ThrowReady", true);
             lr.enabled = true;
             DrawLine();
         }
         else
         {
+            anim.SetBool("ThrowReady", false);
             lr.enabled = false;
         }
         if (Input.GetMouseButtonDown(1))
         {
+            anim.SetBool("ThrowReady", true);
             isShoot = false;
             if (salmon == null)
             {
@@ -60,6 +64,8 @@ public class PlayerShoot : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
+                anim.SetBool("ThrowReady", false);
+                anim.SetTrigger("Throw");
                 isShoot = true;
             }
             if (isShoot == false && Test2_Back.instance.comeback == true && Input.GetMouseButton(0) == false)
@@ -68,6 +74,8 @@ public class PlayerShoot : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.R))
             {
+                //anim.SetBool("ThrowReady", false);
+                //anim.SetTrigger("Throw");
                 Destroy(salmon);
                 isShoot = true;
                 salmon = Instantiate(SalmonFactory);
@@ -78,6 +86,7 @@ public class PlayerShoot : MonoBehaviour
             }
             if (Input.GetMouseButtonDown(0) && Test2_Back.instance.comeback == true)
             {
+                //anim.SetBool("ThrowReady", false);
                 Player_CameraAndMove.instance.isZoom = false;
                 lr.enabled = false;
                 Destroy(salmon);

@@ -10,6 +10,7 @@ public class SpecialAttack : MonoBehaviour
     public Transform cameraTarget;
     public bool High;
     Rigidbody rb;
+    Animator anim;
     private void Awake()
     {
         instance = this;
@@ -20,6 +21,7 @@ public class SpecialAttack : MonoBehaviour
         specialAttack = false;
         rb = GetComponent<Rigidbody>();
         High = false;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -30,16 +32,19 @@ public class SpecialAttack : MonoBehaviour
             specialAttack = true;
             High = true;
             rb.AddForce(new Vector3(0, 1, 0) * 14, ForceMode.Impulse);
+            anim.SetBool("SpecialAttackUp", true);
         }
         if (specialAttack == true)
         {
             currentTime += Time.deltaTime;
-            if (currentTime > 0.5)
+            if (currentTime > 1)
             {
                 //rb.constraints = RigidbodyConstraints.FreezePositionY;
                 rb.isKinematic = true;
+                anim.SetBool("SpecialAttackUp", false);
+                anim.SetTrigger("SpecialAttackDown");
             }
-            if (currentTime > 1)
+            if (currentTime > 1.7)
             {
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(0, -1, 0) * 25, ForceMode.Impulse);
