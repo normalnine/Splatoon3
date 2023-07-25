@@ -21,6 +21,8 @@ public class PlayerShoot : MonoBehaviour
 
     public Image nonSalmon;
     public Animator anim;
+
+    float alphaCount;
     private void Awake()
     {
         instance = this;
@@ -30,6 +32,7 @@ public class PlayerShoot : MonoBehaviour
     {
         isShoot = false;
         nonSalmon.enabled = false;
+        alphaCount = 1f;
         //anim = GetComponentInParent<Animator>();
     }
 
@@ -58,12 +61,14 @@ public class PlayerShoot : MonoBehaviour
         }
         else if (Input.GetMouseButton(1) == true)
         {
-            if (Test2_Back.instance.comeback == false)
+            if (Test2_Back.instance.comeback == false && ShootingTest.instance.INKGAGE >= 0f)
             {
                 nonSalmon.enabled = true;
+                StartCoroutine(ImageEffectManager());
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
+                ShootingTest.instance.INKGAGE -= 20f;
                 anim.SetBool("ThrowReady", false);
                 anim.SetTrigger("Throw");
                 isShoot = true;
@@ -111,7 +116,8 @@ public class PlayerShoot : MonoBehaviour
             if (currentTime > 1f)
             {
                nonSalmon.enabled = false;
-                currentTime = 0;
+               currentTime = 0;
+                alphaCount = 1f;
             }
             
         }
@@ -127,6 +133,39 @@ public class PlayerShoot : MonoBehaviour
             pos += gravity * 0.5f * Time.deltaTime * Time.deltaTime + velocity * Time.deltaTime; // 자유 낙하 운동
             velocity += gravity * Time.deltaTime; // 중력힘이 계속 작용
             lr.SetPosition(i, pos);
+        }
+    }
+
+    IEnumerator ImageEffectManager()
+    {
+        while (true)
+        {
+            yield return ImageEffectOn();
+            yield return ImageEffectOff();
+        }
+    }
+
+    IEnumerator ImageEffectOn()
+    {
+        while (alphaCount >= 0.3f)
+        {
+            alphaCount -= 0.02f;
+            Color color = nonSalmon.color;
+            color.a = alphaCount;
+            nonSalmon.color = color;
+            yield return 0;
+        }
+    }
+
+    IEnumerator ImageEffectOff()
+    {
+        while (alphaCount <= 1f)
+        {
+            alphaCount += 0.02f;
+            Color color = nonSalmon.color;
+            color.a = alphaCount;
+            nonSalmon.color = color;
+            yield return 0;
         }
     }
 }

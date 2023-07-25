@@ -180,7 +180,6 @@ public class Player_Change : MonoBehaviour
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.none)
         {
-            print("In here3");
             InkImage.enabled = true;
             for (int i = 0; i < humanCount; i++)
             {

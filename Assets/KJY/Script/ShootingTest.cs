@@ -32,6 +32,9 @@ public class ShootingTest : MonoBehaviour
     
     public float dist;
     public float height;
+
+    public float alphaCount;
+    public float InkUseCount;
     public float INKGAGE
     {
         get
@@ -62,6 +65,7 @@ public class ShootingTest : MonoBehaviour
         InkGageSlider.maxValue = MaxInkGage;
         InkGageMaterial.material.mainTextureOffset = new Vector2(0, 0);
         anim = GetComponent<Animator>();
+        alphaCount = 1f;
         //input = GetComponent<MovementInput>();
     }
 
@@ -76,7 +80,7 @@ public class ShootingTest : MonoBehaviour
         {
             VisualPolish();
             Shooting = true;
-            INKGAGE -= 0.03f;
+            INKGAGE -= InkUseCount;
             SpecialSkillGageManager.instance.SkillGage += 0.1f;
             anim.SetBool("Shoot", true);
             //RotateToCamera(transform);
@@ -98,11 +102,11 @@ public class ShootingTest : MonoBehaviour
         {
             inkParticle.Stop();
             NonInkImage.enabled = true;
-            ImageShake();
+            StartCoroutine(ImageEffectManager());
         }
         else
         {
-            CancelInvoke("StartShake");
+            alphaCount = 1f;
             NonInkImage.enabled = false;
         }
         if (Player_Change.instance.state == Player_Change.State.Squid)
@@ -122,18 +126,37 @@ public class ShootingTest : MonoBehaviour
         //Aim.position = (Camera.main.transform.position + Camera.main.transform.forward * dist) - nozzle.transform.position;
     }
 
-    public void ImageShake()
+    IEnumerator ImageEffectManager()
     {
-        ImageT = NonInkImage.transform.position;
-        InvokeRepeating("StartShake", 1f, 0.01f);
+        while (true)
+        {
+            yield return ImageEffectOn();
+            yield return ImageEffectOff();
+        }
     }
 
-    public void StartShake()
+    IEnumerator ImageEffectOn()
     {
-        float InkPosY = Random.value * 0.01f * 2 - 0.01f;
-        Vector3 ImagePosition = NonInkImage.transform.position;
-        ImagePosition.y += InkPosY;
-        NonInkImage.transform.position = ImagePosition;
+        while (alphaCount >= 0.3f)
+        {
+            alphaCount -= 0.02f;
+            Color color = NonInkImage.color;
+            color.a = alphaCount;
+            NonInkImage.color = color;
+            yield return 0;
+        }
+    }
+
+    IEnumerator ImageEffectOff()
+    {
+        while (alphaCount <= 1f)
+        {
+            alphaCount += 0.02f;
+            Color color = NonInkImage.color;
+            color.a = alphaCount;
+            NonInkImage.color = color;
+            yield return 0;
+        }
     }
 
     void VisualPolish()

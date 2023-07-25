@@ -49,10 +49,10 @@ public class Player_CameraAndMove : MonoBehaviour
     public GameObject SalmonFactory;
     public GameObject salmon;
     // Start is called before the first frame update
-    public Image aim;
     Animator anim;
 
     public RectTransform reticle;
+    public GameObject aim;
     public float restingSize;
     public float maxSize;
     public float speed;
@@ -401,6 +401,7 @@ public class Player_CameraAndMove : MonoBehaviour
             //salmon = Instantiate(SalmonFactory);
             //salmon.transform.position = GameObject.Find("ThrowTarget").transform.position;
             isZoom = true;
+            aim.SetActive(false);
         }
         if (Input.GetMouseButton(1) && Input.GetMouseButton(0) == false)
         {
@@ -422,6 +423,7 @@ public class Player_CameraAndMove : MonoBehaviour
         if (Input.GetMouseButtonUp(1) || PlayerShoot.instance.isShoot == true || Input.GetMouseButton(0) == true)
         {
             CancelInvoke("ZoomIn");
+            aim.SetActive(true);
         }
         else if ((Input.GetMouseButton(1) == false && Camera.main.fieldOfView < 60f))
         {
