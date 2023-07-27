@@ -77,7 +77,7 @@ public class PlayerShoot : MonoBehaviour
             {
                 salmon.transform.position = muzzle.transform.position;
             }
-            else if (Input.GetKeyDown(KeyCode.R))
+            else if (Input.GetKeyDown(KeyCode.Q))
             {
                 //anim.SetBool("ThrowReady", false);
                 //anim.SetTrigger("Throw");

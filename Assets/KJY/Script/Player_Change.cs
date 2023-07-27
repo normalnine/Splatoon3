@@ -27,7 +27,7 @@ public class Player_Change : MonoBehaviour
     public float currentTime;
     public float MaxlimitTime;
 
-    private bool changeImm;
+    public bool changeImm;
 
     public Canvas InkImage;
 

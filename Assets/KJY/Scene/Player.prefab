@@ -3798,7 +3798,6 @@ Transform:
   - {fileID: 7805775979297894008}
   - {fileID: 3436386592163153367}
   - {fileID: 1291804394970951180}
-  - {fileID: 7178353534514159123}
   m_Father: {fileID: 1542328947692920342}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4751,6 +4750,7 @@ Transform:
   - {fileID: 7384960880812489637}
   - {fileID: 8816641512837920353}
   - {fileID: 2364180621084043411}
+  - {fileID: 7178353534514159123}
   m_Father: {fileID: 5473596424535699768}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8479,12 +8479,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6461727293513225779}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 1, y: -0, z: -0, w: -0.00000019470718}
+  m_LocalPosition: {x: 0.06, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7596686675642728520}
-  m_Father: {fileID: 4984209344792238847}
+  m_Father: {fileID: 4883831303050691231}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6470430475047795693
@@ -36952,7 +36952,7 @@ Transform:
   m_GameObject: {fileID: 7596686676098985063}
   m_LocalRotation: {x: -0.27765003, y: -0, z: -0, w: 0.96068233}
   m_LocalPosition: {x: 0.23684211, y: 0.40263158, z: 0}
-  m_LocalScale: {x: 0.2631579, y: 0.26315787, z: 0.2631579}
+  m_LocalScale: {x: 0.26315787, y: 0.26315787, z: 0.2631579}
   m_Children: []
   m_Father: {fileID: 1055412658669716734}
   m_RootOrder: 15
@@ -37813,8 +37813,11 @@ MonoBehaviour:
   isZoom: 0
   SalmonFactory: {fileID: 5552961466215399825, guid: 347dd850a7f504f438d6e699aca502df, type: 3}
   salmon: {fileID: 5552961466215399825, guid: 347dd850a7f504f438d6e699aca502df, type: 3}
+  reticle: {fileID: 0}
   aim: {fileID: 0}
-  jumpSpot: {fileID: 0}
+  restingSize: 0
+  maxSize: 0
+  speed: 0
 --- !u!114 &7908072550562963386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37909,6 +37912,9 @@ MonoBehaviour:
   NonInkImage: {fileID: 0}
   Aim: {fileID: 0}
   dist: 0
+  height: 0
+  alphaCount: 0
+  InkUseCount: 0
 --- !u!95 &7908072550562963389
 Animator:
   serializedVersion: 3

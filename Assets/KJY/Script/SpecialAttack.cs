@@ -27,7 +27,7 @@ public class SpecialAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && SpecialSkillGageManager.instance.charge)
+        if (Input.GetKeyDown(KeyCode.R) && SpecialSkillGageManager.instance.charge)
         {
             specialAttack = true;
             High = true;

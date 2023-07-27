@@ -57,7 +57,7 @@ public class Player_CameraAndMove : MonoBehaviour
     public float maxSize;
     public float speed;
     private float currentSize;
-
+    public bool isMove;
 
     private void Awake()
     {
@@ -234,7 +234,7 @@ public class Player_CameraAndMove : MonoBehaviour
     private void Move()
     {
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        bool isMove = moveInput.magnitude != 0;
+        isMove = moveInput.magnitude != 0;
         if (isMove)
         {
             anim.SetFloat("X", moveInput.x);
