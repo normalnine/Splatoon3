@@ -7,7 +7,10 @@ public class LerpTest : MonoBehaviour
     Vector3 target;
 
     public Transform target1, target2;
+    public GameObject waveFactory;
+    public Transform wavePos;
 
+    bool waveon;
     Vector3 origin;
 
     void Start()
@@ -20,6 +23,12 @@ public class LerpTest : MonoBehaviour
     float currentTime;
     void Update()
     {
+        if (currentTime > 0.5)
+        {
+            if(waveon == false)
+            WaveEffect();
+        }
+
         currentTime += Time.deltaTime;
         if (currentTime > 1)
             currentTime = 1;
@@ -37,5 +46,14 @@ public class LerpTest : MonoBehaviour
         Vector3 bccd = Vector3.Lerp(bc, cd, t);
 
         return Vector3.Lerp(abbc, bccd, t);
+    }
+
+    void WaveEffect()
+    {
+        GameObject wave = Instantiate(waveFactory);
+        wave.transform.parent = wavePos;
+        wave.transform.position = wavePos.position;
+        
+        waveon = true;
     }
 }

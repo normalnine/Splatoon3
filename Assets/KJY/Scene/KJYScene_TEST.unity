@@ -251,7 +251,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &104373893 stripped
 MonoBehaviour:
@@ -7744,7 +7744,7 @@ PrefabInstance:
       objectReference: {fileID: 724006479}
     - target: {fileID: 5496496670542196575, guid: ddc29795394ef4c49af4bc3dda7d1e4f, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5496496670542196575, guid: ddc29795394ef4c49af4bc3dda7d1e4f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8235,7 +8235,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &938587768 stripped
 GameObject:
@@ -8826,7 +8826,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3366688926191180534, guid: f3a3dabe59f742140b9a35169ee6d9e7, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3366688926191180534, guid: f3a3dabe59f742140b9a35169ee6d9e7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15202,6 +15202,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8574937083761143598, guid: 13f4687aabbb67f44a9520710ac8d278, type: 3}
+      propertyPath: waveFactory
+      value: 
+      objectReference: {fileID: 1661892468567969052, guid: a1c7ab39895fff449850c1025f910f85, type: 3}
     - target: {fileID: 8574937083761143598, guid: 13f4687aabbb67f44a9520710ac8d278, type: 3}
       propertyPath: playerTerget
       value: 
