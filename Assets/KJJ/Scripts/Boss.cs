@@ -16,7 +16,6 @@ public class Boss : MonoBehaviour
     }
     // 보스 체력
     public float bossHP = 9;
-    public bool bossmoving = false;
     // 문추냉이 소환위치
     public Transform moonPosition;
     // 문추냉이 소환공장
@@ -32,51 +31,46 @@ public class Boss : MonoBehaviour
     void Start()
     {
         act = true;
-        bossHP = 9;
+        bossHP = 7;
     }
 
     // Update is called once per frame
     void Update()
     {
         dir = transform.position - center.transform.position;
-        // 보스 체력이 일정 체력으로 낮아지면 패턴이 넘어간다.
-        if (bossmoving == true)
+        if (bossHP == 6 && act == false)
         {
-            if (bossHP == 6 || bossHP == 3)
-            {
-                BossMoveOn();
-                bossmoving = false;
-            }
-        }
-        else BossMoveOff();
-        
-        if (bossHP == 7 && act == true)
-        {
-            MakeBoss();
-            bossmoving = true;
-            BossAttack.instance.currentTime = 0;
-        }
-        else if (bossHP < 7)
-        {
+            // 공격 중지
             BossAttack.instance.pattern1 = false;
             BossAttack.instance.pattern2 = true;
-            if (bossHP == 4 && act == true)
-            {
-                MakeBoss();
-                bossmoving = true;
-                BossAttack.instance.currentTime = 0;
-            }
-            if (bossHP < 4)
-            {
-                BossAttack.instance.pattern2 = false;
-                BossAttack.instance.pattern3 = true;
-                if (bossHP == 1 && act == true)
-                {
-                    MakeBoss();
-                    BossAttack.instance.currentTime = 0;
-                }
-            }
         }
+        else if (bossHP == 7 && act == true)
+        {
+            MakeBoss();
+            BossAttack.instance.currentTime = 0;
+        }
+        if (bossHP == 1 && act == true)
+        {
+            MakeBoss();
+        }
+        if (bossHP < 6)
+        {
+            BossAttack.instance.currentTime = 0;
+        }
+        if (bossHP == 6) movePositionCount = 0;
+
+        if (bossHP == 3 && act == false)
+        {
+            // 공격 중지
+            BossAttack.instance.pattern2 = false;
+            BossAttack.instance.pattern3 = true;
+        }
+        else if (bossHP == 4 && act == true)
+        {
+            MakeBoss();
+            BossAttack.instance.currentTime = 0;
+        }
+        if (bossHP == 3) movePositionCount = 1;
     }
 
     void MakeBoss()
@@ -87,15 +81,6 @@ public class Boss : MonoBehaviour
         act = false;
     }
 
-    void BossMoveOn()
-    {
-        bossMove.GetComponent<BossMove>().enabled = true;
-    }
-
-    public void BossMoveOff()
-    {
-        bossMove.GetComponent<BossMove>().enabled = false;
-    }
 
     public void ClearUI()
     {
@@ -109,9 +94,6 @@ public class Boss : MonoBehaviour
             // 바라보는 방향을 중앙을보게
             transform.forward = -dir.normalized;
             Destroy(collision.gameObject);
-            // 이동 스크립트 끄기
-            BossMoveOff();
         }
     }
-
 }

@@ -15,15 +15,32 @@ public class BossMove : MonoBehaviour
 
     public Transform Projectile;
     private Transform myTransform;
+    public bool a;
+    public bool b;
+
 
     public void Start()
     {
         myTransform = transform;
-        StartCoroutine(SimulateProjectile());
+        //StartCoroutine(SimulateProjectile());
     }
 
+    private void Update()
+    {
+        if (Boss.instance.movePositionCount == 0 && a == true)
+        {
+            StartCoroutine(SimulateProjectile());
+            a = false;
+        }
+        if (Boss.instance.movePositionCount == 1 && b == true)
+        {
+            StartCoroutine(SimulateProjectile());
+            b = false;
+        }
+    }
     IEnumerator SimulateProjectile()
     {
+        myTransform = transform;
         // 발사체를 던지는 물체의 위치로 이동 + 필요한 경우 일부 오프셋을 추가합니다.
         Projectile.position = myTransform.position;
         // 타겟까지의 거리 계산
@@ -51,5 +68,6 @@ public class BossMove : MonoBehaviour
             elapse_time += Time.deltaTime;
             yield return null;
         }
+
     }
 }

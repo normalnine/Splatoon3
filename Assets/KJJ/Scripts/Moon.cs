@@ -53,13 +53,15 @@ public class Moon : MonoBehaviour
             rb.velocity = Vector3.zero;
         }
 
-        if(collision.gameObject.tag == "Boss")
+        if (collision.gameObject.tag == "Boss")
         {
             bossDie = false;
             gameObject.SetActive(false);
             Destroy(gameObject);
             Boss.instance.act = true;
             Boss.instance.bossHP--;
+            if (Boss.instance.bossHP > 4) BossMove.instance.a = true;
+            if (Boss.instance.bossHP < 5) BossMove.instance.b = true;
             BossAttack.instance.currentTime = 0;
         }
     }
@@ -73,7 +75,7 @@ public class Moon : MonoBehaviour
             rb.velocity = -transform.forward * speed * 2f;
             bossDie = true;
         }
-        else if(bossMoonHP < 1 && Boss.instance.bossHP < 2)
+        else if (bossMoonHP < 1 && Boss.instance.bossHP < 2)
         {
             GameObject grenadeBoom = Instantiate(grenade);
             grenadeBoom.transform.position = transform.position;
