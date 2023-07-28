@@ -47,7 +47,7 @@ public class ParticlesController : MonoBehaviour
                 if (other.gameObject.name.Contains("Fist"))
                 {
                     FistC.instance.bossFistHP--;
-                    if(FistC.instance.attacked == false)
+                    if(FistC.instance.attacked == false && FistC.instance.bossFistHP > 0)
                     {
                         FistC.instance.attacked = true;
                     }

@@ -129,6 +129,7 @@ public class FistC : MonoBehaviour
             {
                 speed = 15;
                 attacked = false;
+                fistTime = 0;
             }
         }
         if(audioCount == 1) AudioSource.Play();

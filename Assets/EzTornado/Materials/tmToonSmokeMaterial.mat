@@ -9,16 +9,15 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: tmToonSmokeMaterial
   m_Shader: {fileID: 4800000, guid: b7839dad95683814aa64166edc107ae2, type: 3}
-  m_ShaderKeywords: _COLORCOLOR_ON _EMISSION _NORMALMAP
-  m_LightmapFlags: 2
+  m_ShaderKeywords: _ALPHABLEND_ON _COLORCOLOR_ON _EMISSION _FLIPBOOKBLENDING_OFF
+    _GLOSSYREFLECTIONS_OFF _NORMALMAP _SPECULARHIGHLIGHTS_OFF
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
-  stringTagMap:
-    RenderType: Transparent
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   disabledShaderPasses:
   - ALWAYS
-  - SHADOWCASTER
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -113,7 +112,7 @@ Material:
     - _EmissionColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
     - _SoftParticleFadeParams: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &4718647578283175310
+--- !u!114 &4094177677335050251
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

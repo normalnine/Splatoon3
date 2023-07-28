@@ -30,8 +30,8 @@ public class BossAttack : MonoBehaviour
     int prevChooseIndex = -1; // 인덱스값을 저장
     public GameObject[] spawnList;
 
-    int rValue = 1;
-    int lValue = 1;
+    public int rValue = 1;
+    public int lValue = 1;
     public float swallowTime;
     // Start is called before the first frame update
     void Start()
@@ -169,12 +169,12 @@ public class BossAttack : MonoBehaviour
         if (rValue == 3)
         {
             swallow();
-            lValue++;
+            rValue++;
         }
         else if (rValue == 4)
         {
             Inkboom();
-            lValue++;
+            rValue++;
         }
         else if (rValue == 5)
         {
