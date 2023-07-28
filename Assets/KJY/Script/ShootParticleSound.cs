@@ -6,6 +6,8 @@ public class ShootParticleSound : MonoBehaviour
 {
     public AudioSource ParticleSource;
     public AudioClip[] particleClip;
+    public AudioClip hitClip;
+    public ParticleSystem SplashFactory;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,9 +22,19 @@ public class ShootParticleSound : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
+        int layer = LayerMask.NameToLayer("BossAttack");
         if (other.gameObject.CompareTag("Ground"))
         {
+            if (ParticleSource.GetComponent<AudioSource>().isPlaying)
+                return;
             ParticleSource.clip = particleClip[Random.Range(0, particleClip.Length)];
+            ParticleSource.Play();
+        }
+        else if(other.gameObject.layer == layer)
+        {
+            if (ParticleSource.GetComponent<AudioSource>().isPlaying)
+                return;
+            ParticleSource.clip = hitClip;
             ParticleSource.Play();
         }
     }

@@ -66,7 +66,7 @@ public class PlayerShoot : MonoBehaviour
                 nonSalmon.enabled = true;
                 StartCoroutine(ImageEffectManager());
             }
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.Q))
             {
                 ShootingTest.instance.INKGAGE -= 20f;
                 anim.SetBool("ThrowReady", false);

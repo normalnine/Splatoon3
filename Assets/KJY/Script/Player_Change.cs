@@ -30,7 +30,7 @@ public class Player_Change : MonoBehaviour
     public bool changeImm;
 
     public Canvas InkImage;
-
+    public ParticleSystem puddleParticle;
     private void Awake()
     {
         instance = this;
@@ -57,6 +57,10 @@ public class Player_Change : MonoBehaviour
         ChangeSquid();
         SetBodyPosition();
         ChaneOnTheGround();
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            puddleParticle.Play();
+        }
     }
 
     void ChangeHuman()
