@@ -18,17 +18,17 @@ public class BossMove : MonoBehaviour
     public bool a;
     public bool b;
 
-
+    public AudioSource AudioSource1;
     public void Start()
     {
         myTransform = transform;
-        //StartCoroutine(SimulateProjectile());
     }
 
     private void Update()
     {
         if (Boss.instance.movePositionCount == 0 && a == true)
         {
+            AudioSource1.Play();
             StartCoroutine(SimulateProjectile());
             a = false;
         }

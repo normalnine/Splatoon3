@@ -27,6 +27,9 @@ public class HandC : MonoBehaviour
     public bool swallow;
 
     Vector3 dir; //방향을 담을 변수
+    public AudioSource AudioSource;
+    int audioCount = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -104,7 +107,10 @@ public class HandC : MonoBehaviour
             rb.velocity = dir.normalized * speed * 2.5f;
             transform.forward = -rb.velocity.normalized;
             bhpH = true;
+            audioCount++;
+            if (audioCount > 100) audioCount = 10;
         }
+        if (audioCount == 1) AudioSource.Play();
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -158,6 +164,7 @@ public class HandC : MonoBehaviour
             rb.constraints = RigidbodyConstraints.None;
             rb.velocity = -transform.forward * speed * 2f;
             bossDie = true;
+            AudioSource.Play();
         }
     }
 

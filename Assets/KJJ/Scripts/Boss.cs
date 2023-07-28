@@ -27,19 +27,22 @@ public class Boss : MonoBehaviour
     public GameObject bossMove;
     public GameObject center;
     public Vector3 dir;
+    public AudioSource audioSource;
+    public AudioSource audioSource2;
     // Start is called before the first frame update
     void Start()
     {
         act = true;
-        bossHP = 7;
+        bossHP = 9;
     }
 
     // Update is called once per frame
     void Update()
     {
         dir = transform.position - center.transform.position;
-        if (bossHP == 6 && act == false)
+        if (bossHP == 6)
         {
+            movePositionCount = 0;
             // 공격 중지
             BossAttack.instance.pattern1 = false;
             BossAttack.instance.pattern2 = true;
@@ -52,15 +55,12 @@ public class Boss : MonoBehaviour
         if (bossHP == 1 && act == true)
         {
             MakeBoss();
-        }
-        if (bossHP < 6)
-        {
             BossAttack.instance.currentTime = 0;
         }
-        if (bossHP == 6) movePositionCount = 0;
 
-        if (bossHP == 3 && act == false)
+        if (bossHP == 3)
         {
+            movePositionCount = 1;
             // 공격 중지
             BossAttack.instance.pattern2 = false;
             BossAttack.instance.pattern3 = true;
@@ -70,7 +70,6 @@ public class Boss : MonoBehaviour
             MakeBoss();
             BossAttack.instance.currentTime = 0;
         }
-        if (bossHP == 3) movePositionCount = 1;
     }
 
     void MakeBoss()
@@ -94,6 +93,16 @@ public class Boss : MonoBehaviour
             // 바라보는 방향을 중앙을보게
             transform.forward = -dir.normalized;
             Destroy(collision.gameObject);
+            audioSource2.Play();
+            BossAttack.instance.currentTime = 0;
+        }
+        if(collision.gameObject.CompareTag("Fist"))
+        {
+            audioSource.Play();
+        }
+        if (collision.gameObject.CompareTag("Hand"))
+        {
+            audioSource.Play();
         }
     }
 }

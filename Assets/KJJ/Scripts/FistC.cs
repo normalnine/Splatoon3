@@ -27,8 +27,11 @@ public class FistC : MonoBehaviour
 
     public bool attacked;
     public float fistTime;
-    public float stiffnessTime = 0.1f;
+    public float stiffnessTime = 0.2f;
     Vector3 dir; //방향을 담을 변수
+
+    public AudioSource AudioSource;
+    int audioCount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -106,6 +109,8 @@ public class FistC : MonoBehaviour
             rb.velocity = dir.normalized * speed * 2.5f;
             transform.forward = -rb.velocity.normalized;
             bhpF = true;
+            audioCount++;
+            if (audioCount > 100) audioCount = 10;
         }
         // 체력이 1보다 낮아지면 
         if (bossFistHP < 1)
@@ -126,6 +131,7 @@ public class FistC : MonoBehaviour
                 attacked = false;
             }
         }
+        if(audioCount == 1) AudioSource.Play();
     }
     private void OnCollisionEnter(Collision collision)
     {

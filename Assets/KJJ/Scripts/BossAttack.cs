@@ -15,7 +15,6 @@ public class BossAttack : MonoBehaviour
     public GameObject fistFactory;
     public GameObject inkboomFactory;
     public GameObject swallowFactory;
-    public GameObject waveFactory;
     public float currentTime;
     public float attackTime = 7;
 
@@ -48,16 +47,6 @@ public class BossAttack : MonoBehaviour
         if (pattern2 == true) Page2();
         if (pattern3 == true) Page3();
 
-        //if (HandC.instance.swallow == true)
-        //{
-        //    swallowTime += Time.deltaTime;
-        //}
-        //if (swallowTime > 0.4)
-        //{
-        //    GameObject swallow = Instantiate(swallowFactory);
-        //    swallow.transform.position = Firepos.position;
-        //    swallow.transform.forward = Firepos.forward;
-        //}
     }
     // 1페이지 공격패턴
     void Page1()
@@ -79,16 +68,12 @@ public class BossAttack : MonoBehaviour
     // 1페이지 왼손
     void LFirePos1P()
     {
-        int rValue = Random.Range(0, 9); // 랜덤한 0~9까지의 수를 만든다.
-        if (rValue < 5) LHand();
-        else LFist();
+        LFist();
     }
     // 1페이지 오른손
     void RFirePos1P()
     {
-        int rValue = Random.Range(0, 9); // 랜덤한 0~9까지의 수를 만든다.
-        if (rValue < 5) RHand();
-        else RFist();
+       RFist();
     }
 
     // 2페이지 공격패턴
@@ -105,23 +90,13 @@ public class BossAttack : MonoBehaviour
     {
         if (lValue == 1)
         {
-            swallow();
-            lValue++;
-        }
-        else if (lValue == 2)
-        {
-            Inkboom();
-            lValue++;
-        }
-        else if (lValue == 3)
-        {
-            LFist();
+            LHand();
             lValue++;
             didths = true;
         }
-        else if(lValue == 4)
+        else if (lValue == 2)
         {
-            LHand();
+            LFist();
             lValue++;
             didths = true;
         }
@@ -138,6 +113,7 @@ public class BossAttack : MonoBehaviour
         else if (rValue == 2)
         {
             RHand();
+            rValue++;
             didths = false;
         }
     }
@@ -154,13 +130,17 @@ public class BossAttack : MonoBehaviour
 
     private void LFirePos3P()
     {
-        if (lValue == 5)
+        if (lValue == 3)
         {
-            Wave();
+            swallow();
             lValue++;
-            didths = true;
         }
-        else if (lValue == 6)
+        else if(lValue == 4)
+        {
+            Inkboom();
+            lValue++;
+        }
+        else if (lValue == 5)
         {
             int chooseIndex = Random.Range(0, spawnList.Length); //0부터 배열의 길이까지
                                                                  // 4.1 랜덤 인덱스가 직전 인덱스와 같다면 다시 정하고싶다.
@@ -186,13 +166,17 @@ public class BossAttack : MonoBehaviour
 
     private void RFirePos3P()
     {
-        if (rValue == 5)
+        if (rValue == 3)
         {
-            Wave();
-            rValue++;
-            didths = true;
+            swallow();
+            lValue++;
         }
-        else if (rValue == 6)
+        else if (rValue == 4)
+        {
+            Inkboom();
+            lValue++;
+        }
+        else if (rValue == 5)
         {
             int chooseIndex = Random.Range(0, spawnList.Length); //0부터 배열의 길이까지
                                                                  // 4.1 랜덤 인덱스가 직전 인덱스와 같다면 다시 정하고싶다.
@@ -212,7 +196,7 @@ public class BossAttack : MonoBehaviour
             attack.transform.position = LFirepos.position;
             attack.transform.forward = LFirepos.forward;
             currentTime = 0;
-            didths = false;
+            didths = true;
         }
     }
 
@@ -260,14 +244,6 @@ public class BossAttack : MonoBehaviour
         GameObject swallow = Instantiate(swallowFactory);
         swallow.transform.position = Firepos.position;
         swallow.transform.forward = Firepos.forward;
-        currentTime = 0;
-    }
-
-    void Wave()
-    {
-        GameObject wave = Instantiate(waveFactory);
-        wave.transform.position = Firepos.position;
-        wave.transform.forward = Firepos.forward;
         currentTime = 0;
     }
 }
