@@ -27,10 +27,10 @@ public class Player_Change : MonoBehaviour
     public float currentTime;
     public float MaxlimitTime;
 
-    private bool changeImm;
+    public bool changeImm;
 
     public Canvas InkImage;
-
+    public ParticleSystem puddleParticle;
     private void Awake()
     {
         instance = this;
@@ -57,6 +57,10 @@ public class Player_Change : MonoBehaviour
         ChangeSquid();
         SetBodyPosition();
         ChaneOnTheGround();
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            puddleParticle.Play();
+        }
     }
 
     void ChangeHuman()
@@ -180,7 +184,6 @@ public class Player_Change : MonoBehaviour
         }
         else if (state == State.Squid && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.none)
         {
-            print("In here3");
             InkImage.enabled = true;
             for (int i = 0; i < humanCount; i++)
             {

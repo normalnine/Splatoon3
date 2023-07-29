@@ -24,6 +24,20 @@ public class PlayerHP : MonoBehaviour
     public Camera mainCamera;
     public Vector3 cameraPos;
 
+    public AudioSource DamageSource;
+    public AudioClip[] damageClip;
+    public AudioClip recoveryClip;
+    public AudioClip dieClip;
+
+    public ParticleSystem DamageParticle;
+    public ParticleSystem dibuff;
+    public ParticleSystem dust;
+
+    public MeshRenderer bubbleShield;
+    public float shieldTime;
+
+    public bool ShieldOn;
+
     Animator anim;
     [Range(0.01f, 0.1f)] float shakeRange = 0.05f;
     [Range(0.1f, 0.5f)] float duration = 0.2f;
@@ -64,6 +78,9 @@ public class PlayerHP : MonoBehaviour
         bodyRendererList = HumanBodyMeshManager.Instance.MeshList;
         count = HumanBodyMeshManager.Instance.MeshCount;
         anim = GetComponent<Animator>();
+        shieldTime = 0;
+        bubbleShield.enabled = false;
+        ShieldOn = false;
     }
 
     // Update is called once per frame
@@ -71,6 +88,16 @@ public class PlayerHP : MonoBehaviour
     {
         PlayerInkDamageProcess();
         ShowPlayerDamageUIImage();
+        if (ShieldOn == true)
+        {
+            shieldTime += Time.deltaTime;
+            if (shieldTime > 1.5f)
+            {
+               bubbleShield.enabled = false;
+               shieldTime = 0;
+                ShieldOn = false;
+            }
+        }
     }
 
     public GameObject gameOverUI;
@@ -78,7 +105,7 @@ public class PlayerHP : MonoBehaviour
     public void PlayerStrongDamageProcess()
     {
         //내 체력 1 감소
-        HP -= 60;
+        HP -= 40;
         //내 체력 0일때
         if (HP <= 0)
         {
@@ -89,6 +116,11 @@ public class PlayerHP : MonoBehaviour
         {
             if (Damage == false)
             {
+                dibuff.Play();
+                dust.Play();
+                DamageParticle.Play();
+                ShieldControl(true);
+                DamageSound();
                 StartCoroutine(PlayerDamageManager());
                 StartCoroutine(DamageUIManage());
                 AttackShake();
@@ -109,6 +141,8 @@ public class PlayerHP : MonoBehaviour
         }
         else
         {
+            DamageParticle.Play();
+            DamageSound();
             StartCoroutine(PlayerDamageManager());
             StartCoroutine(DamageUIManage());
             StartCoroutine(UnBeat());
@@ -234,6 +268,7 @@ public class PlayerHP : MonoBehaviour
         otherbody.SetActive(false);
         image.SetActive(true);
         throwBody.SetActive(true);
+        DamageSource.PlayOneShot(dieClip);
         for (int i = 0; i <count; i++)
         {
             bodyRendererList[i].enabled = false;
@@ -276,7 +311,11 @@ public class PlayerHP : MonoBehaviour
         currentTime += Time.deltaTime;
         if (currentTime > recoveryTime)
         {
+            dibuff.Stop();
+            dust.Stop();
+            ShieldControl(false);
             HP = 100;
+            DamageSource.PlayOneShot(recoveryClip);
             for (int i = 1; i < DamageUIManager.instance.count; i++)
             {
                 GameObject image = DamageUIManager.instance.imageList[i];
@@ -339,5 +378,25 @@ public class PlayerHP : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         Damage = false;
+    }
+
+    void DamageSound()
+    {
+        DamageSource.clip = damageClip[Random.Range(0, damageClip.Length)];
+        DamageSource.PlayOneShot(DamageSource.clip);
+    }
+
+    void ShieldControl(bool status)
+    {
+        if (status == true)
+        {
+            bubbleShield.enabled = true;
+            Shield.instance.OpenCloseShield();
+        }
+        else
+        {
+            Shield.instance.OpenCloseShield();
+            ShieldOn = true;
+        }
     }
 }

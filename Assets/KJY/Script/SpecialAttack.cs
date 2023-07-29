@@ -10,6 +10,11 @@ public class SpecialAttack : MonoBehaviour
     public Transform cameraTarget;
     public bool High;
     Rigidbody rb;
+    Animator anim;
+    public ParticleSystem specialAttackParticle;
+    public AudioClip specialAttackClip;
+    public AudioSource PlayerSource;
+    public ParticleSystem GroundParticle;
     private void Awake()
     {
         instance = this;
@@ -20,26 +25,30 @@ public class SpecialAttack : MonoBehaviour
         specialAttack = false;
         rb = GetComponent<Rigidbody>();
         High = false;
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && SpecialSkillGageManager.instance.charge)
+        if (Input.GetKeyDown(KeyCode.R) && SpecialSkillGageManager.instance.charge)
         {
             specialAttack = true;
             High = true;
             rb.AddForce(new Vector3(0, 1, 0) * 14, ForceMode.Impulse);
+            anim.SetBool("SpecialAttackUp", true);
         }
         if (specialAttack == true)
         {
             currentTime += Time.deltaTime;
-            if (currentTime > 0.5)
+            if (currentTime > 1)
             {
                 //rb.constraints = RigidbodyConstraints.FreezePositionY;
                 rb.isKinematic = true;
+                anim.SetBool("SpecialAttackUp", false);
+                anim.SetTrigger("SpecialAttackDown");
             }
-            if (currentTime > 1)
+            if (currentTime > 1.8)
             {
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(0, -1, 0) * 25, ForceMode.Impulse);
@@ -54,6 +63,9 @@ public class SpecialAttack : MonoBehaviour
         if (collision.gameObject.tag == "Ground" && specialAttack == true)
        {
             specialAttack = false;
+            specialAttackParticle.Play();
+            GroundParticle.Play();
+            PlayerSource.PlayOneShot(specialAttackClip);
             int layer = 1 << LayerMask.NameToLayer("BossAttack");
             High = false;
             Collider[] cols = Physics.OverlapSphere(transform.position, 10f, layer);

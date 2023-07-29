@@ -27,7 +27,14 @@ public class ShootingTest : MonoBehaviour
     public SkinnedMeshRenderer InkGageMaterial;
     public Image NonInkImage;
     Vector3 ImageT;
+    public Transform Aim;
     Animator anim;
+    
+    public float dist;
+    public float height;
+
+    public float alphaCount;
+    public float InkUseCount;
     public float INKGAGE
     {
         get
@@ -58,6 +65,7 @@ public class ShootingTest : MonoBehaviour
         InkGageSlider.maxValue = MaxInkGage;
         InkGageMaterial.material.mainTextureOffset = new Vector2(0, 0);
         anim = GetComponent<Animator>();
+        alphaCount = 1f;
         //input = GetComponent<MovementInput>();
     }
 
@@ -68,23 +76,23 @@ public class ShootingTest : MonoBehaviour
         parentController.transform.position = nozzle.transform.position;
         bool pressing = Input.GetMouseButton(0);
 
-        if (Input.GetMouseButton(0) && Player_Change.instance.state == Player_Change.State.Human)
+        if (Input.GetButton("Fire1") && Player_Change.instance.state == Player_Change.State.Human)
         {
             VisualPolish();
             Shooting = true;
-            INKGAGE -= 0.03f;
+            INKGAGE -= InkUseCount;
             SpecialSkillGageManager.instance.SkillGage += 0.1f;
             anim.SetBool("Shoot", true);
             //RotateToCamera(transform);
         }
-        if (Input.GetMouseButtonDown(0) && Shooting == true && Player_Change.instance.state == Player_Change.State.Human)
+        if (Input.GetButtonDown("Fire1") && Shooting == true && Player_Change.instance.state == Player_Change.State.Human)
         {
             if (INKGAGE >= 0)
             {
                 inkParticle.Play();
             }
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (Input.GetButtonUp("Fire1"))
         {
             anim.SetBool("Shoot", false);
             inkParticle.Stop();
@@ -94,11 +102,11 @@ public class ShootingTest : MonoBehaviour
         {
             inkParticle.Stop();
             NonInkImage.enabled = true;
-            ImageShake();
+            StartCoroutine(ImageEffectManager());
         }
         else
         {
-            CancelInvoke("StartShake");
+            alphaCount = 1f;
             NonInkImage.enabled = false;
         }
         if (Player_Change.instance.state == Player_Change.State.Squid)
@@ -107,22 +115,48 @@ public class ShootingTest : MonoBehaviour
         }
         //parentController.eulerAngles = new Vector3(cameraArm.transform.eulerAngles.x, parentController.localEulerAngles.y, parentController.localEulerAngles.z);
         //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
-        parentController.forward = (Camera.main.transform.position + Camera.main.transform.forward * 10) - nozzle.transform.position;
-        Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+        //Vector3 aimPos = (Camera.main.transform.position + Camera.main.transform.forward * 5 + Camera.main.transform.up);
+        //Vector3 dir = aimPos - nozzle.transform.position;
+        //parentController.forward = dir;
+        //Gun.position = dir;
+        //Vector3 aimPos = Camera.main.transform.position + Camera.main.transform.forward * 5;
+        //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+        parentController.forward = (Camera.main.transform.position + Camera.main.transform.forward * dist + Camera.main.transform.up * height) - nozzle.transform.position;
+        //Gun.rotation = Quaternion.Euler(cameraArm.transform.eulerAngles.x + 90f, parentController.localEulerAngles.y, -90f);
+        //Aim.position = (Camera.main.transform.position + Camera.main.transform.forward * dist) - nozzle.transform.position;
     }
 
-    public void ImageShake()
+    IEnumerator ImageEffectManager()
     {
-        ImageT = NonInkImage.transform.position;
-        InvokeRepeating("StartShake", 1f, 0.01f);
+        while (true)
+        {
+            yield return ImageEffectOn();
+            yield return ImageEffectOff();
+        }
     }
 
-    public void StartShake()
+    IEnumerator ImageEffectOn()
     {
-        float InkPosY = Random.value * 0.01f * 2 - 0.01f;
-        Vector3 ImagePosition = NonInkImage.transform.position;
-        ImagePosition.y += InkPosY;
-        NonInkImage.transform.position = ImagePosition;
+        while (alphaCount >= 0.3f)
+        {
+            alphaCount -= 0.02f;
+            Color color = NonInkImage.color;
+            color.a = alphaCount;
+            NonInkImage.color = color;
+            yield return 0;
+        }
+    }
+
+    IEnumerator ImageEffectOff()
+    {
+        while (alphaCount <= 1f)
+        {
+            alphaCount += 0.02f;
+            Color color = NonInkImage.color;
+            color.a = alphaCount;
+            NonInkImage.color = color;
+            yield return 0;
+        }
     }
 
     void VisualPolish()
