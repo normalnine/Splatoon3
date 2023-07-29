@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KDH_PauseGame : MonoBehaviour
 {
-    GameObject bgm;
+    public GameObject bgm;
     
 
     // Start is called before the first frame update

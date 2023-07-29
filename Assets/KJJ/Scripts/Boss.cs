@@ -8,7 +8,6 @@ public class Boss : MonoBehaviour
 
     public static Boss instance;
     public GameObject clearUI;
-    public GameObject bgm;
 
     private void Awake()
     {

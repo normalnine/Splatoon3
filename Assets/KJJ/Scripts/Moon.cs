@@ -77,13 +77,18 @@ public class Moon : MonoBehaviour
         {
             GameObject grenadeBoom = Instantiate(grenade);
             grenadeBoom.transform.position = transform.position;
-            Boss.instance.bgm.GetComponent<AudioSource>().Stop();
-            Boss.instance.ClearUI();
-            Destroy(gameObject);
+            StartCoroutine(ClearUI(1f));
+            Destroy(gameObject, 2f);
         }
         if (collision.gameObject.CompareTag("Ground"))
         {
             BossAttack.instance.currentTime = 0;
         }
+    }
+
+    IEnumerator ClearUI(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Boss.instance.ClearUI();
     }
 }

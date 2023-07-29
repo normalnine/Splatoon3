@@ -18,7 +18,7 @@ public class KDH_Clear : MonoBehaviour
 
     IEnumerator TimerSpawn()
     {
-        yield return new WaitForSecondsRealtime(4f);
+        yield return new WaitForSecondsRealtime(7f);
         clearTimer.GetComponent<Text>().enabled = true;
 
         yield return new WaitForSecondsRealtime(5f);
