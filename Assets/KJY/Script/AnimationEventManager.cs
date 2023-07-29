@@ -181,6 +181,6 @@ public class AnimationEventManager : MonoBehaviour
     void SpecialAttack()
     {
         stop = false;
-        PlayerSource.PlayOneShot(SpecialAttackClip);
+        //PlayerSource.PlayOneShot(SpecialAttackClip);
     }
 }

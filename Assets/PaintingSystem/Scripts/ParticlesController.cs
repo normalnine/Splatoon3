@@ -9,6 +9,7 @@ public class ParticlesController: MonoBehaviour{
     public float maxRadius = 0.2f;
     public float strength = 1;
     public float hardness = 1;
+    public ParticleSystem InkParticleFactory;
     [Space]
     ParticleSystem part;
     List<ParticleCollisionEvent> collisionEvents;
@@ -30,8 +31,10 @@ public class ParticlesController: MonoBehaviour{
         int numCollisionEvents = part.GetCollisionEvents(other, collisionEvents);
 
         Paintable p = other.GetComponentInChildren<Paintable>();//GetComponentInChildren<Paintable>();// GetComponent<Paintable>();
-        if (p != null){
-            for  (int i = 0; i< numCollisionEvents; i++){
+        if (p != null)
+        {
+            for  (int i = 0; i< numCollisionEvents; i++)
+            {
                 Vector3 pos = collisionEvents[i].intersection;
                 float radius = Random.Range(minRadius, maxRadius);
                 PaintManager.instance.paint(p, pos, radius, hardness, strength, paintColor);
@@ -51,6 +54,12 @@ public class ParticlesController: MonoBehaviour{
                 {
                     other.gameObject.GetComponentInParent<KDH_Target>().Damaged();
                     
+                }
+                else if (other.gameObject.CompareTag("Ground"))
+                {
+                    ParticleSystem particle = Instantiate(InkParticleFactory);
+                    particle.transform.position = pos;
+                    particle.Play();
                 }
             }
         }

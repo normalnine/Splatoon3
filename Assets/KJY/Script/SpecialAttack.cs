@@ -11,6 +11,10 @@ public class SpecialAttack : MonoBehaviour
     public bool High;
     Rigidbody rb;
     Animator anim;
+    public ParticleSystem specialAttackParticle;
+    public AudioClip specialAttackClip;
+    public AudioSource PlayerSource;
+    public ParticleSystem GroundParticle;
     private void Awake()
     {
         instance = this;
@@ -44,7 +48,7 @@ public class SpecialAttack : MonoBehaviour
                 anim.SetBool("SpecialAttackUp", false);
                 anim.SetTrigger("SpecialAttackDown");
             }
-            if (currentTime > 1.7)
+            if (currentTime > 1.8)
             {
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(0, -1, 0) * 25, ForceMode.Impulse);
@@ -59,6 +63,9 @@ public class SpecialAttack : MonoBehaviour
         if (collision.gameObject.tag == "Ground" && specialAttack == true)
        {
             specialAttack = false;
+            specialAttackParticle.Play();
+            GroundParticle.Play();
+            PlayerSource.PlayOneShot(specialAttackClip);
             int layer = 1 << LayerMask.NameToLayer("BossAttack");
             High = false;
             Collider[] cols = Physics.OverlapSphere(transform.position, 10f, layer);

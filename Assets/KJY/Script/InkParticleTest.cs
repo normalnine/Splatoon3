@@ -19,11 +19,10 @@ public class InkParticleTest : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        print("un");
         if (other.gameObject.CompareTag("Ground"))
         {
             ParticleSystem particle = Instantiate(InkParticleFactory);
-            //particle.transform.position = other.gameObject.transform.position;
+            particle.transform.position = transform.position;
             particle.Play();
         }
     }

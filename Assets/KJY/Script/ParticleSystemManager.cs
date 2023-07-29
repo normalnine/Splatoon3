@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class ParticleSystemManager : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class ParticleSystemManager : MonoBehaviour
     public ParticleSystem enemyForwardParticle;
     public ParticleSystem specialAttack;
     public ParticleSystem specialAttackGround;
+    public ParticleSystem specialAttackUp;
+    public ParticleSystem specialAttackWave;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,16 +40,28 @@ public class ParticleSystemManager : MonoBehaviour
         {
             forwardParticle.Stop();
         }
+        Vector3 tmp;
+        tmp = transform.position;
+        tmp.y = 0;
+        specialAttackUp.transform.position = tmp;
+        specialAttackWave.transform.position = tmp;
+        specialAttack.transform.position = tmp;
+        specialAttackGround.transform.position = tmp;
     }
 
     void SpecialAttackEvent()
     {
-        specialAttack.Play();
+        //specialAttack.Play();
+        //specialAttackGround.Play();
     }
 
     void SpecialAttackGroundEvent()
     {
-        specialAttackGround.Play();
     }
 
+    void SpecialAttackUp()
+    {
+        specialAttackUp.Play();
+        specialAttackWave.Play();
+    }
 }
