@@ -7,6 +7,7 @@ public class ParticleSystemManager : MonoBehaviour
     public ParticleSystem forwardParticle;
     public ParticleSystem enemyForwardParticle;
     public ParticleSystem specialAttack;
+    public ParticleSystem specialAttackGround;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,4 +43,10 @@ public class ParticleSystemManager : MonoBehaviour
     {
         specialAttack.Play();
     }
+
+    void SpecialAttackGroundEvent()
+    {
+        specialAttackGround.Play();
+    }
+
 }

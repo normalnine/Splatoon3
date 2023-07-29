@@ -29,6 +29,11 @@ public class PlayerHP : MonoBehaviour
     public AudioClip recoveryClip;
     public AudioClip dieClip;
 
+    public ParticleSystem DamageParticle;
+    public ParticleSystem dibuff;
+    public ParticleSystem dust;
+    public ParticleSystem recovery;
+
     Animator anim;
     [Range(0.01f, 0.1f)] float shakeRange = 0.05f;
     [Range(0.1f, 0.5f)] float duration = 0.2f;
@@ -94,6 +99,7 @@ public class PlayerHP : MonoBehaviour
         {
             if (Damage == false)
             {
+                DamageParticle.Play();
                 DamageSound();
                 StartCoroutine(PlayerDamageManager());
                 StartCoroutine(DamageUIManage());
@@ -115,6 +121,7 @@ public class PlayerHP : MonoBehaviour
         }
         else
         {
+            DamageParticle.Play();
             DamageSound();
             StartCoroutine(PlayerDamageManager());
             StartCoroutine(DamageUIManage());
@@ -282,8 +289,13 @@ public class PlayerHP : MonoBehaviour
     public void Recure()
     {
         currentTime += Time.deltaTime;
+        dibuff.Play();
+        dust.Play();
         if (currentTime > recoveryTime)
         {
+            dibuff.Stop();
+            dust.Stop();
+            recovery.Play();
             HP = 100;
             DamageSource.PlayOneShot(recoveryClip);
             for (int i = 1; i < DamageUIManager.instance.count; i++)

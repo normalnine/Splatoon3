@@ -23,6 +23,7 @@ public class PlayerShoot : MonoBehaviour
     public Animator anim;
 
     float alphaCount;
+    ParticleSystem salmonParticle;
     private void Awake()
     {
         instance = this;

@@ -15,6 +15,7 @@ public class Test2_Back : MonoBehaviour
     float currentTime;
     bool salmonisGround;
     public bool comeback;
+    public ParticleSystem salmonParticle;
     void Awake()
     {
         instance = this;
@@ -38,12 +39,14 @@ public class Test2_Back : MonoBehaviour
             currentTime += Time.deltaTime;
             if (currentTime > 5f)
             {
+                salmonParticle.Stop();
                 StartCoroutine(SimulateProjectile_self());
             }
         }
        else if(Input.GetMouseButtonDown(1))
        {
             comeback = false;
+            salmonParticle.Stop();
             PlayerShoot.instance.lr.enabled = false;
             StartCoroutine(ComebackManager());
        }
@@ -51,13 +54,16 @@ public class Test2_Back : MonoBehaviour
        {
            Destroy(this.gameObject);
        }
+       if (PlayerShoot.instance.isShoot == true)
+        {
+            salmonParticle.Play();
+        }
     }
 
     IEnumerator ComebackManager()
     {
         yield return SimulateProjectile();
         yield return comeback = true;
-        print(comeback);
     }
 
     IEnumerator SimulateProjectile()
@@ -138,7 +144,7 @@ public class Test2_Back : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Rigidbody rb = GetComponent<Rigidbody>();
-        if (collision.gameObject.tag == "Ground" && PlayerShoot.instance.isShoot == true)
+        if (collision.gameObject && PlayerShoot.instance.isShoot == true)
         {
             print("in here");
             salmonisGround = true;
