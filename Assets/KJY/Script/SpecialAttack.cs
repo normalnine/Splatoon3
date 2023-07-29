@@ -14,7 +14,8 @@ public class SpecialAttack : MonoBehaviour
     public ParticleSystem specialAttackParticle;
     public AudioClip specialAttackClip;
     public AudioSource PlayerSource;
-    public ParticleSystem GroundParticle;
+    public ParticleSystem Particle1;
+    public ParticleSystem Particle2;
     private void Awake()
     {
         instance = this;
@@ -63,8 +64,9 @@ public class SpecialAttack : MonoBehaviour
         if (collision.gameObject.tag == "Ground" && specialAttack == true)
        {
             specialAttack = false;
+            Particle1.Play();
+            Particle2.Play();
             specialAttackParticle.Play();
-            GroundParticle.Play();
             PlayerSource.PlayOneShot(specialAttackClip);
             int layer = 1 << LayerMask.NameToLayer("BossAttack");
             High = false;
