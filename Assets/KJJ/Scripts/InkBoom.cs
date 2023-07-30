@@ -24,6 +24,8 @@ public class InkBoom : MonoBehaviour
 
     public Transform Projectile;
     private Transform myTransform;
+
+    public GameObject inkEffectFactory;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,7 @@ public class InkBoom : MonoBehaviour
 
     IEnumerator SimulateProjectile()
     {
+        myTransform = transform;
         // 발사체를 던지는 물체의 위치로 이동 + 필요한 경우 일부 오프셋을 추가합니다.
         Projectile.position = myTransform.position; // + new Vector3(0, 0, 0);
         // 타겟까지의 거리 계산
@@ -76,9 +79,11 @@ public class InkBoom : MonoBehaviour
         // 바닥에 닿았다면
         if (collision.gameObject.CompareTag("Ground"))
         {
+            StopCoroutine(SimulateProjectile());
             currentTime = 0;
             rb.useGravity = false;
             rb.velocity = Vector3.zero;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
             // 내 공격도 파괴하고싶다.
             Destroy(gameObject, 2.4f);
         }
@@ -98,7 +103,9 @@ public class InkBoom : MonoBehaviour
         if (currentTime > boomTime)
         {
             //터지는 이펙트
-
+            GameObject inkEffect = Instantiate(inkEffectFactory);
+            inkEffect.transform.position = transform.position;
+            Destroy(inkEffect, 0.8f);
             // 반경 5M 안의 충돌체중에 적이있다면
             int layer = 1 << LayerMask.NameToLayer("Player");
             Collider[] cols = Physics.OverlapSphere(transform.position, 5, layer);

@@ -30,8 +30,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566882517582554080}
-  m_LocalRotation: {x: 0.004605794, y: -0.702816, z: 0.004550588, w: 0.7113423}
-  m_LocalPosition: {x: 23.530941, y: 14.216351, z: -0.07019183}
+  m_LocalRotation: {x: 0.0021903887, y: -0.7052871, z: 0.0021791789, w: 0.7089151}
+  m_LocalPosition: {x: 25.698044, y: 17.932901, z: 0.22945985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 543450653340046075}
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1691aa4f7c8dcbb46922497bd7625c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 18
+  speed: 16
   bossMoonHP: 8
   grenade: {fileID: 100012, guid: 17e0ebddaa2fdea4b8f45188ec44e76e, type: 3}
 --- !u!54 &1566882517582554093

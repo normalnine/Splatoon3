@@ -28,6 +28,14 @@ public class Boss : MonoBehaviour
     public Vector3 dir;
     public AudioSource audioSource;
     public AudioSource audioSource2;
+
+    public bool idle;
+    public bool hit;
+    public bool moon;
+
+    float currentTime;
+
+    public GameObject hitEFactory;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +46,7 @@ public class Boss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentTime += Time.deltaTime;
         dir = transform.position - center.transform.position;
         if (bossHP == 6)
         {
@@ -69,6 +78,14 @@ public class Boss : MonoBehaviour
             MakeBoss();
             BossAttack.instance.currentTime = 0;
         }
+        if(hit == true)
+        {
+            if(currentTime > 1)
+            {
+                idle = true;
+                hit = false;
+            }
+        }
     }
 
     void MakeBoss()
@@ -89,6 +106,8 @@ public class Boss : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("to"))
         {
+            moon = false;
+            idle = true;
             // 바라보는 방향을 중앙을보게
             transform.forward = -dir.normalized;
             Destroy(collision.gameObject);
@@ -102,6 +121,22 @@ public class Boss : MonoBehaviour
         if (collision.gameObject.CompareTag("Hand"))
         {
             audioSource.Play();
+        }
+        if(collision.gameObject.CompareTag("Hand") || collision.gameObject.CompareTag("Fist"))
+        {
+            GameObject hiteffect = Instantiate(hitEFactory);
+            hiteffect.transform.position =transform.position;
+            idle = false;
+            hit = true;
+            currentTime = 0;
+        }
+        if (collision.gameObject.CompareTag("Moon"))
+        {
+            GameObject hiteffect = Instantiate(hitEFactory);
+            hiteffect.transform.position = transform.position;
+            idle = false;
+            moon = true;
+            currentTime = 0;
         }
     }
 }

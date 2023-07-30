@@ -11,12 +11,16 @@ public class BossAttack : MonoBehaviour
     }
     public Transform playerTerget;
     public GameObject floor;
-    public GameObject handFactory;
-    public GameObject fistFactory;
+    public GameObject lhandFactory;
+    public GameObject rhandFactory;
+    public GameObject lfistFactory;
+    public GameObject rfistFactory;
     public GameObject inkboomFactory;
     public GameObject swallowFactory;
     public float currentTime;
     public float attackTime = 7;
+
+    public AudioSource audioSource3;
 
     public bool pattern1 = false;
     public bool pattern2 = false;
@@ -27,8 +31,6 @@ public class BossAttack : MonoBehaviour
     public Transform Firepos;
     public bool didths;
 
-    int prevChooseIndex = -1; // 인덱스값을 저장
-    public GameObject[] spawnList;
 
     public int rValue = 1;
     public int lValue = 1;
@@ -88,15 +90,15 @@ public class BossAttack : MonoBehaviour
     // 2페이지 왼손
     void LFirePos2P()
     {
-        if (lValue == 1)
+        if (lValue%2 == 1)
         {
-            LHand();
+            LFist();
             lValue++;
             didths = true;
         }
-        else if (lValue == 2)
+        else if (lValue%2 == 0)
         {
-            LFist();
+            LHand();
             lValue++;
             didths = true;
         }
@@ -104,13 +106,13 @@ public class BossAttack : MonoBehaviour
     // 2페이지 오른손
     void RFirePos2P()
     {
-        if (rValue == 1)
+        if (rValue%2 == 1)
         {
             RFist();
             rValue++;
             didths = false;
         }
-        else if (rValue == 2)
+        else if (rValue%2 == 0)
         {
             RHand();
             rValue++;
@@ -130,105 +132,89 @@ public class BossAttack : MonoBehaviour
 
     private void LFirePos3P()
     {
-        if (lValue == 3)
+        if (lValue%4 == 3)
         {
             swallow();
             lValue++;
         }
-        else if(lValue == 4)
+        else if(lValue%4 == 0)
         {
             Inkboom();
             lValue++;
         }
-        else if (lValue == 5)
+        else if (lValue%4 == 1)
         {
-            int chooseIndex = Random.Range(0, spawnList.Length); //0부터 배열의 길이까지
-                                                                 // 4.1 랜덤 인덱스가 직전 인덱스와 같다면 다시 정하고싶다.
-            if (prevChooseIndex == chooseIndex)
-            {
-                // chooseIndex에 1을 더하고싶다.
-                chooseIndex++;
-                // 만약 chooseIndex가 배열의 범위를 벗어난다면 0으로 초기화하고싶다.
-                if (chooseIndex >= spawnList.Length)
-                {
-                    chooseIndex = 0;
-                }
-            }
-            // 직전인덱스에 현재 인덱스를 기억하고싶다.
-            prevChooseIndex = chooseIndex;
-            GameObject attack = (spawnList[chooseIndex]);
-            attack.transform.position = LFirepos.position;
-            attack.transform.forward = LFirepos.forward;
-            currentTime = 0;
+            LFist();
+            lValue++;
+            didths = true;
+        }
+        else if (lValue % 4 == 2)
+        {
+            LHand();
+            lValue++;
             didths = true;
         }
     }
 
     private void RFirePos3P()
     {
-        if (rValue == 3)
+        if (rValue%4 == 3)
         {
             swallow();
             rValue++;
         }
-        else if (rValue == 4)
+        else if (rValue%4 == 0)
         {
             Inkboom();
             rValue++;
         }
-        else if (rValue == 5)
+        else if (rValue%4 == 1)
         {
-            int chooseIndex = Random.Range(0, spawnList.Length); //0부터 배열의 길이까지
-                                                                 // 4.1 랜덤 인덱스가 직전 인덱스와 같다면 다시 정하고싶다.
-            if (prevChooseIndex == chooseIndex)
-            {
-                // chooseIndex에 1을 더하고싶다.
-                chooseIndex++;
-                // 만약 chooseIndex가 배열의 범위를 벗어난다면 0으로 초기화하고싶다.
-                if (chooseIndex >= spawnList.Length)
-                {
-                    chooseIndex = 0;
-                }
-            }
-            // 직전인덱스에 현재 인덱스를 기억하고싶다.
-            prevChooseIndex = chooseIndex;
-            GameObject attack = (spawnList[chooseIndex]);
-            attack.transform.position = LFirepos.position;
-            attack.transform.forward = LFirepos.forward;
-            currentTime = 0;
-            didths = true;
+            RFist();
+            rValue++;
+            didths = false;
+        }
+        else if (rValue % 4 == 2)
+        {
+            RHand();
+            rValue++;
+            didths = false;
         }
     }
 
     void LHand()
     {
-        GameObject hand = Instantiate(handFactory);
+        GameObject hand = Instantiate(lhandFactory);
         hand.transform.position = LFirepos.position;
         hand.transform.forward = LFirepos.forward;
+        audioSource3.Play();
         currentTime = 0;
     }
 
     void RHand()
     {
-        GameObject hand = Instantiate(handFactory);
+        GameObject hand = Instantiate(rhandFactory);
         hand.transform.position = RFirepos.position;
         hand.transform.forward = RFirepos.forward;
+        audioSource3.Play();
         currentTime = 0;
     }
 
     void LFist()
     {
-        GameObject fist = Instantiate(fistFactory);
+        GameObject fist = Instantiate(lfistFactory);
         fist.transform.position = LFirepos.position;
         fist.transform.forward = LFirepos.forward;
+        audioSource3.Play();
         currentTime = 0;
     }
 
     void RFist()
     {
-        GameObject fist = Instantiate(fistFactory);
+        GameObject fist = Instantiate(rfistFactory);
         fist.transform.position = RFirepos.position;
         fist.transform.forward = RFirepos.forward;
+        audioSource3.Play();
         currentTime = 0;
     }
 
