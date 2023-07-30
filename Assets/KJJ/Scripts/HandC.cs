@@ -45,7 +45,7 @@ public class HandC : MonoBehaviour
 
         if (isForword)
         {
-            body.transform.Rotate(0, 0, 360 * Time.deltaTime);
+            body.transform.Rotate(0, 0, 720 * Time.deltaTime);
             // 일정시간을 추적
             if (1.8f < currentTime && currentTime < trackingTime)
             {

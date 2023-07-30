@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 23076264033391583}
   - component: {fileID: 5238999141387845009}
   m_Layer: 21
-  m_Name: RFistC
+  m_Name: RFist
   m_TagString: Fist
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,7 +406,7 @@ MonoBehaviour:
   speed: 17
   currentTime: 0
   attackDelayTime: 5
-  trackingTime: 3
+  trackingTime: 2.5
   bossFistHP: 50
   bhpF: 0
   attacked: 0

@@ -88,13 +88,13 @@ public class BossAttack : MonoBehaviour
     // 2페이지 왼손
     void LFirePos2P()
     {
-        if (lValue%4 == 1)
+        if (lValue%2 == 1)
         {
             LFist();
             lValue++;
             didths = true;
         }
-        else if (lValue%4 == 2)
+        else if (lValue%2 == 0)
         {
             LHand();
             lValue++;
@@ -104,13 +104,13 @@ public class BossAttack : MonoBehaviour
     // 2페이지 오른손
     void RFirePos2P()
     {
-        if (rValue%4 == 1)
+        if (rValue%2 == 1)
         {
             RFist();
             rValue++;
             didths = false;
         }
-        else if (rValue%4 == 2)
+        else if (rValue%2 == 0)
         {
             RHand();
             rValue++;
