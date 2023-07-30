@@ -11,6 +11,10 @@ public class KDH_PauseGame : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0f; // Pause the game
-        bgm.GetComponent<AudioSource>().Stop();
+
+        if(bgm)
+        {
+            bgm.GetComponent<AudioSource>().Stop();
+        }
     }
 }
