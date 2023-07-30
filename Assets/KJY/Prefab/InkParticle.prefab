@@ -24350,6 +24350,7 @@ GameObject:
   - component: {fileID: 5217307993570398119}
   - component: {fileID: 4667931117142260316}
   - component: {fileID: 9051473045645381156}
+  - component: {fileID: -2967258931678488774}
   m_Layer: 0
   m_Name: InkParticle
   m_TagString: Untagged
@@ -29225,3 +29226,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-2967258931678488774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8474091785482234360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c333aa30633c9d42a7e877e7f8375ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
