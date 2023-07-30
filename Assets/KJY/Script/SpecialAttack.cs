@@ -12,12 +12,13 @@ public class SpecialAttack : MonoBehaviour
     public bool High;
     Rigidbody rb;
     Animator anim;
-    public ParticleSystem specialAttackParticle;
+    //public ParticleSystem specialAttackParticle;
     public AudioClip specialAttackClip;
     public AudioSource PlayerSource;
-    public ParticleSystem Particle1;
-    public ParticleSystem Particle2;
+    // public ParticleSystem Particle1;
+    // public ParticleSystem Particle2;
     //public ParticleSystem hairParticle;
+    public GameObject bombEffect;
     public GameObject hairParticle;
     public bool move;
     private void Awake()
@@ -33,6 +34,7 @@ public class SpecialAttack : MonoBehaviour
         High = false;
         anim = GetComponent<Animator>();
         move = true;
+        bombEffect.SetActive(false);
     }
 
     // Update is called once per frame
@@ -91,7 +93,8 @@ public class SpecialAttack : MonoBehaviour
         if (collision.gameObject.tag == "Ground" && specialAttack == true)
        {
             specialAttack = false;
-            specialAttackParticle.Play();
+            //specialAttackParticle.Play();
+            bombEffect.SetActive(true);
             PlayerSource.PlayOneShot(specialAttackClip);
             hairParticle.SetActive(false);
             int layer = 1 << LayerMask.NameToLayer("BossAttack");
@@ -118,8 +121,8 @@ public class SpecialAttack : MonoBehaviour
 
     void AttackParticleEvent()
     {
-        Particle1.Play();
-        Particle2.Play();
+       // Particle1.Play();
+        //Particle2.Play();
     }
     //IEnumerator FindTarget()
     //{

@@ -7,6 +7,7 @@ public class KDH_Destroy : MonoBehaviour
     // Start is called before the first frame update
     void VFX_Destroy()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }
