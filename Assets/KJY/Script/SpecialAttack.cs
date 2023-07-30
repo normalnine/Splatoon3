@@ -64,8 +64,6 @@ public class SpecialAttack : MonoBehaviour
         if (collision.gameObject.tag == "Ground" && specialAttack == true)
        {
             specialAttack = false;
-            Particle1.Play();
-            Particle2.Play();
             specialAttackParticle.Play();
             PlayerSource.PlayOneShot(specialAttackClip);
             int layer = 1 << LayerMask.NameToLayer("BossAttack");
@@ -90,6 +88,11 @@ public class SpecialAttack : MonoBehaviour
         }
     }
 
+    void AttackParticleEvent()
+    {
+        Particle1.Play();
+        Particle2.Play();
+    }
     //IEnumerator FindTarget()
     //{
     //    yield return new WaitForSeconds(0.1f);
