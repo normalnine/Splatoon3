@@ -20,6 +20,8 @@ public class BossAttack : MonoBehaviour
     public float currentTime;
     public float attackTime = 7;
 
+    public AudioSource audioSource3;
+
     public bool pattern1 = false;
     public bool pattern2 = false;
     public bool pattern3 = false;
@@ -185,6 +187,7 @@ public class BossAttack : MonoBehaviour
         GameObject hand = Instantiate(lhandFactory);
         hand.transform.position = LFirepos.position;
         hand.transform.forward = LFirepos.forward;
+        audioSource3.Play();
         currentTime = 0;
     }
 
@@ -193,6 +196,7 @@ public class BossAttack : MonoBehaviour
         GameObject hand = Instantiate(rhandFactory);
         hand.transform.position = RFirepos.position;
         hand.transform.forward = RFirepos.forward;
+        audioSource3.Play();
         currentTime = 0;
     }
 
@@ -201,6 +205,7 @@ public class BossAttack : MonoBehaviour
         GameObject fist = Instantiate(lfistFactory);
         fist.transform.position = LFirepos.position;
         fist.transform.forward = LFirepos.forward;
+        audioSource3.Play();
         currentTime = 0;
     }
 
@@ -209,6 +214,7 @@ public class BossAttack : MonoBehaviour
         GameObject fist = Instantiate(rfistFactory);
         fist.transform.position = RFirepos.position;
         fist.transform.forward = RFirepos.forward;
+        audioSource3.Play();
         currentTime = 0;
     }
 

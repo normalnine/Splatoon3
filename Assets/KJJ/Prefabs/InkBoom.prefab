@@ -52,6 +52,7 @@ MonoBehaviour:
   firingAngle: 45
   gravity: 30
   Projectile: {fileID: 3753611620537467626}
+  inkEffectFactory: {fileID: 1538102051281877180, guid: 098dc37c25d62284ebf0f061f0619607, type: 3}
 --- !u!54 &3601425717323686899
 Rigidbody:
   m_ObjectHideFlags: 0
