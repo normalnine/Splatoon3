@@ -47,6 +47,13 @@ public class PlayerHP : MonoBehaviour
 
     [Range(0.01f, 0.02f)] float shakeInkRange = 0.01f;
 
+    bool test;
+    public float repeat_time;
+    public float repeat_rate;
+    public float duration_time;
+    public float velocity;
+    //[Range(0.001f, 0.01f)] float testShakeRange;
+    public float testShakeRange;
     public int HP
     {
         get
@@ -81,6 +88,7 @@ public class PlayerHP : MonoBehaviour
         shieldTime = 0;
         bubbleShield.enabled = false;
         ShieldOn = false;
+        test = false;
     }
 
     // Update is called once per frame
@@ -97,6 +105,18 @@ public class PlayerHP : MonoBehaviour
                shieldTime = 0;
                 ShieldOn = false;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            
+            print("in");
+            test = true;
+        }
+
+        if (test)
+        {
+            TestShake();
         }
     }
 
@@ -212,6 +232,32 @@ public class PlayerHP : MonoBehaviour
         cameraPos.x += cameraPosX;
         cameraPos.y += cameraPosY;
         mainCamera.transform.position = cameraPos;
+    }
+
+    public void TestShake()
+    {
+        print("in1");
+        cameraPos = mainCamera.transform.position;
+        InvokeRepeating("TestStartShake", repeat_time, repeat_rate);
+        Invoke("TestStopShake", duration);
+    }
+    public void TestStartShake()
+    {
+        print("in2");
+        //float cameraPosX = Random.value * shakeRange * 2 - shakeRange;
+        float cameraPosY = Random.value * testShakeRange * 2 - testShakeRange;
+        Vector3 cameraPos = mainCamera.transform.position;
+        //cameraPos.x += cameraPosX;
+        cameraPos.y += cameraPosY;
+        mainCamera.transform.position = cameraPos;
+    }
+
+    public void TestStopShake()
+    {
+        print("in3");
+        CancelInvoke("TestStartShake");
+        mainCamera.transform.position = cameraPos;
+        test = false;
     }
 
     public void StopShake()

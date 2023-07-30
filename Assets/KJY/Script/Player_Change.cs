@@ -31,6 +31,7 @@ public class Player_Change : MonoBehaviour
 
     public Canvas InkImage;
     public ParticleSystem puddleParticle;
+    public ParticleSystem EnemyPuddlePartice;
     private void Awake()
     {
         instance = this;
@@ -57,6 +58,7 @@ public class Player_Change : MonoBehaviour
         ChangeSquid();
         SetBodyPosition();
         ChaneOnTheGround();
+        InEnemyInkOnHuman();
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             puddleParticle.Play();
@@ -210,6 +212,24 @@ public class Player_Change : MonoBehaviour
             otherBody.SetActive(false);
             gun.SetActive(false);
         }
+    }
+
+    void InEnemyInkOnHuman()
+    {
+        if(state == State.Human && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other)
+        {
+            Vector3 tmp = humanBody.transform.position;
+            tmp.y = -0.2f;
+            humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
+            EnemyPuddlePartice.Play();
+        }
+        //else if (state == State.Human && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
+        //{
+        //    Vector3 tmp = humanBody.transform.position;
+        //    tmp.y = 0.1f;
+        //    humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 5f * Time.deltaTime);
+        //    EnemyPuddlePartice.Stop();
+        //}
     }
 
     IEnumerator Up()

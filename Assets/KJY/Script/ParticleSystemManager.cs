@@ -39,6 +39,7 @@ public class ParticleSystemManager : MonoBehaviour
         else
         {
             forwardParticle.Stop();
+            enemyForwardParticle.Stop();
         }
         Vector3 tmp;
         tmp = transform.position;

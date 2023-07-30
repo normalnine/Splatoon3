@@ -6,6 +6,7 @@ public class SpecialAttack : MonoBehaviour
 {
     public static SpecialAttack instance;
     public float currentTime;
+    public float specialFinishTime;
     public bool specialAttack;
     public Transform cameraTarget;
     public bool High;
@@ -16,6 +17,9 @@ public class SpecialAttack : MonoBehaviour
     public AudioSource PlayerSource;
     public ParticleSystem Particle1;
     public ParticleSystem Particle2;
+    //public ParticleSystem hairParticle;
+    public GameObject hairParticle;
+    public bool move;
     private void Awake()
     {
         instance = this;
@@ -23,26 +27,38 @@ public class SpecialAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hairParticle.SetActive(false);
         specialAttack = false;
         rb = GetComponent<Rigidbody>();
         High = false;
         anim = GetComponent<Animator>();
+        move = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (SpecialSkillGageManager.instance.charge && Player_Change.instance.state == Player_Change.State.Human)
+        {
+            hairParticle.SetActive(true);
+            //hairParticle.Play();
+        }
+        else
+        {
+            hairParticle.SetActive(false);
+        }
         if (Input.GetKeyDown(KeyCode.R) && SpecialSkillGageManager.instance.charge)
         {
             specialAttack = true;
             High = true;
+            move = false;
             rb.AddForce(new Vector3(0, 1, 0) * 14, ForceMode.Impulse);
             anim.SetBool("SpecialAttackUp", true);
         }
         if (specialAttack == true)
         {
             currentTime += Time.deltaTime;
-            if (currentTime > 1)
+            if (currentTime > 1f)
             {
                 //rb.constraints = RigidbodyConstraints.FreezePositionY;
                 rb.isKinematic = true;
@@ -53,10 +69,21 @@ public class SpecialAttack : MonoBehaviour
             {
                 rb.isKinematic = false;
                 rb.AddForce(new Vector3(0, -1, 0) * 25, ForceMode.Impulse);
-                currentTime = 0;
             }
         }
-        
+        if (!specialAttack)
+        {
+            currentTime = 0;
+        }
+        if (move == false)
+        {
+            specialFinishTime += Time.deltaTime;
+            if (specialFinishTime > 4.5f)
+            {
+                specialFinishTime = 0;
+                move = true;
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -66,6 +93,7 @@ public class SpecialAttack : MonoBehaviour
             specialAttack = false;
             specialAttackParticle.Play();
             PlayerSource.PlayOneShot(specialAttackClip);
+            hairParticle.SetActive(false);
             int layer = 1 << LayerMask.NameToLayer("BossAttack");
             High = false;
             Collider[] cols = Physics.OverlapSphere(transform.position, 10f, layer);

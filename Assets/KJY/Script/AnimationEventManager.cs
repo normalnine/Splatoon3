@@ -183,4 +183,9 @@ public class AnimationEventManager : MonoBehaviour
         stop = false;
         //PlayerSource.PlayOneShot(SpecialAttackClip);
     }
+
+    void HitReact()
+    {
+        ShootAudioSource.Stop();
+    }
 }
