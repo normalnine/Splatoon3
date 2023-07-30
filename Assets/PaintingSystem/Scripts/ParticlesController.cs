@@ -10,6 +10,7 @@ public class ParticlesController: MonoBehaviour{
     public float strength = 1;
     public float hardness = 1;
     public ParticleSystem InkParticleFactory;
+    public ParticleSystem hitParticleFactory;
     [Space]
     ParticleSystem part;
     List<ParticleCollisionEvent> collisionEvents;
@@ -41,19 +42,30 @@ public class ParticlesController: MonoBehaviour{
                 if (other.gameObject.name.Contains("Fist"))
                 {
                    FistC.instance.bossFistHP--;
+                    ParticleSystem particle = Instantiate(hitParticleFactory);
+                    particle.transform.position = pos;
+                    particle.Play();
                 }
                 else if(other.gameObject.name.Contains("Hand") && HandC.instance.attackOK == true)
                 {
                    HandC.instance.bossHandHP--;
+                    ParticleSystem particle = Instantiate(hitParticleFactory);
+                    particle.transform.position = pos;
+                    particle.Play();
                 }
                 else if (other.gameObject.name.Contains("Moon"))
                 {
                     Moon.instance.bossMoonHP--;
+                    ParticleSystem particle = Instantiate(hitParticleFactory);
+                    particle.transform.position = pos;
+                    particle.Play();
                 }
                 else if (other.gameObject.name.Contains("training"))
                 {
                     other.gameObject.GetComponentInParent<KDH_Target>().Damaged();
-                    
+                    ParticleSystem particle = Instantiate(hitParticleFactory);
+                    particle.transform.position = pos;
+                    particle.Play();
                 }
                 else if (other.gameObject.CompareTag("Ground"))
                 {

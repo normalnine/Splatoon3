@@ -77596,7 +77596,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0.6333333
-    functionName: AttackParticle
+    functionName: AttackParticleEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -77610,7 +77610,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 1.1666666
-    functionName: SpecialAttackGroundEvent
+    functionName: SpecialAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

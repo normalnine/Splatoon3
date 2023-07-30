@@ -235,7 +235,7 @@ public class Player_CameraAndMove : MonoBehaviour
     {
         Vector2 moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         isMove = moveInput.magnitude != 0;
-        if (isMove)
+        if (isMove && SpecialAttack.instance.move)
         {
             anim.SetFloat("X", moveInput.x);
             anim.SetFloat("Y", moveInput.y);
@@ -390,6 +390,10 @@ public class Player_CameraAndMove : MonoBehaviour
             //    tmp.y = 0;
             //    characterBody.transform.position = tmp;
             //}
+            if (inkState == InkState.other && Player_Change.instance.state == Player_Change.State.Human)
+            {
+                PlayerHP.instance.TestShake();
+            }
             anim.SetBool("Jump", false);
         }
     }
