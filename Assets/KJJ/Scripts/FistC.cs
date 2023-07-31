@@ -112,6 +112,7 @@ public class FistC : MonoBehaviour
             audioCount++;
             if (audioCount > 100) audioCount = 10;
         }
+
         // 체력이 1보다 낮아지면 
         if (bossFistHP < 1)
         {
@@ -121,18 +122,19 @@ public class FistC : MonoBehaviour
             bossDie = true;
         }
 
-        if(attacked == true)
+        if (attacked == true)
         {
             fistTime += Time.deltaTime;
             speed = 0.1f;
-            if(fistTime > stiffnessTime)
+            if (fistTime > stiffnessTime)
             {
                 speed = 15;
                 attacked = false;
                 fistTime = 0;
             }
         }
-        if(audioCount == 1) AudioSource.Play();
+
+        if (audioCount == 1) AudioSource.Play();
     }
     private void OnCollisionEnter(Collision collision)
     {

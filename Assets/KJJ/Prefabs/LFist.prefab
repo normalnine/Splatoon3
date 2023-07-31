@@ -430,7 +430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba9aff2b2ca32e049a0bfeb6f4e292e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 17
+  speed: 15
   currentTime: 0
   attackDelayTime: 5
   bossDie: 0

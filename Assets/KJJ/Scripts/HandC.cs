@@ -128,6 +128,7 @@ public class HandC : MonoBehaviour
             PlayerHP.instance.Shake();
             // 시간을 초기화
             currentTime = 0;
+            GetComponentInChildren<Paintable>().enabled = true;
         }
         if (collision.gameObject.CompareTag("Player"))
         {

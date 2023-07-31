@@ -29,7 +29,7 @@ public class Test2_Back : MonoBehaviour
         Projectile = transform;
         salmonisGround = false;
         comeback = true;
-        transform.GetComponent<SphereCollider>().enabled = false;
+        GetComponent<Collider>().enabled = false;
         //StartCoroutine(SimulateProjectile());
     }
 
@@ -56,10 +56,10 @@ public class Test2_Back : MonoBehaviour
            Destroy(this.gameObject);
        }
        if (PlayerShoot.instance.isShoot == true)
-       {
+        {
+            GetComponent<Collider>().enabled = true;
             salmonParticle.Play();
-            GetComponent<SphereCollider>().enabled = true;
-       }
+        }
     }
 
     IEnumerator ComebackManager()
@@ -148,6 +148,7 @@ public class Test2_Back : MonoBehaviour
         Rigidbody rb = GetComponent<Rigidbody>();
         if (collision.gameObject && PlayerShoot.instance.isShoot == true)
         {
+            print("in here");
             salmonisGround = true;
         }
         rb.isKinematic = true;
