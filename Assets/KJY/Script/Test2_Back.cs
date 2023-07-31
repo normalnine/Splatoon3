@@ -29,6 +29,7 @@ public class Test2_Back : MonoBehaviour
         Projectile = transform;
         salmonisGround = false;
         comeback = true;
+        GetComponent<Collider>().enabled = false;
         //StartCoroutine(SimulateProjectile());
     }
 
@@ -56,6 +57,7 @@ public class Test2_Back : MonoBehaviour
        }
        if (PlayerShoot.instance.isShoot == true)
         {
+            GetComponent<Collider>().enabled = true;
             salmonParticle.Play();
         }
     }
