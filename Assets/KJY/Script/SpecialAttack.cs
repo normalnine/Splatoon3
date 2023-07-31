@@ -21,6 +21,7 @@ public class SpecialAttack : MonoBehaviour
     public GameObject bombEffect;
     public GameObject hairParticle;
     public bool move;
+    public Color color;
     private void Awake()
     {
         instance = this;
@@ -93,12 +94,14 @@ public class SpecialAttack : MonoBehaviour
         if (collision.gameObject.tag == "Ground" && specialAttack == true)
        {
             specialAttack = false;
-            //specialAttackParticle.Play();
             bombEffect.SetActive(true);
+            //specialAttackParticle.Play();
             PlayerSource.PlayOneShot(specialAttackClip);
             hairParticle.SetActive(false);
             int layer = 1 << LayerMask.NameToLayer("BossAttack");
             High = false;
+            Paintable p = collision.gameObject.GetComponent<Paintable>();
+            PaintManager.instance.paint(p, transform.position, 5, 1, 1, color);
             Collider[] cols = Physics.OverlapSphere(transform.position, 10f, layer);
             for (int i = 0; i < cols.Length; i++)
             {
@@ -115,9 +118,14 @@ public class SpecialAttack : MonoBehaviour
                 {
                     Moon.instance.bossMoonHP -= 100;
                 }
+                else
+                {
+                    return ;
+                }
             }
         }
     }
+
 
     void AttackParticleEvent()
     {

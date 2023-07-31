@@ -7,7 +7,6 @@ public class ShootParticleSound : MonoBehaviour
     public AudioSource ParticleSource;
     public AudioClip[] particleClip;
     public AudioClip hitClip;
-    public ParticleSystem SplashFactory;
     // Start is called before the first frame update
     void Start()
     {
