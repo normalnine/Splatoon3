@@ -2360,11 +2360,11 @@ PrefabInstance:
       objectReference: {fileID: 1689222844}
     - target: {fileID: 8625741299135494504, guid: 4c50a50227e79e14ca105f8c9cfdd3d2, type: 3}
       propertyPath: repeat_rate
-      value: 0.0001
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 8625741299135494504, guid: 4c50a50227e79e14ca105f8c9cfdd3d2, type: 3}
       propertyPath: repeat_time
-      value: 0.01
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8625741299135494504, guid: 4c50a50227e79e14ca105f8c9cfdd3d2, type: 3}
       propertyPath: DamageSource
