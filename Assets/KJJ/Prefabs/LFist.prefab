@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!64 &7472187336354654056
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724116165800872827}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 1ee7137e5334c3345a32b2d315b7ff69, type: 3}
+--- !u!114 &1396187994225457013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724116165800872827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c3ea44eef20b0b4396ebe666c9a6eeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extendsIslandOffset: 1
 --- !u!1 &6142870247301584936
 GameObject:
   m_ObjectHideFlags: 0
@@ -20,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6142870247301584939
 Transform:
   m_ObjectHideFlags: 0
@@ -309,7 +336,7 @@ MeshCollider:
   m_GameObject: {fileID: 6142870247301584936}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30
@@ -406,6 +433,7 @@ MonoBehaviour:
   speed: 17
   currentTime: 0
   attackDelayTime: 5
+  bossDie: 0
   trackingTime: 2.5
   bossFistHP: 50
   bhpF: 0
@@ -516,6 +544,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7485481726369323821}
     m_Modifications:
+    - target: {fileID: 726083946080808813, guid: f27f65fce3a373f429bbc9e6fbb72cb9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 396f95af6c221584196072999316676a, type: 2}
     - target: {fileID: 739752924114615989, guid: f27f65fce3a373f429bbc9e6fbb72cb9, type: 3}
       propertyPath: m_Name
       value: IMG_LFist
@@ -578,6 +610,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f27f65fce3a373f429bbc9e6fbb72cb9, type: 3}
+--- !u!1 &2724116165800872827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 739752924114615989, guid: f27f65fce3a373f429bbc9e6fbb72cb9, type: 3}
+  m_PrefabInstance: {fileID: 3425586085573277134}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2727967507023573607 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 743533312411109289, guid: f27f65fce3a373f429bbc9e6fbb72cb9, type: 3}

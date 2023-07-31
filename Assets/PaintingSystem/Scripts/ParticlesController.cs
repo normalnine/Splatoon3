@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ParticlesController: MonoBehaviour{
+public class ParticlesController : MonoBehaviour
+{
     public Color paintColor;
-    
+
     public float minRadius = 0.05f;
     public float maxRadius = 0.2f;
     public float strength = 1;
@@ -14,7 +15,8 @@ public class ParticlesController: MonoBehaviour{
     ParticleSystem part;
     List<ParticleCollisionEvent> collisionEvents;
 
-    void Start(){
+    void Start()
+    {
         part = GetComponent<ParticleSystem>();
         collisionEvents = new List<ParticleCollisionEvent>();
         //var pr = part.GetComponent<ParticleSystemRenderer>();
@@ -22,7 +24,8 @@ public class ParticlesController: MonoBehaviour{
         //paintColor = c;
     }
 
-    void OnParticleCollision(GameObject other) {
+    void OnParticleCollision(GameObject other)
+    {
         //if(other.gameObject.name.Contains("Ground") && paintColor == new Color(0, 0.2877133f, 1))
         //{
         //    print("groundpaint");
@@ -33,18 +36,19 @@ public class ParticlesController: MonoBehaviour{
         Paintable p = other.GetComponentInChildren<Paintable>();//GetComponentInChildren<Paintable>();// GetComponent<Paintable>();
         if (p != null)
         {
-            for  (int i = 0; i< numCollisionEvents; i++)
+            for (int i = 0; i < numCollisionEvents; i++)
             {
                 Vector3 pos = collisionEvents[i].intersection;
                 float radius = Random.Range(minRadius, maxRadius);
                 PaintManager.instance.paint(p, pos, radius, hardness, strength, paintColor);
                 if (other.gameObject.name.Contains("Fist"))
                 {
-                   FistC.instance.bossFistHP--;
+                    FistC.instance.bossFistHP--;
+                    if (FistC.instance.attacked == false && FistC.instance.bossDie == false) FistC.instance.attacked = true;
                 }
-                else if(other.gameObject.name.Contains("Hand") && HandC.instance.attackOK == true)
+                else if (other.gameObject.name.Contains("Hand") && HandC.instance.attackOK == true)
                 {
-                   HandC.instance.bossHandHP--;
+                    HandC.instance.bossHandHP--;
                 }
                 else if (other.gameObject.name.Contains("Moon"))
                 {
@@ -53,7 +57,7 @@ public class ParticlesController: MonoBehaviour{
                 else if (other.gameObject.name.Contains("training"))
                 {
                     other.gameObject.GetComponentInParent<KDH_Target>().Damaged();
-                    
+
                 }
                 else if (other.gameObject.CompareTag("Ground"))
                 {

@@ -34,6 +34,9 @@ public class BossAttack : MonoBehaviour
 
     public int rValue = 1;
     public int lValue = 1;
+    public int r2Value = 1;
+    public int l2Value = 1;
+
     public float swallowTime;
     // Start is called before the first frame update
     void Start()
@@ -132,52 +135,52 @@ public class BossAttack : MonoBehaviour
 
     private void LFirePos3P()
     {
-        if (lValue%4 == 3)
+        if (l2Value%4 == 1)
         {
             swallow();
-            lValue++;
+            l2Value++;
         }
-        else if(lValue%4 == 0)
+        else if(l2Value%4 == 2)
         {
             Inkboom();
-            lValue++;
+            l2Value++;
         }
-        else if (lValue%4 == 1)
+        else if (l2Value%4 == 3)
         {
             LFist();
-            lValue++;
+            l2Value++;
             didths = true;
         }
-        else if (lValue % 4 == 2)
+        else if (l2Value % 4 == 0)
         {
             LHand();
-            lValue++;
+            l2Value++;
             didths = true;
         }
     }
 
     private void RFirePos3P()
     {
-        if (rValue%4 == 3)
+        if (r2Value%4 == 1)
         {
             swallow();
-            rValue++;
+            r2Value++;
         }
-        else if (rValue%4 == 0)
+        else if (r2Value%4 == 2)
         {
             Inkboom();
-            rValue++;
+            r2Value++;
         }
-        else if (rValue%4 == 1)
+        else if (r2Value%4 == 3)
         {
             RFist();
-            rValue++;
+            r2Value++;
             didths = false;
         }
-        else if (rValue % 4 == 2)
+        else if (r2Value % 4 == 0)
         {
             RHand();
-            rValue++;
+            r2Value++;
             didths = false;
         }
     }
