@@ -79,7 +79,6 @@ public class InkBoom : MonoBehaviour
         // 바닥에 닿았다면
         if (collision.gameObject.CompareTag("Ground"))
         {
-            StopCoroutine(SimulateProjectile());
             currentTime = 0;
             rb.useGravity = false;
             rb.velocity = Vector3.zero;

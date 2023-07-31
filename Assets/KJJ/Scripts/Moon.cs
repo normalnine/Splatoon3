@@ -26,7 +26,7 @@ public class Moon : MonoBehaviour
         bossMoonHP = 100;
         rb = GetComponent<Rigidbody>();
         rb.AddForce(transform.forward * speed, ForceMode.Impulse);
-        rb.AddTorque(Vector3.forward * 0.31f, ForceMode.Impulse);
+        rb.AddTorque(Vector3.forward * 0.25f, ForceMode.Impulse);
     }
 
     // Update is called once per frame

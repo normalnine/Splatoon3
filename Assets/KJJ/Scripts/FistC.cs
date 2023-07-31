@@ -17,7 +17,7 @@ public class FistC : MonoBehaviour
     public float attackDelayTime = 5f;
     bool isForword;
     bool isBack;
-    bool bossDie;
+    public bool bossDie;
 
     public float trackingTime = 2.5f;
     float trackingBossTime = 5f;
@@ -49,7 +49,7 @@ public class FistC : MonoBehaviour
         if (isForword)
         {
             // 일정시간을 추적
-            if (1.8f < currentTime && currentTime < trackingTime)
+            if (1f < currentTime && currentTime < trackingTime)
             {
                 // Player게임오브젝트를 찾아줘
                 GameObject target = GameObject.Find("Player");
@@ -61,7 +61,7 @@ public class FistC : MonoBehaviour
                 transform.forward = rb.velocity.normalized;
             }
             // 추적하지 않는다면
-            else if (currentTime < 1.8f)
+            else if (currentTime < 1f)
             {
                 // 앞방향을 rb.velocity의 방향과 같게
                 transform.forward = rb.velocity.normalized;

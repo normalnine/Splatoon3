@@ -105,6 +105,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8574937083761143599}
   - component: {fileID: 8574937083761143598}
+  - component: {fileID: 358963423}
   m_Layer: 0
   m_Name: LFirePos
   m_TagString: Boss
@@ -140,12 +141,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTerget: {fileID: 0}
   floor: {fileID: 0}
-  handFactory: {fileID: 7089481583754306726, guid: 52cae96b99b0c7243b122924d412a60d, type: 3}
-  fistFactory: {fileID: 7485481726369323824, guid: c8a53d4608644094796fc700189e7f67, type: 3}
+  lhandFactory: {fileID: 7089481583754306726, guid: 52cae96b99b0c7243b122924d412a60d, type: 3}
+  rhandFactory: {fileID: 7089481583754306726, guid: 5417b0597c5b02d43ac5fd41a270bcb8, type: 3}
+  lfistFactory: {fileID: 7485481726369323824, guid: c8a53d4608644094796fc700189e7f67, type: 3}
+  rfistFactory: {fileID: 7485481726369323824, guid: 3c8dbb09659e90c41acebaaa19e8de7f, type: 3}
   inkboomFactory: {fileID: 3655864567603919480, guid: 0817700bee1a29f49b397c39fa45207b, type: 3}
   swallowFactory: {fileID: 2695064464129552453, guid: 635269f8d89e53e428bc10ba6b4b760c, type: 3}
   currentTime: 0
   attackTime: 8
+  audioSource3: {fileID: 358963423}
   pattern1: 0
   pattern2: 0
   pattern3: 0
@@ -153,14 +157,105 @@ MonoBehaviour:
   RFirepos: {fileID: 8574937085298978082}
   Firepos: {fileID: 8574937085038241168}
   didths: 0
-  spawnList:
-  - {fileID: 7485481726369323824, guid: c8a53d4608644094796fc700189e7f67, type: 3}
-  - {fileID: 7089481583754306726, guid: 52cae96b99b0c7243b122924d412a60d, type: 3}
-  - {fileID: 2695064464129552453, guid: 635269f8d89e53e428bc10ba6b4b760c, type: 3}
-  - {fileID: 3655864567603919480, guid: 0817700bee1a29f49b397c39fa45207b, type: 3}
   rValue: 1
   lValue: 1
   swallowTime: 0
+--- !u!82 &358963423
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8574937083761143596}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 18a26f62095cd1043949e5e3dc0029fb, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8574937084681009768
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +375,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clearUI: {fileID: 0}
-  bgm: {fileID: 0}
   bossHP: 4
   moonPosition: {fileID: 8574937085038241168}
   bossFactory: {fileID: 1566882517582554080, guid: 059f19407bd66844084142b4ef63f438, type: 3}
@@ -294,6 +388,7 @@ MonoBehaviour:
   idle: 0
   hit: 0
   moon: 0
+  hitEFactory: {fileID: 0}
 --- !u!114 &8574937084681009775
 MonoBehaviour:
   m_ObjectHideFlags: 0
