@@ -54,6 +54,7 @@ public class PlayerHP : MonoBehaviour
     public float velocity;
     //[Range(0.001f, 0.01f)] float testShakeRange;
     public float testShakeRange;
+    public bool shieldbreak;
     public int HP
     {
         get
@@ -89,6 +90,7 @@ public class PlayerHP : MonoBehaviour
         bubbleShield.enabled = false;
         ShieldOn = false;
         test = false;
+        shieldbreak = false;
     }
 
     // Update is called once per frame
@@ -103,7 +105,7 @@ public class PlayerHP : MonoBehaviour
             {
                bubbleShield.enabled = false;
                shieldTime = 0;
-                ShieldOn = false;
+               ShieldOn = false;
             }
         }
 
@@ -125,7 +127,7 @@ public class PlayerHP : MonoBehaviour
     public void PlayerStrongDamageProcess()
     {
         //내 체력 1 감소
-        HP -= 40;
+        HP -= 30;
         //내 체력 0일때
         if (HP <= 0)
         {
@@ -134,7 +136,7 @@ public class PlayerHP : MonoBehaviour
         }
         else
         {
-            if (Damage == false)
+            if (Damage == false && !SpecialAttack.instance.specialAttack)
             {
                 dibuff.Play();
                 dust.Play();
@@ -201,6 +203,15 @@ public class PlayerHP : MonoBehaviour
                 Recure();
             }
         }
+        else if (SpecialAttack.instance.specialAttack == true)
+        {
+            StopInkShake();
+            anim.SetBool("Damage", false);
+            if (die == false)
+            {
+                Recure();
+            }
+        }
     }
 
     public void Shake()
@@ -236,14 +247,12 @@ public class PlayerHP : MonoBehaviour
 
     public void TestShake()
     {
-        print("in1");
         cameraPos = mainCamera.transform.position;
         InvokeRepeating("TestStartShake", repeat_time, repeat_rate);
         Invoke("TestStopShake", duration);
     }
     public void TestStartShake()
     {
-        print("in2");
         //float cameraPosX = Random.value * shakeRange * 2 - shakeRange;
         float cameraPosY = Random.value * testShakeRange * 2 - testShakeRange;
         Vector3 cameraPos = mainCamera.transform.position;
@@ -254,7 +263,6 @@ public class PlayerHP : MonoBehaviour
 
     public void TestStopShake()
     {
-        print("in3");
         CancelInvoke("TestStartShake");
         mainCamera.transform.position = cameraPos;
         test = false;
@@ -320,6 +328,8 @@ public class PlayerHP : MonoBehaviour
             bodyRendererList[i].enabled = false;
         }
         die = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void ShowPlayerDamageUIImage()
@@ -422,7 +432,7 @@ public class PlayerHP : MonoBehaviour
 
     IEnumerator UnBeat()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         Damage = false;
     }
 
@@ -434,14 +444,16 @@ public class PlayerHP : MonoBehaviour
 
     void ShieldControl(bool status)
     {
-        if (status == true)
+        if (status == true && shieldbreak == false)
         {
             bubbleShield.enabled = true;
+            shieldbreak = true;
             Shield.instance.OpenCloseShield();
         }
         else
         {
             Shield.instance.OpenCloseShield();
+            shieldbreak = false;
             ShieldOn = true;
         }
     }

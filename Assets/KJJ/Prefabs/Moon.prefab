@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1566882517582554090}
   - component: {fileID: 1566882517582554093}
   - component: {fileID: -2643395482001192677}
+  - component: {fileID: -781731837471741273}
   m_Layer: 21
   m_Name: Moon
   m_TagString: Moon
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1566882517582554080}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.5, y: 28.34, z: -75.075}
+  m_LocalPosition: {x: 43.42, y: 28.34, z: -74.524994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 543450653340046075}
@@ -184,6 +185,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &-781731837471741273
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566882517582554080}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 30b75a1fb3a46eb4390a1f72afd40003, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0203added4f6ad44bb15a5e14e14b83b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!64 &6716959818230595430
 MeshCollider:
   m_ObjectHideFlags: 0

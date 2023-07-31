@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AnimationEventManager : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class AnimationEventManager : MonoBehaviour
     public ParticleSystem rightfootPrticle;
     public ParticleSystem enemyleftfootParticle;
     public ParticleSystem enemyrightfootParticle;
-
+    public ParticleSystem enemyInParticle;
     bool stop;
     // Start is called before the first frame update
     void Start()
@@ -41,6 +42,9 @@ public class AnimationEventManager : MonoBehaviour
         ChangeSquidSound();
         ChangeHumanSound();
         SpecialAttackCharge();
+        Vector3 tmp = transform.position;
+        tmp.y = 0;
+        enemyInParticle.transform.position = tmp;
     }
 
     void FootStepClipLeft()
@@ -187,5 +191,6 @@ public class AnimationEventManager : MonoBehaviour
     void HitReact()
     {
         ShootAudioSource.Stop();
+        enemyInParticle.Play();
     }
 }

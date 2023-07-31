@@ -24,6 +24,7 @@ public class KDH_ESC : MonoBehaviour
                 escUI.SetActive(false);
                 isESC = false;
                 Time.timeScale = 1;
+                Cursor.lockState = CursorLockMode.Locked;
 
             }
             else
@@ -31,6 +32,7 @@ public class KDH_ESC : MonoBehaviour
                 escUI.SetActive(true);
                 isESC = true;
                 Time.timeScale = 0;
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }

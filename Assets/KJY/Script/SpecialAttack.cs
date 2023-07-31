@@ -87,11 +87,12 @@ public class SpecialAttack : MonoBehaviour
                 move = true;
             }
         }
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground" && specialAttack == true)
+        if (collision.gameObject.tag == "Ground" && specialAttack == true && currentTime > 1f)
        {
             specialAttack = false;
             bombEffect.SetActive(true);

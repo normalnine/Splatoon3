@@ -36,6 +36,8 @@ public class Player_Change : MonoBehaviour
     {
         instance = this;
         squidCount = 2;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         for (int i = 0; i < squidCount; i++)
         {
             squidMeshList[i].enabled = false;
@@ -111,7 +113,7 @@ public class Player_Change : MonoBehaviour
             if (Player_CameraAndMove.instance.jumping == false)
             {
                 Vector3 tmp = humanBody.transform.position;
-                tmp.y = -1.5f;
+                tmp.y = -1.7f;
                 humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
             }
             if (Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.my)
@@ -218,10 +220,21 @@ public class Player_Change : MonoBehaviour
     {
         if(state == State.Human && Player_CameraAndMove.instance.inkState == Player_CameraAndMove.InkState.other)
         {
-            Vector3 tmp = humanBody.transform.position;
-            tmp.y = -0.2f;
-            humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
-            EnemyPuddlePartice.Play();
+            if (Player_CameraAndMove.instance.jumping == false && SpecialAttack.instance.specialAttack == false)
+            {
+                Vector3 tmp = humanBody.transform.position;
+                tmp.y = -0.2f;
+                humanBody.transform.position = Vector3.Lerp(humanBody.transform.position, tmp, 0.2f);
+            }
+        }
+        else if (state == State.Human && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
+        {
+            EnemyPuddlePartice.Stop();
+            StartCoroutine(Up());
+        }
+        if (Player_CameraAndMove.instance.jumping)
+        {
+            EnemyPuddlePartice.Stop();
         }
         //else if (state == State.Human && Player_CameraAndMove.instance.inkState != Player_CameraAndMove.InkState.other)
         //{

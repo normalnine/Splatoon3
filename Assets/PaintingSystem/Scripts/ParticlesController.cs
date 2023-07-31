@@ -73,6 +73,10 @@ public class ParticlesController: MonoBehaviour{
                     particle.transform.position = pos;
                     particle.Play();
                 }
+                else
+                {
+                    break;
+                }
             }
         }
     }
